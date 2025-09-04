@@ -159,7 +159,6 @@ def amigoz(df):
                 df_novo["DAT_CREDITO"][i] = data_default
         df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%d/%m/%Y')
 
-    
     if "DSC_OBSERVACAO" in df_novo.columns:
         mask = df_novo["DSC_OBSERVACAO"] == "Credito devido estorno feito em duplicidade"
         df_novo.loc[mask, "TIPO_COMISSAO_BANCO"] = "REEMBOLSO"
