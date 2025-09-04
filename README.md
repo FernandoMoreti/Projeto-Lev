@@ -1,9 +1,9 @@
-🧠 Guia para Contribuir com Este Projeto no GitHub
+# 🧠 Guia para Contribuir com Este Projeto no GitHub
 
 Obrigado por querer contribuir com este projeto! 🎉
 Siga os passos abaixo para clonar, criar uma branch, fazer alterações e enviar seu Pull Request corretamente.
 
-✅ Pré-requisitos
+# ✅ Pré-requisitos
 
 Tenha o Git instalado (instalar Git)
 
@@ -11,7 +11,7 @@ Tenha uma conta no GitHub
 
 (Opcional) Use um editor como o VS Code
 
-1. 🔁 Fork do repositório (se necessário)
+# 1. 🔁 Fork do repositório (se necessário)
 
 Se você não for colaborador direto do projeto, comece criando um fork:
 
@@ -21,7 +21,7 @@ Clique no botão Fork (no canto superior direito).
 
 Isso criará uma cópia do projeto no seu próprio GitHub.
 
-2. 💻 Clone o projeto para sua máquina
+# 2. 💻 Clone o projeto para sua máquina
 
 Abra o terminal (ou Git Bash) e execute:
 
@@ -29,7 +29,7 @@ Abra o terminal (ou Git Bash) e execute:
 git clone https://github.com/FernandoMoreti/Projeto-Lev
 ```
 
-3. 🌿 Crie uma nova branch
+# 3. 🌿 Crie uma nova branch
 
 Sempre crie uma branch separada para suas alterações, com um nome descritivo:
 
@@ -43,7 +43,7 @@ Exemplo:
 git checkout -b correcao-botao-login
 ```
 
-4. ✍️ Faça suas alterações
+# 4. ✍️ Faça suas alterações
 
 Agora, edite os arquivos no seu editor (VS Code, por exemplo).
 Quando terminar:
@@ -66,13 +66,13 @@ Exemplo:
 git commit -m "Corrigido bug no botão de login que não redirecionava"
 ```
 
-5. 🚀 Envie sua branch para o GitHub
+# 5. 🚀 Envie sua branch para o GitHub
 
 ```bash
 git push origin minha-nova-feature
 ```
 
-7. 🔄 Crie um Pull Request
+# 6. 🔄 Crie um Pull Request
 
 Vá até o repositório no GitHub.
 
@@ -84,7 +84,7 @@ Escreva um título e uma descrição do que foi feito.
 
 Clique em "Create Pull Request".
 
-7. ⬇️ Atualize seu repositório local (git pull)
+# 7. ⬇️ Atualize seu repositório local (git pull)
 
 Se quiser atualizar seu repositório com a versão mais recente da branch principal (geralmente main ou master):
 
