@@ -1,0 +1,95 @@
+import pandas as pd
+from pathlib import Path
+from datetime import datetime, timedelta
+import openpyxl
+import json
+import os
+
+print("importações OK")
+
+caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\RelatorioComissoes 28.08.CSV"
+
+df_test = pd.read_csv(r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\RelatorioComissoes 28.08.CSV", sep=';')
+
+nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[1]
+
+print(nome_data)
+
+col_opcoes = [
+   "NUM_BANCO",
+   "NOM_BANCO",
+   "NUM_PROPOSTA",
+   "NUM_CONTRATO",
+   "NOM_CLIENTE",
+   "COD_CPF_CLIENTE",
+   "DSC_PRODUTO",
+   "DSC_SITUACAO_BANCO",
+   "DSC_OBSERVACAO",
+   "DAT_CREDITO",
+   "VAL_BRUTO",
+   "VAL_LIQUIDO",
+   "VAL_SALDO_REFINANCIAMENTO",
+   "VAL_BASE_COMISSAO",
+   "VAL_COMISSAO",
+   "PCL_COMISSAO",
+   "DSC_TIPO_COMISSAO",
+   "COD_LOJA",
+   "COD_UNIDADE_EMPRESA",
+   "COD_BANCO",
+   "COD_TIPO_PROPOSTA_EMPRESTIMO",
+   "DSC_TIPO_PROPOSTA_EMPRESTIMO",
+   "NIC_CTR_USUARIO",
+   "COD_PRODUTO",
+   "COD_PRODUTOR_VENDA",
+   "COD_PRODUTOR_VENDA_BANCO",
+   "COD_TIPO_COMISSAO",
+   "COD_SITUACAO_EMPRESTIMO",
+   "QTD_PARCELA",
+   "NUM_PARCELA_DIFERIDA_EMPRESA",
+   "DAT_EMPRESTIMO",
+   "DAT_CONFIRMACAO",
+   "DAT_ESTORNO",
+   "DAT_CTR_INCLUSAO",
+   "TIPO_COMISSAO_BANCO",
+   "PCL_TAXA_EMPRESTIMO"
+]
+
+def grandino(df):
+
+    infos ={
+       "Nro Proposta":"NUM_PROPOSTA",
+       "Data de Fechamento":"DAT_CREDITO",
+       "Base de C\u00e1lculo":"VAL_BASE_COMISSAO",
+       "Valor Comiss\u00e3o":"VAL_COMISSAO",
+       "Porcentagem":"PCL_COMISSAO",
+    }
+    if not isinstance(df, pd.DataFrame):
+        return"Erro: A entrada não é um DataFrame válido."
+
+    colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
+    if not colunas_origem_presentes:
+        return"ErroColunas"
+
+    # Criar o DataFrame com as colunas desejadas
+    df_novo = pd.DataFrame(columns=col_opcoes)
+
+    # Mapeamento de colunas
+    for col_origem, col_destino in infos.items():
+        if col_origem in df.columns:
+            df_novo[col_destino] = df[col_origem]
+
+    df_novo["NUM_BANCO"] = '88888'
+    df_novo["NOM_BANCO"] = 'GRANDINO LTDA'
+    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+    # Gerar o caminho do arquivo
+    data_arquivo = datetime.now().strftime("%d-%m")
+    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/GRANDINO/ Grandino - {nome_data}.xlsx'
+
+    # Salvar como Excel
+    df_novo.to_excel(caminho_arquivo, index=False)
+
+    return caminho_arquivo
+
+print(grandino(df_test))
