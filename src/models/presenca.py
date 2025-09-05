@@ -6,10 +6,10 @@ import json
 import os
 
 
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 02.09.xlsx"
+caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 03.09.xlsx"
 nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[3]
 
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 02.09.xlsx", header=2 )
+df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\Acerto da Producao 03.09.xlsx", header=2 )
 
 
 col_opcoes = [
@@ -85,16 +85,15 @@ def presenca(df):
     df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str)
     mascara = df_novo["VAL_BASE_COMISSAO"].str.len() <= 6
     df_novo.loc[mascara, "VAL_BASE_COMISSAO"] = df_novo.loc[mascara, "VAL_BASE_COMISSAO"].str.replace(".", ",", regex=False)
-    print(df_novo["VAL_BASE_COMISSAO"])
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(float)
+    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].str.replace(".", "").str.replace(",", ".").astype(float)
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["NUM_BANCO"] = 482
     df_novo["NOM_BANCO"] = 'PRESENCA BANK SCP'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
     # Gerar o caminho do arquivo
-    data_arquivo = datetime.now().strftime("%d-%m")
     caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/PRESENÇA BANK/ PRESENÇA_BANK_{nome_data}.xlsx'
 
     # # Salvar como Excel
