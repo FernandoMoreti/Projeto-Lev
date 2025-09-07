@@ -6,9 +6,12 @@ function App() {
 
   const [file, setFile] = useState("")
   const [banco, setBanco] = useState("")
+  const [loading, setLoading] = useState(false)
   
   async function handleSubmit(e) {
     e.preventDefault()
+
+    setLoading(true)
 
     const formData = new FormData();
     formData.append("banco", banco)
@@ -17,14 +20,21 @@ function App() {
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    
-    const response = await fetch("http://127.0.0.1:5000/executar", {
-      method: "POST",
-      body: formData,
-    })
 
-    const data = await response.json();
-    console.log(data.resultado)
+    try {
+      const response = await fetch("http://127.0.0.1:5000/executar", {
+        method: "POST",
+        body: formData,
+      })
+  
+      const data = await response.json();
+      console.log(data.resultado)
+    } catch(error) {
+      console.error("Erro ao enviar:", error)
+    } finally {
+      setLoading(false)
+    }
+    
   }
 
   const bancos = [
@@ -52,7 +62,7 @@ function App() {
                   <option className='bg-black' value={banco}>{banco}</option>
                 ))}
               </select>
-              <button className='border rounded-xl p-5 shadow-xl shadow-gray-700 transition-all durarion-400 cursor-pointer hover:bg-gray-300 hover:text-black' type='submit'>Criar arquivo</button>
+              <button className='border rounded-xl p-5 shadow-xl shadow-gray-700 transition-all durarion-400 cursor-pointer hover:bg-gray-300 hover:text-black' type='submit'>{loading ? "Carregando..." : "Criar arquivo"}</button>
             </form>
           </div>
           <img className='w-120 rounded-r-4xl' src={logo} alt="" />
