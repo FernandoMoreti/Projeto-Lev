@@ -5,13 +5,12 @@ import openpyxl
 import json
 import os
 
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\30.07 A 01.08 - WL_CASAQUI_SERVICOS_ADMINISTRATIVOS_LTDA.xlsx"
+# caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\30.07 A 01.08 - WL_CASAQUI_SERVICOS_ADMINISTRATIVOS_LTDA.xlsx"
 
-df_test = pd.read_excel(caminho_arquivo)
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[2]
-data_br = nome_data + "-2025"
-data_default = pd.to_datetime(data_br, format="%d-%m-%Y").strftime("%Y-%m-%d %H:%M:%S")
-
+# df_test = pd.read_excel(caminho_arquivo)
+# nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[2]
+# data_br = nome_data + "-2025"
+# data_default = pd.to_datetime(data_br, format="%d-%m-%Y").strftime("%Y-%m-%d %H:%M:%S")
 
 col_opcoes = [
    "NUM_BANCO",
@@ -174,5 +173,3 @@ def amigoz(df):
     df_novo.to_excel(caminho_arquivo, index=False)
 
     return caminho_arquivo
-
-amigoz(df_test)
