@@ -7,65 +7,35 @@ function App() {
   const [file, setFile] = useState("")
   const [banco, setBanco] = useState("")
   
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log(file)
-    console.log(banco)
+
+    const formData = new FormData();
+    formData.append("banco", banco)
+    formData.append("arquivo", file)
+
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    
+    const response = await fetch("http://127.0.0.1:5000/executar", {
+      method: "POST",
+      body: formData,
+    })
+
+    const data = await response.json();
+    console.log(data.resultado)
   }
 
   const bancos = [
-  "Banco do Brasil",
-  "Caixa Econômica Federal",
-  "Itaú Unibanco",
-  "Bradesco",
-  "Santander Brasil",
-  "Banco Safra",
-  "BTG Pactual",
-  "Banco Inter",
-  "Nubank",
-  "C6 Bank",
-  "Banco Pan",
-  "Banco Original",
-  "Banco Neon",
-  "Banco Modal",
-  "Banco Sofisa",
-  "Banco Votorantim (BV)",
-  "Banco Daycoval",
-  "Banco Alfa",
-  "Banco BMG",
-  "Banco Mercantil do Brasil",
-  "Banco Fibra",
-  "Banco Banrisul",
-  "Banco Banestes",
-  "Banco Sicoob",
-  "Banco Sicredi",
-  "Banco Agibank",
-  "Banco Cetelem",
-  "Banco Digio",
-  "Banco Renner",
-  "Banco Industrial do Brasil",
-  "Banco Paulista",
-  "Banco Pine",
-  "Banco Topázio",
-  "Banco Master",
-  "Banco Semear",
-  "Banco Cruzeiro do Sul",
-  "Banco ABC Brasil",
-  "Banco Rabobank",
-  "Banco Toyota",
-  "Banco Honda",
-  "Banco RCI Brasil",
-  "Banco Mercedes-Benz",
-  "Banco Volvo",
-  "Banco Volkswagen",
-  "Banco PSA Finance",
-  "HSBC",
-  "Citibank",
-  "JPMorgan Chase",
-  "Bank of America",
-  "Deutsche Bank",
-  "BNP Paribas"
-];
+    "amigoz",
+    "brb360",
+    "bv",
+    "c6vista",
+    "grandino",
+    "happy",
+    "queromais"
+  ]
 
   return (
     <>
