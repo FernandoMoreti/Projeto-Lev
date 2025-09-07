@@ -6,6 +6,12 @@ function App() {
 
   const [file, setFile] = useState("")
   const [banco, setBanco] = useState("")
+  
+  function handleSubmit(e) {
+    e.preventDefault()
+    console.log(file)
+    console.log(banco)
+  }
 
   const bancos = [
   "Banco do Brasil",
@@ -67,11 +73,11 @@ function App() {
         <div className='flex bg-black/10 rounded-4xl shadow-2xl shadow-gray-700'>
           <div className='flex flex-col p-10 w-120'>
             <h1 className='flex justify-center text-xl font-semibold'>Bem vindo ao Conversor WORKBANK</h1>
-            <form className='flex flex-col gap-5' action="">
+            <form onSubmit={handleSubmit} className='flex flex-col gap-5' action="">
               <p className='text-lg pt-5'>Importe o relatorio:</p>
               <input className="border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer" onChange={(e) => setFile(e.target.files[0])} type="file" />
               <p className='text-lg'>Escolha o banco:</p>
-              <select className='border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer' name="Banco" id="">
+              <select onChange={(e) => {setBanco(e.target.value)}} className='border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer' name="Banco" id="">
                 {bancos.map((banco) => (
                   <option className='bg-black' value={banco}>{banco}</option>
                 ))}
