@@ -5,12 +5,10 @@ import openpyxl
 import json
 import os
 
-
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 03.09.xlsx"
+caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 02.09.xlsx"
 nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[3]
 
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\Acerto da Producao 03.09.xlsx", header=2 )
-
+df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\Backend\app\assets\Acerto da Producao 02.09.xlsx", header=2 )
 
 col_opcoes = [
    "NUM_BANCO",
@@ -94,7 +92,7 @@ def presenca(df):
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
     # Gerar o caminho do arquivo
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/PRESENÇA BANK/ PRESENÇA_BANK_{nome_data}.xlsx'
+    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/PRESENÇA BANK/ PRESENÇA_BANK_{nome_data} Editado.xlsx'
 
     # # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
