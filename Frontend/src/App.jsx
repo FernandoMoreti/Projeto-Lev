@@ -17,10 +17,6 @@ function App() {
     formData.append("banco", banco)
     formData.append("arquivo", file)
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     try {
       const response = await fetch("http://127.0.0.1:5000/executar", {
         method: "POST",
@@ -39,12 +35,7 @@ function App() {
 
   const bancos = [
     "amigoz",
-    "brb360",
-    "bv",
-    "c6vista",
-    "grandino",
-    "happy",
-    "queromais"
+    "presenca"
   ]
 
   return (
@@ -58,6 +49,7 @@ function App() {
               <input className="border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer" onChange={(e) => setFile(e.target.files[0])} type="file" />
               <p className='text-lg'>Escolha o banco:</p>
               <select onChange={(e) => {setBanco(e.target.value)}} className='border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer' name="Banco" id="">
+                <option value="">Escolha um banco</option>
                 {bancos.map((banco) => (
                   <option className='bg-black' value={banco}>{banco}</option>
                 ))}
