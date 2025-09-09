@@ -37,15 +37,67 @@ function App() {
     
   }
 
-  const bancos = [
+  const cbancos_ = [
+    "agibank",
+    "aki capital",
     "amigoz",
-    "brb360",
+    "ayude",
+    "banrisul",
+    "bmg",
+    "brb",
+    "btw",
     "bv",
-    "c6vista",
+    "c6 auto",
+    "c6 bank",
+    "c6 car equity",
+    "cba - caixa",
+    "ccb",
+    "cetelem",
+    "comissão zero",
+    "creditas",
+    "crefaz",
+    "crefisa",
+    "daycoval",
+    "digio",
+    "dryve",
+    "edições",
+    "euro 17",
+    "evol",
+    "facta",
+    "fit - santander",
+    "futuroprev",
     "grandino",
-    "happy",
-    "queromais"
-  ]
+    "happy - teddy",
+    "hope",
+    "icred",
+    "inbursa - teddy",
+    "itau",
+    "itau 360",
+    "jbcred",
+    "kardbank",
+    "lev consorcio",
+    "master",
+    "mercantil",
+    "meucashcard",
+    "novo saque",
+    "nyc",
+    "ole - orienta",
+    "pan",
+    "paraná bank",
+    "ph",
+    "presença bank",
+    "quero + crédito",
+    "sabemi",
+    "safra",
+    "santander fve",
+    "total cash",
+    "v8",
+    "vctex",
+    "vemcard",
+    "via certa",
+    "web cash"
+  ];
+
 
   return (
     <>
