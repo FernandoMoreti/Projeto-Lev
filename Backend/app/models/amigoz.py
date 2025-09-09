@@ -50,7 +50,7 @@ def amigoz(df):
 
     infos ={
        "Nr Proposta": "NUM_PROPOSTA",
-       "Data Integração": "DAT_CREDITO",
+       "Data Status": "DAT_CREDITO",
        "Observações": "DSC_OBSERVACAO"
     }
 
@@ -145,17 +145,16 @@ def amigoz(df):
 
     df_novo = pd.DataFrame(linhas_expandidas)
 
-    # cata data atual
-    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-
     if "PCL_COMISSAO" in df_novo.columns:
         df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
 
     if "DAT_CREDITO" in df_novo.columns:
+        df_novo['DAT_CREDITO'] = pd.to_datetime(df_novo['DAT_CREDITO'], errors='coerce')
         for i in range(len(df_novo["DAT_CREDITO"])):
             if pd.isna(df_novo["DAT_CREDITO"][i]) == True:
-                df_novo["DAT_CREDITO"][i] = data_arquivo
+                df_novo.loc[i, "DAT_CREDITO"] = data_arquivo
         df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%d/%m/%Y')
+
 
     if "DSC_OBSERVACAO" in df_novo.columns:
         mask = df_novo["DSC_OBSERVACAO"] == "Credito devido estorno feito em duplicidade"
@@ -165,6 +164,7 @@ def amigoz(df):
     df_novo = df_novo[df_novo["VAL_COMISSAO"].notna()]
 
     # Gerar o caminho do arquivo
+    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
     caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/AMIGOZ/ Amigoz - {data_arquivo}.xlsx'
 
     # Salvar como Excel
