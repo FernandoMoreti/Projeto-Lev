@@ -5,11 +5,6 @@ import openpyxl
 import json
 import os
 
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 02.09.xlsx"
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[3]
-
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\Backend\app\assets\Acerto da Producao 02.09.xlsx", header=2 )
-
 col_opcoes = [
    "NUM_BANCO",
    "NOM_BANCO",
@@ -50,6 +45,12 @@ col_opcoes = [
 ]
 
 def presenca(df):
+
+
+    filename = df.filename
+    nome_data = filename.replace(".", "-").replace("-xlsx", "").split()[3]
+
+    df = pd.read_excel(df, header=2)
 
     infos ={
        "PROPOSTA":"NUM_PROPOSTA",
@@ -98,5 +99,3 @@ def presenca(df):
     df_novo.to_excel(caminho_arquivo, index=False)
 
     return caminho_arquivo
-
-print(presenca(df_test))

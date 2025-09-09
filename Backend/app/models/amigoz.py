@@ -5,13 +5,6 @@ import openpyxl
 import json
 import os
 
-# caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\30.07 A 01.08 - WL_CASAQUI_SERVICOS_ADMINISTRATIVOS_LTDA.xlsx"
-
-# df_test = pd.read_excel(caminho_arquivo)
-# nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[2]
-# data_br = nome_data + "-2025"
-# data_default = pd.to_datetime(data_br, format="%d-%m-%Y").strftime("%Y-%m-%d %H:%M:%S")
-
 col_opcoes = [
    "NUM_BANCO",
    "NOM_BANCO",
@@ -52,6 +45,9 @@ col_opcoes = [
 ]
 
 def amigoz(df):
+
+    df = pd.read_excel(df)
+
     infos ={
        "Nr Proposta": "NUM_PROPOSTA",
        "Data Integração": "DAT_CREDITO",
@@ -88,7 +84,7 @@ def amigoz(df):
             else:    
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO DIAMANTE"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
-            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Liberado Cliente"]
+            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
             nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
             novas_linhas.append(nova_linha)
 
@@ -100,7 +96,7 @@ def amigoz(df):
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO OURO"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
-            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Liberado Cliente"]
+            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
             nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
             novas_linhas.append(nova_linha)
 
@@ -112,7 +108,7 @@ def amigoz(df):
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO PRATA"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
-            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Liberado Cliente"]
+            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
             nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
             novas_linhas.append(nova_linha)
 
@@ -133,7 +129,7 @@ def amigoz(df):
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO"
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="DIRETA"
-            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Liberado Cliente"]
+            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
             nova_linha["VAL_COMISSAO"] = row_original["$ Comissão"]
             nova_linha["PCL_COMISSAO"] = row_original["% Comissao"]
             novas_linhas.append(nova_linha)
