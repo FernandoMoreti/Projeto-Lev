@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from models import bancos
 
 app = Flask(__name__) #cria o app, inicializa a aplicação flask
+CORS(app)
 
 @app.route("/executar", methods=["POST"])
 def executar():
@@ -16,7 +18,8 @@ def executar():
     
     resultado = bancos[nome_banco](arquivo)
 
-    return jsonify({"resultado": resultado})
+    return jsonify({"resultado": resultado}), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True)
