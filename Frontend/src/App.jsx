@@ -7,6 +7,8 @@ function App() {
   const [file, setFile] = useState("")
   const [banco, setBanco] = useState("")
   const [loading, setLoading] = useState(false)
+  const [validar, setValidar] = useState(false)
+  const [mostrar, setMostrar] = useState(false)
   
   async function handleSubmit(e) {
     e.preventDefault()
@@ -17,94 +19,43 @@ function App() {
     formData.append("banco", banco)
     formData.append("arquivo", file)
 
+    console.log("Cheguei aqui porra")
     try {
       const response = await fetch("http://127.0.0.1:5000/executar", {
         method: "POST",
         body: formData,
       })
-  
-      const data = await response.json();
-      console.log(data.resultado)
+
+      if (response.ok){
+        console.log(response)
+        setValidar(true)
+      } else {
+        setValidar(false)
+      }
     } catch(error) {
-      console.error("Erro ao enviar:", error)
+      console.log("Erro ao enviar:", error)
+      setValidar(false)
     } finally {
+      setMostrar(true)
       setLoading(false)
+
+      setTimeout(() => {
+        setMostrar(false)
+      }, 2000)
     }
-    
   }
 
-  const cbancos_ = [
-    "agibank",
-    "aki capital",
+  const bancos = [
     "amigoz",
-<<<<<<< HEAD
     "presenca"
   ]
-=======
-    "ayude",
-    "banrisul",
-    "bmg",
-    "brb",
-    "btw",
-    "bv",
-    "c6 auto",
-    "c6 bank",
-    "c6 car equity",
-    "cba - caixa",
-    "ccb",
-    "cetelem",
-    "comissão zero",
-    "creditas",
-    "crefaz",
-    "crefisa",
-    "daycoval",
-    "digio",
-    "dryve",
-    "edições",
-    "euro 17",
-    "evol",
-    "facta",
-    "fit - santander",
-    "futuroprev",
-    "grandino",
-    "happy - teddy",
-    "hope",
-    "icred",
-    "inbursa - teddy",
-    "itau",
-    "itau 360",
-    "jbcred",
-    "kardbank",
-    "lev consorcio",
-    "master",
-    "mercantil",
-    "meucashcard",
-    "novo saque",
-    "nyc",
-    "ole - orienta",
-    "pan",
-    "paraná bank",
-    "ph",
-    "presença bank",
-    "quero + crédito",
-    "sabemi",
-    "safra",
-    "santander fve",
-    "total cash",
-    "v8",
-    "vctex",
-    "vemcard",
-    "via certa",
-    "web cash"
-  ];
-
->>>>>>> 182e6f2780f242486f567f7896a25897510b61db
 
   return (
     <>
-      <section className='flex justify-center items-center h-screen bg-gradient-to-tr from-black to-purple-500'>
-        <div className='flex bg-black/10 rounded-4xl shadow-2xl shadow-gray-700'>
-          <div className='flex flex-col p-10 w-120'>
+      <section className='flex flex-col h-screen bg-gradient-to-tr from-black to-purple-500'>
+        <p className={`absolute p-5 w-full transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : "Não foi possivel editar"}</p>
+        <div className='flex-1 flex justify-center items-center bg-black/10'>
+          <div className='flex flex-col p-10 h-120 w-120 shadow-2xl shadow-gray-700 rounded-l-4xl'>
             <h1 className='flex justify-center text-xl font-semibold'>Bem vindo ao Conversor WORKBANK</h1>
             <form onSubmit={handleSubmit} className='flex flex-col gap-5' action="">
               <p className='text-lg pt-5'>Importe o relatorio:</p>
@@ -119,7 +70,7 @@ function App() {
               <button className='border rounded-xl p-5 shadow-xl shadow-gray-700 transition-all durarion-400 cursor-pointer hover:bg-gray-300 hover:text-black' type='submit'>{loading ? "Carregando..." : "Criar arquivo"}</button>
             </form>
           </div>
-          <img className='w-120 rounded-r-4xl' src={logo} alt="" />
+          <img className='w-120 rounded-r-4xl shadow-2xl shadow-gray-700' src={logo} alt="" />
         </div>
       </section>
 
