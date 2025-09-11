@@ -9,6 +9,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [validar, setValidar] = useState(false)
   const [mostrar, setMostrar] = useState(false)
+  const [mensagem, setMensagem] = useState(false)
   
   async function handleSubmit(e) {
     e.preventDefault()
@@ -19,7 +20,10 @@ function App() {
     formData.append("banco", banco)
     formData.append("arquivo", file)
 
-    console.log("Cheguei aqui porra")
+    if (file == "" || banco == "") {
+      setMensagem(true)
+    }
+
     try {
       const response = await fetch("http://127.0.0.1:5000/executar", {
         method: "POST",
@@ -27,7 +31,6 @@ function App() {
       })
 
       if (response.ok){
-        console.log(response)
         setValidar(true)
       } else {
         setValidar(false)
@@ -40,6 +43,7 @@ function App() {
       setLoading(false)
 
       setTimeout(() => {
+        setMensagem(false)
         setMostrar(false)
       }, 2000)
     }
@@ -53,7 +57,7 @@ function App() {
   return (
     <>
       <section className='flex flex-col h-screen bg-gradient-to-tr from-black to-purple-500'>
-        <p className={`absolute p-5 w-full transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : "Não foi possivel editar"}</p>
+        <p className={`absolute p-5 w-full transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : mensagem ? "Faltando credenciais" : "Não foi possivel editar"}</p>
         <div className='flex-1 flex justify-center items-center bg-black/10'>
           <div className='flex flex-col p-10 h-120 w-120 shadow-2xl shadow-gray-700 rounded-l-4xl'>
             <h1 className='flex justify-center text-xl font-semibold'>Bem vindo ao Conversor WORKBANK</h1>
