@@ -1,16 +1,4 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
-
-
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 01.09.xlsx"
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[3]
-
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\Acerto da Producao 01.09.xlsx", header=2 )
-
 
 col_opcoes = [
    "NUM_BANCO",
@@ -53,6 +41,12 @@ col_opcoes = [
 
 def happy(df):
 
+
+    filename = df.filename
+    nome_data = filename.replace(".", "-").replace("-xlsx", "").split()[3]
+
+    df = pd.read_excel(df, header=2)
+
     infos ={
        "PROPOSTA":"NUM_PROPOSTA",
        "DT PAGTO":"DAT_CREDITO",
@@ -89,16 +83,14 @@ def happy(df):
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["NUM_BANCO"] = 1010
-    df_novo["NOM_BANCO"] = 'HAPPY CONSIGNADO'
+    df_novo["NOM_BANCO"] = 'HAPPY'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
     # Gerar o caminho do arquivo
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/HAPPY/ HAPPY - {nome_data}.xlsx'
+    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/HAPPY/HAPPY - {nome_data} Editado.xlsx'
 
     # # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
 
     return caminho_arquivo
-
-print(happy(df_test))

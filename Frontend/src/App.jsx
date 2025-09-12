@@ -51,7 +51,8 @@ function App() {
 
   const bancos = [
     "amigoz",
-    "presenca"
+    "presenca",
+    "happy"
   ]
 
   return (

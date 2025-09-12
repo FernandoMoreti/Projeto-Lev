@@ -1,9 +1,5 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
+from datetime import datetime
 
 col_opcoes = [
    "NUM_BANCO",

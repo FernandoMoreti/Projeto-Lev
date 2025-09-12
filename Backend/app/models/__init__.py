@@ -4,18 +4,18 @@ from .presenca import presenca
 # from .bv import bv
 # from .C6Vista import c6avista
 # from .grandino import grandino
-# from .happy import happy
+from .happy import happy
 # from .queromais import queromais
 # from .bv import bv
 
 bancos = {
     "amigoz": amigoz,
-    "presenca": presenca
+    "presenca": presenca,
+    "happy": happy,
     # "ayude": ayude,
     # "brb360": brb360,
     # "bv": bv,
     # "c6vista": c6avista,
     # "grandino": grandino,
-    # "happy": happy,
     # "queromais": queromais
 }
