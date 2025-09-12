@@ -1,15 +1,4 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
-
-
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\Acerto da Producao 15.08.xlsx"
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[3]
-
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\Acerto da Producao 15.08.xlsx", header=2 )
 
 col_opcoes = [
    "NUM_BANCO",
@@ -52,13 +41,19 @@ col_opcoes = [
 
 def brb360(df):
 
+
+    filename = df.filename
+    nome_data = filename.replace(".", "-").replace("-xlsx", "").split()[3]
+
+    df = pd.read_excel(df, header=2)
+
     infos ={
-       "PROPOSTA":"NUM_PROPOSTA",
-       "DT PAGTO":"DAT_CREDITO",
-       "VR BASE":"VAL_BASE_COMISSAO",
-       "VR CMS":"VAL_COMISSAO",
-       "% CMS":"PCL_COMISSAO",
-       
+       "PROPOSTA": "NUM_PROPOSTA",
+       "DT PAGTO": "DAT_CREDITO",
+       "VR BASE": "VAL_BASE_COMISSAO",
+       "VR CMS": "VAL_COMISSAO",
+       "% CMS": "PCL_COMISSAO",
+       "TIPO CMS": "TIPO_COMISSAO_BANCO"       
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -67,7 +62,6 @@ def brb360(df):
     tamanho = len(df["PROPOSTA"])
     
     df = df.drop(index=[tamanho -1])
-
 
     colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
     if not colunas_origem_presentes:
@@ -88,20 +82,13 @@ def brb360(df):
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["NUM_BANCO"] = 701
-    df_novo["NOM_BANCO"] = 'BRB360'
-    for i in range(len(df_novo["TIPO_COMISSAO_BANCO"])):
-        if df_novo["VAL_BASE_COMISSAO"][i] < 0:
-            print(df_novo["VAL_BASE_COMISSAO"][i])
-            # df_novo["TIPO_COMISSAO_BANCO"] = 'ESTORNO'
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+    df_novo["NOM_BANCO"] = 'BRB'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
     # Gerar o caminho do arquivo
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/BRB360/ BRB_360_{nome_data}.xlsx'
+    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/BRB360/ BRB360_{nome_data} Editado.xlsx'
 
     # # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
 
     return caminho_arquivo
-
-print(brb360(df_test))

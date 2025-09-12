@@ -1,6 +1,6 @@
 from .amigoz import amigoz
 from .presenca import presenca
-# from .brb360 import brb360
+from .brb360 import brb360
 # from .bv import bv
 # from .C6Vista import c6avista
 # from .grandino import grandino
@@ -12,8 +12,8 @@ bancos = {
     "amigoz": amigoz,
     "presenca": presenca,
     "happy": happy,
+    "brb360": brb360,
     # "ayude": ayude,
-    # "brb360": brb360,
     # "bv": bv,
     # "c6vista": c6avista,
     # "grandino": grandino,

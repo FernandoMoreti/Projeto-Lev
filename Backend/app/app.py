@@ -9,6 +9,7 @@ CORS(app)
 def executar():
     nome_banco = request.form.get("banco")
     arquivo = request.files.get("arquivo")
+    nome_banco = nome_banco.lower()
 
     if nome_banco not in bancos:
         return jsonify({"erro": "Função não encontrada"}), 400
@@ -19,7 +20,6 @@ def executar():
     resultado = bancos[nome_banco](arquivo)
 
     return jsonify({"resultado": resultado}), 200
-
 
 if __name__ == "__main__":
     app.run(debug=True)
