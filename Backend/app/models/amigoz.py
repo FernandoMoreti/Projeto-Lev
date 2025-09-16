@@ -121,11 +121,17 @@ def amigoz(df):
         # Criar linha Comissão
         if pd.isna(row_original.get("$ Comissão")) == False:
             nova_linha = row_mapeada.copy()
+            
             if row_original["$ Comissão"] < 0: 
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO"
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="DIRETA"
-            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
+
+            if (row_original["% Comissao"] == 0):
+                nova_linha["VAL_BASE_COMISSAO"] = 0
+            else:
+                nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
+
             nova_linha["VAL_COMISSAO"] = row_original["$ Comissão"]
             nova_linha["PCL_COMISSAO"] = row_original["% Comissao"]
             novas_linhas.append(nova_linha)
@@ -161,7 +167,7 @@ def amigoz(df):
 
     # Gerar o caminho do arquivo
     data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/AMIGOZ/ Amigoz - {data_arquivo}.xlsx'
+    caminho_arquivo = f'Z:/COMISSÃO/PROJETO TESTE/AMIGOZ/ Amigoz - {data_arquivo}.xlsx'
 
     # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
