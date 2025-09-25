@@ -1,17 +1,6 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
-
-print("importações OK")
-
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\BV_COMISSAO_SETEMBRO 03.09.xlsx"
-
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\BV_COMISSAO_SETEMBRO 03.09.xlsx")
-
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[1]
 
 col_opcoes = [
    "NUM_BANCO",
@@ -54,11 +43,15 @@ col_opcoes = [
 
 def bv(df):
 
+    df = pd.read_excel(df)
+
     infos ={
        "NUM_PROPOSTA":"NUM_PROPOSTA",
        "NUM_CONTRATO":"NUM_CONTRATO",
        "DAT_PAGAMENTO":"DAT_CREDITO",
-       "VAL_LIQUIDO":"VAL_BASE_COMISSAO",
+       "VAL_BRUTO": "VAL_BASE_COMISSAO",
+       "VAL_BRUTO": "VAL_BRUTO",
+       "VAL_LIQUIDO":"VAL_LIQUIDO",
        "VAL_COMISSAO":"VAL_COMISSAO"
     }
 
@@ -66,7 +59,6 @@ def bv(df):
         return"Erro: A entrada não é um DataFrame válido."
 
     colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
-    print('colunas_origem_presentes', colunas_origem_presentes)
     if not colunas_origem_presentes:
         return"ErroColunas"
 
@@ -84,12 +76,10 @@ def bv(df):
     df_novo["DAT_CREDITO"] = datetime.now().strftime('%d/%m/%Y')
 
     # Gerar o caminho do arquivo
-
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/BV/BV - {nome_data}.xlsx'
-
+    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
+    caminho_arquivo = f'Z:/COMISSÃO/PROJETO TESTE/BV/BV - {data_arquivo}.xlsx'
+    
     # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
 
     return caminho_arquivo
-
-bv(df_test)

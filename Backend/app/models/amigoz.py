@@ -152,9 +152,8 @@ def amigoz(df):
 
     if "DAT_CREDITO" in df_novo.columns:
         df_novo['DAT_CREDITO'] = pd.to_datetime(df_novo['DAT_CREDITO'], errors='coerce')
-        for i in range(len(df_novo["DAT_CREDITO"])):
-            if pd.isna(df_novo["DAT_CREDITO"][i]) == True:
-                df_novo.loc[i, "DAT_CREDITO"] = data_arquivo
+        data_arquivo = pd.Timestamp.now()
+        df_novo.loc[df_novo["DAT_CREDITO"].isna(), "DAT_CREDITO"] = data_arquivo
         df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%d/%m/%Y')
 
 
