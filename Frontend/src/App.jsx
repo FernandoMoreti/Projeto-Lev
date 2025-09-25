@@ -73,7 +73,8 @@ function App() {
     "Amigoz",
     "Presenca",
     "Happy",
-    "BRB360"
+    "BRB360",
+    "Bv"
   ]
 
   return (
