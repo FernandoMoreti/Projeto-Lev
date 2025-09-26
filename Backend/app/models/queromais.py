@@ -1,17 +1,6 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
-
-print("importações OK")
-
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\BV_COMISSAO_SETEMBRO 03.09.xlsx"
-
-df_test = pd.read_excel(r"Z:\COMISSÃO\TIME\Nandão\Projeto\Projeto Lev\src\assets\BV_COMISSAO_SETEMBRO 03.09.xlsx")
-
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[1]
 
 col_opcoes = [
    "NUM_BANCO",
@@ -53,6 +42,9 @@ col_opcoes = [
 ]
 
 def queromais(df):
+
+    df = pd.read_excel(df)
+
     infos = {
        "NR.PROP.":"NUM_PROPOSTA",
        "Dt Pag Comissão":"DAT_CREDITO",
@@ -86,13 +78,10 @@ def queromais(df):
     if"PCL_COMISSAO"in df_novo.columns:
         df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
 
-    if"DAT_CREDITO"in df_novo.columns:
-        df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], origin='1899-12-30', unit='d')
-        df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%d/%m/%Y')
-
+         
     # Gerar o caminho do arquivo
-    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    caminho_arquivo = f'Z:/COMISSÃO/DOCS - WORK BANK 2025/QUERO + CRÉDITO/COMISSÃO/QUERO+_{data_arquivo}.xlsx'
+    data_arquivo = (datetime.now() - timedelta(days=1)).strftime("%d-%m %H%M%S")
+    caminho_arquivo = f'Z:/COMISSÃO/PROJETO TESTE/QUERO+/QUERO+_{data_arquivo}.xlsx'
 
     # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
