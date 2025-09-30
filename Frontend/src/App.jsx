@@ -74,7 +74,9 @@ function App() {
     "Presenca",
     "Happy",
     "BRB360",
-    "Bv"
+    "Bv",
+    "Queromais",
+    "Crefisa_Adiantamento"
   ]
 
   return (
