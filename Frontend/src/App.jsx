@@ -45,12 +45,31 @@ function App() {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/executar", {
+      const response = await fetch("https://flask-backend-ipg8.onrender.com/executar", {
         method: "POST",
         body: formData,
       })
 
       if (response.ok){
+        const disposition = response.headers.get("content-disposition");
+        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = filenameRegex.exec(disposition);
+        let filename = "arquivo.xlsx";
+
+        console.log(disposition)
+        if (matches != null && matches[1]) {
+          filename = matches[1].replace(/['"]/g, '');
+          filename = decodeURIComponent(filename);
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
         setValidar(true)
       } else {
         setValidar(false)

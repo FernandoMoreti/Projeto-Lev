@@ -165,16 +165,4 @@ def amigoz(df):
     df_novo = df_novo[df_novo["TIPO_COMISSAO_BANCO"].notna()]
     df_novo = df_novo[df_novo["VAL_COMISSAO"].notna()]
 
-    # Gerar o caminho do arquivo
-    UPLOAD_FOLDER = r"Z:\COMISSÃO\PROJETO TESTE\AMIGOZ"
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-    # dentro da função amigoz, para montar o nome e caminho do arquivo:
-    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    nome_arquivo = f"Amigoz - {data_arquivo}.xlsx"
-    caminho_arquivo = os.path.join(UPLOAD_FOLDER, nome_arquivo)
-
-    # Salvar como Excel
-    df_novo.to_excel(caminho_arquivo, index=False)
-
-    return caminho_arquivo
+    return df_novo

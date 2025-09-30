@@ -1,9 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 from .models import bancos
+from io import BytesIO
+from datetime import datetime
+
 
 app = Flask(__name__) #cria o app, inicializa a aplicação flask
-CORS(app)
+CORS(app, expose_headers=["Content-Disposition"])
 
 @app.route("/executar", methods=["POST"])
 def executar():
@@ -19,7 +22,23 @@ def executar():
     
     resultado = bancos[nome_banco](arquivo)
 
-    return jsonify({"resultado": resultado}), 200
+    print(resultado)
+
+    output = BytesIO()
+    resultado.to_excel(output, index=False)
+    output.seek(0)
+
+    # Criar nome do arquivo
+    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
+    nome_arquivo = f"Amigoz - {data_arquivo}.xlsx"
+
+    # Enviar para download
+    return send_file(
+        output,
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        as_attachment=True,
+        download_name=nome_arquivo
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
