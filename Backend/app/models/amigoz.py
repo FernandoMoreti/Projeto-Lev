@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime
+import os
 
 col_opcoes = [
    "NUM_BANCO",
@@ -165,8 +166,13 @@ def amigoz(df):
     df_novo = df_novo[df_novo["VAL_COMISSAO"].notna()]
 
     # Gerar o caminho do arquivo
+    UPLOAD_FOLDER = r"Z:\COMISSÃO\PROJETO TESTE\AMIGOZ"
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+    # dentro da função amigoz, para montar o nome e caminho do arquivo:
     data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    caminho_arquivo = f'Z:/COMISSÃO/PROJETO TESTE/AMIGOZ/ Amigoz - {data_arquivo}.xlsx'
+    nome_arquivo = f"Amigoz - {data_arquivo}.xlsx"
+    caminho_arquivo = os.path.join(UPLOAD_FOLDER, nome_arquivo)
 
     # Salvar como Excel
     df_novo.to_excel(caminho_arquivo, index=False)
