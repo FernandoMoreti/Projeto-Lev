@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from models import bancos
+from .models import bancos
 
 app = Flask(__name__) #cria o app, inicializa a aplicação flask
 CORS(app)
