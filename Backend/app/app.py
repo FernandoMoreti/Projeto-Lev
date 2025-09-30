@@ -22,15 +22,13 @@ def executar():
     
     resultado = bancos[nome_banco](arquivo)
 
-    print(resultado)
-
     output = BytesIO()
     resultado.to_excel(output, index=False)
     output.seek(0)
 
     # Criar nome do arquivo
     data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    nome_arquivo = f"Amigoz - {data_arquivo}.xlsx"
+    nome_arquivo = f"{nome_banco} - {data_arquivo}.xlsx"
 
     # Enviar para download
     return send_file(
