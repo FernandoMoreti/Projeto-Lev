@@ -75,11 +75,4 @@ def bv(df):
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["DAT_CREDITO"] = datetime.now().strftime('%d/%m/%Y')
 
-    # Gerar o caminho do arquivo
-    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    caminho_arquivo = f'Z:/COMISSÃO/PROJETO TESTE/BV/BV - {data_arquivo}.xlsx'
-    
-    # Salvar como Excel
-    df_novo.to_excel(caminho_arquivo, index=False)
-
-    return caminho_arquivo
+    return df_novo
