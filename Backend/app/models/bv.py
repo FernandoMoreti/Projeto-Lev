@@ -73,6 +73,4 @@ def bv(df):
     df_novo["NUM_BANCO"] = '44'
     df_novo["NOM_BANCO"] = 'BV'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
-    df_novo["DAT_CREDITO"] = datetime.now().strftime('%d/%m/%Y')
-
     return df_novo
