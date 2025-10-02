@@ -96,7 +96,6 @@ function App() {
     "Happy",
     "Queromais",
     "Presenca",
-    "Crefisa_Adiantamento"
   ]
 
   return (
