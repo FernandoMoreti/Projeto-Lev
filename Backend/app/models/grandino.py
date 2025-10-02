@@ -43,15 +43,16 @@ col_opcoes = [
 
 def grandino(df):
 
-    df = pd.read_excel(df)
+    df = pd.read_csv(df, sep=";")
 
     infos ={
        "Nro Proposta":"NUM_PROPOSTA",
        "Data de Fechamento":"DAT_CREDITO",
-       "Base de C\u00e1lculo":"VAL_BASE_COMISSAO",
-       "Valor Comiss\u00e3o":"VAL_COMISSAO",
-       "Porcentagem":"PCL_COMISSAO",
+       "Base de Cálculo":"VAL_BASE_COMISSAO",
+       "Valor Comissão":"VAL_COMISSAO",
+       "Porcentagem":"PCL_COMISSAO"
     }
+
     if not isinstance(df, pd.DataFrame):
         return"Erro: A entrada não é um DataFrame válido."
 
