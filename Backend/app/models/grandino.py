@@ -1,19 +1,6 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
-
-print("importações OK")
-
-caminho_arquivo = r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\RelatorioComissoes 28.08.CSV"
-
-df_test = pd.read_csv(r"Z:\COMISSÃO\TIME\Nandão\EXTRATORES_COMISSÃO\src\assets\RelatorioComissoes 28.08.CSV", sep=';')
-
-nome_data = os.path.splitext(os.path.basename(caminho_arquivo))[0].replace(".", "-").split()[1]
-
-print(nome_data)
 
 col_opcoes = [
    "NUM_BANCO",
@@ -56,6 +43,8 @@ col_opcoes = [
 
 def grandino(df):
 
+    df = pd.read_excel(df)
+
     infos ={
        "Nro Proposta":"NUM_PROPOSTA",
        "Data de Fechamento":"DAT_CREDITO",
@@ -83,13 +72,4 @@ def grandino(df):
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
-    # Gerar o caminho do arquivo
-    data_arquivo = datetime.now().strftime("%d-%m")
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/GRANDINO/ Grandino - {nome_data}.xlsx'
-
-    # Salvar como Excel
-    df_novo.to_excel(caminho_arquivo, index=False)
-
-    return caminho_arquivo
-
-print(grandino(df_test))
+    return df_novo

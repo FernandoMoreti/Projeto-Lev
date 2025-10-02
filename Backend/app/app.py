@@ -25,6 +25,7 @@ def executar():
     output = BytesIO()
     resultado.to_excel(output, index=False)
     output.seek(0)
+    nome_banco = nome_banco.upper()
 
     # Criar nome do arquivo
     data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
