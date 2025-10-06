@@ -45,7 +45,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("https://flask-backend-ipg8.onrender.com/executar", {
+      const response = await fetch("http://127.0.0.1:5000/executar", {
         method: "POST",
         body: formData,
       })
@@ -108,7 +108,7 @@ function App() {
                 <input className="border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer" onChange={(e) => setFile(e.target.files[0])} type="file" />
                 <p className='text-lg'>Escolha o banco:</p>
                 <select onChange={(e) => {setBanco(e.target.value)}} className='border rounded-xl p-5 shadow-xl shadow-gray-700 cursor-pointer' name="Banco" id="">
-                  <option value="">Escolha um banco</option>
+                  <option className='hidden'>Escolha um banco</option>
                   {bancos.map((banco) => (
                     <option className='bg-black' value={banco}>{banco}</option>
                   ))}

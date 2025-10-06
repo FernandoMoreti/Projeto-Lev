@@ -74,6 +74,18 @@ def amigoz(df):
         novas_linhas = []
 
         # Criar linha seguro
+        if row_original.get("Seguro") == "Super diamante":
+            nova_linha = row_mapeada.copy()
+            if row_original["Valor Seguro"] < 0: 
+                nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO SEGURO"
+            else:    
+                nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO SUPER DIAMANTE"
+            nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
+            nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
+            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
+            novas_linhas.append(nova_linha)
+        
+        # Criar linha seguro
         if row_original.get("Seguro") == "Diamante":
             nova_linha = row_mapeada.copy()
             if row_original["Valor Seguro"] < 0: 
