@@ -41,10 +41,6 @@ col_opcoes = [
 
 def brb360(df):
 
-
-    filename = df.filename
-    nome_data = filename.replace(".", "-").replace("-xlsx", "").split()[3]
-
     df = pd.read_excel(df, header=2)
 
     infos ={
@@ -85,10 +81,4 @@ def brb360(df):
     df_novo["NOM_BANCO"] = 'BRB'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
-    # Gerar o caminho do arquivo
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/BRB360/ BRB360_{nome_data} Editado.xlsx'
-
-    # # Salvar como Excel
-    df_novo.to_excel(caminho_arquivo, index=False)
-
-    return caminho_arquivo
+    return df_novo
