@@ -93,7 +93,8 @@ function App() {
     "BRB360",
     "Bv",
     "Grandino",
-  ]
+    "Presenca"
+   ]
 
   return (
     <>

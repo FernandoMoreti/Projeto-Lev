@@ -1,9 +1,7 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
-import openpyxl
-import json
-import os
+
 
 col_opcoes = [
    "NUM_BANCO",
@@ -46,10 +44,6 @@ col_opcoes = [
 
 def presenca(df):
 
-
-    filename = df.filename
-    nome_data = filename.replace(".", "-").replace("-xlsx", "").split()[3]
-
     df = pd.read_excel(df, header=2)
 
     infos ={
@@ -89,13 +83,12 @@ def presenca(df):
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["NUM_BANCO"] = 482
     df_novo["NOM_BANCO"] = 'PRESENCA BANK SCP'
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+    
+    for i in range(len(df_novo["VAL_BASE_COMISSAO"])):
+        if df_novo["VAL_BASE_COMISSAO"][i] < 0:
+            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'ESTORNO'
+        else:
+            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'DIRETA'
 
-    # Gerar o caminho do arquivo
-    caminho_arquivo = f'Z:/COMISSÃO/TIME/Nandão/PRESENÇA BANK/ PRESENÇA_BANK_{nome_data} Editado.xlsx'
-
-    # # Salvar como Excel
-    df_novo.to_excel(caminho_arquivo, index=False)
-
-    return caminho_arquivo
+    return df_novo
