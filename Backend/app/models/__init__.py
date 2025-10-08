@@ -1,12 +1,11 @@
 from .amigoz import amigoz
+from .ayude import ayude
 from .brb360 import brb360
 from .bv import bv
+from .grandino import grandino
 from .happy import happy
 from .presenca import presenca
-from .queromais import queromais
-from .crefisa import crefisa_adiantamento
-from .grandino import grandino
-from .ayude import ayude
+from .v8 import v8
 # from .bv import bv
 # from .C6Vista import c6avista
 
@@ -18,6 +17,6 @@ bancos = {
     "grandino": grandino,
     "happy": happy,
     "presenca": presenca,
-    "queromais": queromais,
+    "v8": v8,
     # "c6vista": c6avista,
 }
