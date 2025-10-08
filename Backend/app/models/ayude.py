@@ -44,12 +44,12 @@ col_opcoes = [
 
 def ayude(df):
 
+    df_soli = pd.read_excel(df, sheet_name="DADOS DA SOLICITAÇÃO", )
     df = pd.read_excel(df, sheet_name="PROPOSTAS PRÓPRIAS", )
     df = df.iloc[:-3]
 
     infos ={
        "ID DA PROPOSTA":"NUM_PROPOSTA",
-       "CRIADO EM":"DAT_CREDITO",
        "VALOR DA PROPOSTA":"VAL_BASE_COMISSAO",
        "VALOR DA COMISSÃO":"VAL_COMISSAO"
     }
@@ -73,5 +73,6 @@ def ayude(df):
     df_novo["NOM_BANCO"] = 'AYUDE'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+    df_novo["DAT_CREDITO"] = df_soli["SOLICITADO EM"]
 
     return df_novo
