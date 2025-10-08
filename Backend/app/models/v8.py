@@ -51,7 +51,8 @@ def v8(df):
         "VAL_BASE_COMISSAO":"VAL_BASE_COMISSAO",
         "VAL_COMISSAO_TOTAL":"VAL_COMISSAO",
         "PERCENTUAL_REPASSE_TOTAL":"PCL_COMISSAO",
-        "NUM_CONTRATO": "NUM_CONTRATO"
+        "NUM_CONTRATO": "NUM_CONTRATO",
+        "COD_PRODUTO" : "COD_PRODUTO"
     }
 
     if not isinstance(df, pd.DataFrame):
