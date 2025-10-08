@@ -21,6 +21,7 @@ def executar():
         return jsonify({"erro": "Nenhum arquivo enviado"}), 400
     
     resultado = bancos[nome_banco](arquivo)
+    print(resultado)
 
     output = BytesIO()
     resultado.to_excel(output, index=False)

@@ -6,6 +6,7 @@ from .presenca import presenca
 from .queromais import queromais
 from .crefisa import crefisa_adiantamento
 from .grandino import grandino
+from .ayude import ayude
 # from .bv import bv
 # from .C6Vista import c6avista
 
@@ -17,7 +18,6 @@ bancos = {
     "happy": happy,
     "queromais": queromais,
     "grandino": grandino,
-    "crefisa_adiantamento": crefisa_adiantamento
-    # "ayude": ayude,
+    "ayude": ayude,
     # "c6vista": c6avista,
 }

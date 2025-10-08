@@ -90,6 +90,7 @@ function App() {
 
   const bancos = [
     "Amigoz",
+    "Ayude",
     "BRB360",
     "Bv",
     "Grandino",
