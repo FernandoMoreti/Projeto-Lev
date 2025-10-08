@@ -95,6 +95,7 @@ function App() {
     "Bv",
     "Grandino",
     "Happy",
+    "NYC",
     "Presenca",
     "V8",
    ]

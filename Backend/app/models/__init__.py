@@ -4,6 +4,7 @@ from .brb360 import brb360
 from .bv import bv
 from .grandino import grandino
 from .happy import happy
+from .nyc import nyc
 from .presenca import presenca
 from .v8 import v8
 # from .bv import bv
@@ -16,6 +17,7 @@ bancos = {
     "brb360": brb360,
     "grandino": grandino,
     "happy": happy,
+    "nyc": nyc,
     "presenca": presenca,
     "v8": v8,
     # "c6vista": c6avista,
