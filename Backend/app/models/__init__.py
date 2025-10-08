@@ -12,12 +12,12 @@ from .ayude import ayude
 
 bancos = {
     "amigoz": amigoz,
+    "ayude": ayude,
     "bv": bv,
     "brb360": brb360,
-    "presenca": presenca,
-    "happy": happy,
-    "queromais": queromais,
     "grandino": grandino,
-    "ayude": ayude,
+    "happy": happy,
+    "presenca": presenca,
+    "queromais": queromais,
     # "c6vista": c6avista,
 }
