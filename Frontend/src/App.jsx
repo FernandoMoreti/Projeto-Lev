@@ -94,6 +94,7 @@ function App() {
     "BRB360",
     "Bv",
     "Grandino",
+    "Happy",
     "Presenca"
    ]
 
