@@ -72,11 +72,6 @@ def happy(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
-    for i in range(len(df_novo["VAL_BASE_COMISSAO"])):
-        if df_novo["VAL_BASE_COMISSAO"][i] < 0:
-            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'ESTORNO'
-        else:
-            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'DIRETA'
 
     df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str)
     mascara = df_novo["VAL_BASE_COMISSAO"].str.len() <= 6
@@ -88,4 +83,10 @@ def happy(df):
     df_novo["NOM_BANCO"] = 'HAPPY'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
+    for i in range(len(df_novo["VAL_BASE_COMISSAO"])):
+        if df_novo["VAL_BASE_COMISSAO"][i] < 0:
+            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'ESTORNO'
+        else:
+            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            
     return df_novo
