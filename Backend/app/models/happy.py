@@ -54,11 +54,6 @@ def happy(df):
 
     if not isinstance(df, pd.DataFrame):
         return"Erro: A entrada não é um DataFrame válido."
-    
-    tamanho = len(df["PROPOSTA"])
-    
-    df = df.drop(index=[tamanho -1])
-
 
     colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
     if not colunas_origem_presentes:
