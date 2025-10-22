@@ -74,5 +74,6 @@ def ayude(df):
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
     df_novo["DAT_CREDITO"] = df_soli["SOLICITADO EM"]
+    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100
 
     return df_novo
