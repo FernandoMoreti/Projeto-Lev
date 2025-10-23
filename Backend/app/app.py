@@ -5,7 +5,7 @@ from io import BytesIO
 from datetime import datetime
 
 
-app = Flask(__name__) #cria o app, inicializa a aplicação flask
+app = Flask(__name__) #cria o app, inicializa a aplicação flask 
 CORS(app, origins=["https://projeto-lev.vercel.app"], expose_headers=["Content-Disposition"])
 
 @app.route("/executar", methods=["POST"])
