@@ -67,10 +67,7 @@ def brb360(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str)
-    mascara = df_novo["VAL_BASE_COMISSAO"].str.len() <= 6
-    df_novo.loc[mascara, "VAL_BASE_COMISSAO"] = df_novo.loc[mascara, "VAL_BASE_COMISSAO"].str.replace(".", ",", regex=False)
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].str.replace(".", "").str.replace(",", ".").astype(float)
+    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["NUM_BANCO"] = 701
