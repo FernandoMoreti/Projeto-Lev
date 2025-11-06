@@ -125,7 +125,7 @@ def amigoz(df):
         if pd.isna(row_original.get("Comissao por Emissão", 0)) == False:
             if row_original["Comissao por Emissão"] != 0:
                 nova_linha = row_mapeada.copy()
-                nova_linha["TIPO_COMISSAO_BANCO"] ="PRE-ADESÃO"
+                nova_linha["TIPO_COMISSAO_BANCO"] ="PRÉ-ADESÃO"
                 nova_linha["VAL_COMISSAO"] = row_original["Comissao por Emissão"]
                 nova_linha["VAL_BASE_COMISSAO"] = row_original["Comissao por Emissão"]
                 nova_linha["PCL_COMISSAO"] = 1
