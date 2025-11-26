@@ -96,6 +96,7 @@ function App() {
     "Grandino",
     "Happy",
     "Icred",
+    "NEO",
     "NYC",
     "Presenca",
     "V8",
