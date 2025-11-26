@@ -8,6 +8,7 @@ from .icred import icred
 from .nyc import nyc
 from .presenca import presenca
 from .v8 import v8
+from .neo import neo
 # from .bv import bv
 # from .C6Vista import c6avista
 
@@ -19,6 +20,7 @@ bancos = {
     "grandino": grandino,
     "happy": happy,
     "icred": icred,
+    "neo": neo,
     "nyc": nyc,
     "presenca": presenca,
     "v8": v8,

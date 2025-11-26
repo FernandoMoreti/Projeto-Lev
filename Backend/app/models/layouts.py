@@ -62,7 +62,8 @@ def amigoz(df):
     # Criar o DataFrame com as colunas desejadas
     df_novo = pd.DataFrame(columns=col_opcoes)
 
-    # Mapeamento de colunas
+
+
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
