@@ -99,8 +99,8 @@ function App() {
     "NEO",
     "NYC",
     "Presenca",
+    "QualiBank",
     "V8",
-    
    ]
 
   return (
