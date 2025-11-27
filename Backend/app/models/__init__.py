@@ -8,6 +8,7 @@ from .icred import icred
 from .nyc import nyc
 from .presenca import presenca
 from .v8 import v8
+from .qualibank import qualibank
 from .neo import neo
 # from .bv import bv
 # from .C6Vista import c6avista
@@ -23,6 +24,7 @@ bancos = {
     "neo": neo,
     "nyc": nyc,
     "presenca": presenca,
+    "qualibank": qualibank,
     "v8": v8,
     # "c6vista": c6avista,
 }
