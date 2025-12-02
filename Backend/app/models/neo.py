@@ -47,11 +47,6 @@ def neo(df):
 
     df = pd.read_excel(df)
 
-    tamanho = len(df["PROPOSTA"])
-    
-    df = df.drop(index=[tamanho -1, tamanho -2])
-
-
     infos ={
        "PROPOSTA":"NUM_PROPOSTA",
        "VALOR BRUTO":"VAL_BASE_COMISSAO",
@@ -71,6 +66,12 @@ def neo(df):
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
+
+    tamanho = len(df_novo)
+
+    df_novo = df_novo.drop(index=[tamanho -1, tamanho -2, tamanho -3, tamanho -4])
+
+    df_novo["PCL_COMISSAO"] = round(df_novo["PCL_COMISSAO"] * 100, 2)
 
     df_novo["NUM_BANCO"] = 3333333
     df_novo["NOM_BANCO"] = "NEO CREDITO"
