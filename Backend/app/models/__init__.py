@@ -1,3 +1,4 @@
+from .aki import aki
 from .amigoz import amigoz
 from .ayude import ayude
 from .brb360 import brb360
@@ -16,6 +17,7 @@ from .v8 import v8
 # from .C6Vista import c6avista
 
 bancos = {
+    "aki": aki,
     "amigoz": amigoz,
     "ayude": ayude,
     "bv": bv,
