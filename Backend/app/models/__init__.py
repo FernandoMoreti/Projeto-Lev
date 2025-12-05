@@ -2,14 +2,15 @@ from .amigoz import amigoz
 from .ayude import ayude
 from .brb360 import brb360
 from .bv import bv
+from .euro import euro
 from .grandino import grandino
 from .happy import happy
 from .icred import icred
+from .neo import neo
 from .nyc import nyc
 from .presenca import presenca
-from .v8 import v8
 from .qualibank import qualibank
-from .neo import neo
+from .v8 import v8
 # from .bv import bv
 # from .C6Vista import c6avista
 
@@ -18,6 +19,7 @@ bancos = {
     "ayude": ayude,
     "bv": bv,
     "brb360": brb360,
+    "euro": euro,
     "grandino": grandino,
     "happy": happy,
     "icred": icred,

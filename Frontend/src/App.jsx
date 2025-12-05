@@ -93,6 +93,7 @@ function App() {
     "Ayude",
     "BRB360",
     "Bv",
+    "Euro",
     "Grandino",
     "Happy",
     "Icred",
