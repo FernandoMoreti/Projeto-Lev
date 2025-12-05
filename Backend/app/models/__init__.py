@@ -2,6 +2,7 @@ from .amigoz import amigoz
 from .ayude import ayude
 from .brb360 import brb360
 from .bv import bv
+from .digio import digio
 from .euro import euro
 from .grandino import grandino
 from .happy import happy
@@ -20,6 +21,7 @@ bancos = {
     "bv": bv,
     "brb360": brb360,
     "euro": euro,
+    "digio": digio,
     "grandino": grandino,
     "happy": happy,
     "icred": icred,
