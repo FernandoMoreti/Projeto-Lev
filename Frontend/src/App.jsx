@@ -103,6 +103,7 @@ function App() {
     "NYC",
     "Presenca",
     "QualiBank",
+    "SantanderFVEVI",
     "V8",
    ]
 
