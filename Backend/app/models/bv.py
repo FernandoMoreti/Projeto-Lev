@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 
 col_opcoes = [
    "NUM_BANCO",
@@ -43,15 +43,14 @@ col_opcoes = [
 
 def bv(df):
 
+    data = datetime.now().strftime("%d/%m/%Y")
+
     df = pd.read_excel(df)
 
     infos ={
        "NUM_PROPOSTA":"NUM_PROPOSTA",
        "NUM_CONTRATO":"NUM_CONTRATO",
-       "DAT_PAGAMENTO":"DAT_CREDITO",
-       "VAL_BRUTO": "VAL_BASE_COMISSAO",
-       "VAL_BRUTO": "VAL_BRUTO",
-       "VAL_LIQUIDO":"VAL_LIQUIDO",
+       "VAL_LIQUIDO": "VAL_BASE_COMISSAO",
        "VAL_COMISSAO":"VAL_COMISSAO"
     }
 
@@ -70,7 +69,10 @@ def bv(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
-    df_novo["NUM_BANCO"] = '44'
+    df_novo["DAT_CREDITO"] = data
+    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["NUM_BANCO"] = 44
     df_novo["NOM_BANCO"] = 'BV'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     return df_novo
