@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 col_opcoes = [
    "NUM_BANCO",
@@ -43,12 +44,12 @@ def digio(df):
     
     df = pd.read_csv(df, sep=";")
 
+    data = datetime.now().strftime("%d/%m/%Y")
+
     infos = {
         "Prop.": "NUM_PROPOSTA",
         "Valor Liberado Oper": "VAL_BASE_COMISSAO",
-        "Vl Bruto Oper": "VAL_BRUTO",
         "Valor Comiss": "VAL_COMISSAO",
-        "Data Base": "DAT_CREDITO",
         "Parâm": "PCL_COMISSAO",
     }
 
@@ -65,7 +66,12 @@ def digio(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BRUTO"]
+    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
+    df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
+    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["DAT_CREDITO"] = data
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
     df_novo["NUM_BANCO"] = 335
     df_novo["NOM_BANCO"] = "BANCO DIGIO"
