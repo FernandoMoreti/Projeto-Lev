@@ -13,6 +13,9 @@ def executar():
     nome_banco = request.form.get("banco")
     arquivo = request.files.get("arquivo")
     nome_banco = nome_banco.lower()
+
+    print(f"Banco selecionado: {nome_banco}")
+    print(f"Arquivo recebido: {arquivo.filename if arquivo else 'Nenhum arquivo'}")
     
     if nome_banco not in bancos:
         return jsonify({"erro": "Função não encontrada"}), 400

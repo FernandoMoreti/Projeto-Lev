@@ -1,7 +1,4 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
-
 
 #LAYOUT WORKBANK
 col_opcoes = [
@@ -49,7 +46,7 @@ def icred(df):
 
     infos ={
        "Number":"NUM_PROPOSTA",
-       "commission_report_reference_date":"DAT_CREDITO",
+       "Data":"DAT_CREDITO",
        "commission_base":"VAL_BASE_COMISSAO",
        "commission_factor": "PCL_COMISSAO",
        "commission_value":"VAL_COMISSAO",
@@ -73,8 +70,6 @@ def icred(df):
     df_novo["NOM_BANCO"] = 'ICRED'
     df_novo["TIPO_COMISSAO_BANCO"] = df_novo["TIPO_COMISSAO_BANCO"].replace('Flat', 'DIRETA')
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
-    if"PCL_COMISSAO"in df_novo.columns:
-        df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
+    df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
 
     return df_novo
