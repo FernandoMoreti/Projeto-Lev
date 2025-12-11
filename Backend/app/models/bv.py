@@ -72,6 +72,7 @@ def bv(df):
     df_novo["DAT_CREDITO"] = data
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100)
     df_novo["NUM_BANCO"] = 44
     df_novo["NOM_BANCO"] = 'BV'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
