@@ -105,6 +105,7 @@ function App() {
     "QualiBank",
     "SantanderFVEVI",
     "V8",
+    "VCtex"
    ]
 
   return (

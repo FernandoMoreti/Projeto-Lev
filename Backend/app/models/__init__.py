@@ -14,8 +14,7 @@ from .presenca import presenca
 from .qualibank import qualibank
 from .santanderFve6 import santanderfvevi
 from .v8 import v8
-# from .bv import bv
-# from .C6Vista import c6avista
+from .vctex import vctex
 
 bancos = {
     "aki": aki,
@@ -34,5 +33,5 @@ bancos = {
     "qualibank": qualibank,
     "santanderfvevi": santanderfvevi,
     "v8": v8,
-    # "c6vista": c6avista,
+    "vctex": vctex
 }
