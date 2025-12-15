@@ -69,5 +69,6 @@ def phtech(df):
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
     return df_novo

@@ -10,6 +10,7 @@ from .happy import happy
 from .icred import icred
 from .neo import neo
 from .nyc import nyc
+from .phtech import phtech
 from .presenca import presenca
 from .qualibank import qualibank
 from .santanderFve6 import santanderfvevi
@@ -29,6 +30,7 @@ bancos = {
     "icred": icred,
     "neo": neo,
     "nyc": nyc,
+    "phtech": phtech, 
     "presenca": presenca,
     "qualibank": qualibank,
     "santanderfvevi": santanderfvevi,
