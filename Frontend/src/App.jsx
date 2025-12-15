@@ -101,6 +101,7 @@ function App() {
     "Icred",
     "NEO",
     "NYC",
+    "PHtech",
     "Presenca",
     "QualiBank",
     "SantanderFVEVI",
