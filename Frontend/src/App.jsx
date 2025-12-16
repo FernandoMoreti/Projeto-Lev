@@ -45,7 +45,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("https://flask-backend-ipg8.onrender.com/executar", {
+      const response = await fetch("http://127.0.0.1:5000/executar", {
         method: "POST",
         body: formData,
       })
@@ -106,14 +106,15 @@ function App() {
     "QualiBank",
     "SantanderFVEVI",
     "V8",
-    "VCtex"
+    "VCtex",
+    "WebCash"
    ]
 
   return (
     <>
       <div ref={root}>
         <section className='flex flex-col h-screen'>
-          <p className={`absolute p-5 w-full transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : mensagem ? "Faltando credenciais" : "Não foi possivel editar"}</p>
+          <p className={`absolute p-5 w-full text-white transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : mensagem ? "Faltando credenciais" : "Não foi possivel editar"}</p>
           <div className='flex-1 flex justify-center items-center bg-black/10'>
             <div className='flex flex-col p-10 h-120 w-120 shadow-2xl bg-white shadow-gray-700 rounded-l-4xl'>
               <h1 className='flex justify-center text-[22px] font-bold'>Bem vindo ao Conversor WORKBANK</h1>

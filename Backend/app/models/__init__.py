@@ -16,6 +16,7 @@ from .qualibank import qualibank
 from .santanderFve6 import santanderfvevi
 from .v8 import v8
 from .vctex import vctex
+from .webcash import webcash
 
 bancos = {
     "aki": aki,
@@ -35,5 +36,6 @@ bancos = {
     "qualibank": qualibank,
     "santanderfvevi": santanderfvevi,
     "v8": v8,
-    "vctex": vctex
+    "vctex": vctex,
+    "webcash": webcash
 }
