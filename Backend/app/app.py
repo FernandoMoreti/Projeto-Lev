@@ -25,6 +25,9 @@ def executar():
     
     resultado = bancos[nome_banco](arquivo)
 
+    print("Log do resultado:" )
+    print(resultado)
+
     output = BytesIO()
     resultado.to_excel(output, index=False)
     output.seek(0)

@@ -9,6 +9,7 @@ from .euro import euro
 from .grandino import grandino
 from .happy import happy
 from .icred import icred
+from .kardbank import kardbank
 from .neo import neo
 from .nyc import nyc
 from .phtech import phtech
@@ -31,6 +32,7 @@ bancos = {
     "grandino": grandino,
     "happy": happy,
     "icred": icred,
+    "kardbank": kardbank,
     "neo": neo,
     "nyc": nyc,
     "phtech": phtech, 
