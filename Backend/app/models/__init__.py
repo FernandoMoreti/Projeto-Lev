@@ -2,6 +2,7 @@ from .aki import aki
 from .amigoz import amigoz
 from .ayude import ayude
 from .brb360 import brb360
+from .brbInconta import brbInconta
 from .btw import btw
 from .bv import bv
 from .digio import digio
@@ -25,6 +26,7 @@ bancos = {
     "amigoz": amigoz,
     "ayude": ayude,
     "brb360": brb360,
+    "brbinconta": brbInconta,
     "btw": btw,
     "bv": bv,
     "euro": euro,

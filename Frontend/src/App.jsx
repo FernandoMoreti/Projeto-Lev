@@ -93,6 +93,7 @@ function App() {
     "Amigoz",
     "Ayude",
     "BRB360",
+    "BRBInconta",
     "BTW",
     "Bv",
     "Digio",
