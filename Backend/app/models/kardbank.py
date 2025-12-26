@@ -91,6 +91,9 @@ def kardbank(df):
     df_novo["VAL_BASE_COMISSAO"] = valores_tratados
 
     df_novo["NOM_BANCO"] = "KARDBANK"
+    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+    df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] * (df_novo["PCL_COMISSAO"] / 100)
     df_novo["NUM_BANCO"] = 6910
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
