@@ -45,10 +45,6 @@ def kardbank(df):
 
     df.to_excel("teste_kardbank.xlsx")
 
-    df = pd.read_excel("teste_kardbank.xlsx")
-
-    print(df.columns)
-
     infos ={
         "Número Ade":"NUM_PROPOSTA",
         "Data Pgto Vendedor":"DAT_CREDITO",
@@ -69,8 +65,6 @@ def kardbank(df):
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
-
-    print(df_novo["VAL_BASE_COMISSAO"])
 
     valores_tratados = []
 
