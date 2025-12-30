@@ -43,8 +43,6 @@ def kardbank(df):
 
     df = pd.read_html(df, header=0)[0]
 
-    df.to_excel("teste_kardbank.xlsx")
-
     infos ={
         "Número Ade":"NUM_PROPOSTA",
         "Data Pgto Vendedor":"DAT_CREDITO",
