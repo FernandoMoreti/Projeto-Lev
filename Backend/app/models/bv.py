@@ -69,6 +69,44 @@ def bv(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
+    valores_tratados = []
+
+    for valor in df_novo["VAL_BASE_COMISSAO"]:    
+        
+        valor_str = valor
+
+        if type(valor) == str:
+
+            valor_str = str(valor)
+            valor_teste = valor_str.replace("R$", "")
+            valor_teste = valor_teste.replace(".", "")
+            valor_teste = valor_teste.replace(",", ".")
+            valor_teste = valor_teste.strip()
+            valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
+
+    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
+    
+    valores_tratados = []
+
+
+    for valor in df_novo["VAL_COMISSAO"]:    
+        
+        valor_str = valor
+
+        if type(valor) == str:
+
+            valor_str = str(valor)
+            valor_teste = valor_str.replace("R$", "")
+            valor_teste = valor_teste.replace(".", "")
+            valor_teste = valor_teste.replace(",", ".")
+            valor_teste = valor_teste.strip()
+            valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
+
+    df_novo["VAL_COMISSAO"] = valores_tratados
     df_novo["DAT_CREDITO"] = data
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
