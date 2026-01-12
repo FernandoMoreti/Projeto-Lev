@@ -50,7 +50,8 @@ def evol(df):
         "Comissão":"VAL_COMISSAO",  
         "Valor_Bruto":"VAL_BRUTO",  
         "Data Finalizacao":"DAT_CREDITO",
-        "Percentual_Comissao":"PCL_COMISSAO"   
+        "Percentual_Comissao":"PCL_COMISSAO",
+        "Descricao_Tipo_Operacao" :"DSC_TIPO_PROPOSTA_EMPRESTIMO"   
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -67,10 +68,16 @@ def evol(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
+    for index, row in df_novo.iterrows():
+        if row["DSC_TIPO_PROPOSTA_EMPRESTIMO"] == "PORT + REFIN - NORMAL":
+            df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_LIQUIDO"]
+        else:
+            df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_BRUTO"]
+
     df_novo["NOM_BANCO"] = "EVOL"
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
     df_novo["NUM_BANCO"] = 7777
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_COMISSAO"] / (df_novo["PCL_COMISSAO"] / 100)
+    df_novo["DSC_TIPO_PROPOSTA_EMPRESTIMO"] = None
     
     return df_novo
