@@ -5,6 +5,7 @@ from .brb360 import brb360
 from .brbInconta import brbInconta
 from .btw import btw
 from .bv import bv
+from .caixa import caixa
 from .digio import digio
 from .euro import euro
 from .grandino import grandino
@@ -29,6 +30,7 @@ bancos = {
     "brbinconta": brbInconta,
     "btw": btw,
     "bv": bv,
+    "caixa": caixa,
     "euro": euro,
     "digio": digio,
     "grandino": grandino,

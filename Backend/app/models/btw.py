@@ -64,7 +64,7 @@ def btw(df):
     mes = meses((df.filename.split('_')[2].split('-')[0][4:6]))
     ano = (df.filename.split('_')[2].split('-')[0][0:4])
 
-    if df.filename.split('_')[1] == "BTW" :
+    if df.filename.split('_')[1] == "BTW":
         name = "LECCA"
     else:
         name = "BTW"
