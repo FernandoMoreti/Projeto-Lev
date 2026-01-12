@@ -8,6 +8,7 @@ from .bv import bv
 from .caixa import caixa
 from .digio import digio
 from .euro import euro
+from .evol import evol
 from .grandino import grandino
 from .happy import happy
 from .icred import icred
@@ -32,6 +33,7 @@ bancos = {
     "bv": bv,
     "caixa": caixa,
     "euro": euro,
+    "evol": evol,
     "digio": digio,
     "grandino": grandino,
     "happy": happy,
