@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
-from .models import bancos
+from models import bancos
 from io import BytesIO
 from datetime import datetime
 
@@ -27,6 +27,9 @@ def executar():
 
     print("Log do resultado:" )
     print(resultado)
+
+    if type(resultado) is str:
+        return jsonify({"erro": resultado}), 400
 
     output = BytesIO()
     resultado.to_excel(output, index=False)
