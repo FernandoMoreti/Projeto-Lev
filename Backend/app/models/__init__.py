@@ -13,6 +13,7 @@ from .grandino import grandino
 from .happy import happy
 from .hope import hope
 from .icred import icred
+from .jbcred import jbcred
 from .kardbank import kardbank
 from .neo import neo
 from .nyc import nyc
@@ -40,6 +41,7 @@ bancos = {
     "happy": happy,
     "hope": hope,
     "icred": icred,
+    "jbcred": jbcred,
     "kardbank": kardbank,
     "neo": neo,
     "nyc": nyc,

@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 col_opcoes = [
    "NUM_BANCO",
@@ -39,16 +40,16 @@ col_opcoes = [
    "PCL_TAXA_EMPRESTIMO"
 ]
 
-def hope(df):
+def jbcred(df):
+
+    now = datetime.now()
+    current_date = now.strftime("%d/%m/%Y")
 
     df = pd.read_html(df, header=0)[0]
 
     infos ={
-        "Número Ade":"NUM_PROPOSTA",
-        "Data do Fechamento":"DAT_CREDITO",
-        "Valor Bruto":"VAL_BASE_COMISSAO",
-        "% Comissão": "PCL_COMISSAO",
-        "Valor":"VAL_COMISSAO",
+        "NRCONTRATO":"NUM_PROPOSTA",
+        "VLR_OPER":"VAL_BASE_COMISSAO",
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -64,33 +65,21 @@ def hope(df):
         if col_origem in df.columns:
             df_novo[col_destino] = df[col_origem]
 
-    tamanho = len(df_novo["NUM_PROPOSTA"])
-    df_novo = df_novo.drop(df_novo.index[tamanho-1])
-    df_novo = df_novo.drop(df_novo.index[tamanho-2])
+    num_propostas = []
 
-    
-    valores_tratados = []
-
-    for valor in df_novo["VAL_BASE_COMISSAO"]:    
+    for num in df_novo["NUM_PROPOSTA"]:
+        num_str = str(num)
+        num_str = num_str.replace("-", "")
+        num_str = float(num_str)
+        num_propostas.append(num_str)
         
-        valor_str = valor
-
-        if type(valor) == str :
-
-            valor_str = str(valor)
-            valor_teste = valor_str.replace("R$ ", "")
-            valor_teste = valor_teste.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-    
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    df_novo["NOM_BANCO"] = "HOPE"
+    df_novo["NUM_PROPOSTA"] = num_propostas
+    df_novo["DAT_CREDITO"] = current_date
+    df_novo["NOM_BANCO"] = "JBCRED"
+    df_novo["PCL_COMISSAO"] = 10
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] / 100 * df_novo["PCL_COMISSAO"]
-    df_novo["NUM_BANCO"] = 1597
+    df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] / 10
+    df_novo["NUM_BANCO"] = 777
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
     return df_novo
