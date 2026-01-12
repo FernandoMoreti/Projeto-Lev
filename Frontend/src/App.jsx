@@ -102,6 +102,7 @@ function App() {
     "Evol",
     "Grandino",
     "Happy",
+    "Hope",
     "Icred",
     "Kardbank",
     "NEO",

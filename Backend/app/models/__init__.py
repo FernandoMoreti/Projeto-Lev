@@ -11,6 +11,7 @@ from .euro import euro
 from .evol import evol
 from .grandino import grandino
 from .happy import happy
+from .hope import hope
 from .icred import icred
 from .kardbank import kardbank
 from .neo import neo
@@ -37,6 +38,7 @@ bancos = {
     "digio": digio,
     "grandino": grandino,
     "happy": happy,
+    "hope": hope,
     "icred": icred,
     "kardbank": kardbank,
     "neo": neo,
