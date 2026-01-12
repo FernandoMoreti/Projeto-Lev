@@ -96,6 +96,7 @@ function App() {
     "BRBInconta",
     "BTW",
     "Bv",
+    "Caixa",
     "Digio",
     "Euro",
     "Grandino",
