@@ -44,11 +44,11 @@ def euro(df):
     df = pd.read_excel(df)
 
     infos = {
-        "PROPOSTA":"NUM_PROPOSTA",
-        "VALOR LIBERADO R$":"VAL_BASE_COMISSAO",
-        "% PAR":"PCL_COMISSAO",
-        "COMISSÃO PARCEIRO":"VAL_COMISSAO",
-        "DATA DE PAGAMENTO":"DAT_CREDITO",
+        "Proposta":"NUM_PROPOSTA",
+        "Vlr. Liberado":"VAL_BASE_COMISSAO",
+        "% Comissão":"PCL_COMISSAO",
+        "Vlr. Comissão":"VAL_COMISSAO",
+        "Dt. de Pagamento":"DAT_CREDITO",
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -70,7 +70,7 @@ def euro(df):
 
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+    df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace("%", "").astype(float)
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
     df_novo["NUM_BANCO"] = "359108"
     df_novo["NOM_BANCO"] = "EURO17 EMPRESARIAL"
