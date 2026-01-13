@@ -39,45 +39,68 @@ col_opcoes = [
    "PCL_TAXA_EMPRESTIMO"
 ]
 
-def evol(df):
-    
-    df = pd.read_excel(df)
+def santanderfit(df):
+
+    df = pd.read_excel(df, header=1)
 
     infos ={
-        "Id_Operation":"NUM_PROPOSTA",
-        "Taxa":"PCL_TAXA_EMPRESTIMO",
-        "Valor_Liberado":"VAL_LIQUIDO",
-        "Comissão":"VAL_COMISSAO",  
-        "Valor_Bruto":"VAL_BRUTO",  
-        "Data de Pagamento Comissão":"DAT_CREDITO",
-        "Percentual_Comissao":"PCL_COMISSAO",
-        "Descricao_Tipo_Operacao" :"DSC_TIPO_PROPOSTA_EMPRESTIMO"   
+        "Nº da Instalação":"NUM_PROPOSTA",
+        "Valor a Receber":"VAL_COMISSAO",  
+        "Percentual (%)":"PCL_COMISSAO",
+        "Valor Base (R$)":"VAL_BASE_COMISSAO",   
     }
 
     if not isinstance(df, pd.DataFrame):
         return"Erro: A entrada não é um DataFrame válido."
-    
-    
+
     colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
     if not colunas_origem_presentes:
-        return"Erro: Colunas necessárias não encontradas no DataFrame."
+        return "ErroColunas"
     
     df_novo = pd.DataFrame(columns=col_opcoes)
 
     for col_origem, col_destino in infos.items():
-        if col_origem in df.columns:
-            df_novo[col_destino] = df[col_origem]
+        df_novo[col_destino] = df[col_origem]
 
-    for index, row in df_novo.iterrows():
-        if row["DSC_TIPO_PROPOSTA_EMPRESTIMO"] == "PORT + REFIN - NORMAL":
-            df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_BRUTO"]
-        else:
-            df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_LIQUIDO"]
+    valores_tratados = []
 
-    df_novo["NOM_BANCO"] = "EVOL"
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["NUM_BANCO"] = 7777
-    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-    df_novo["DSC_TIPO_PROPOSTA_EMPRESTIMO"] = None
+    for valor in df_novo["VAL_BASE_COMISSAO"]:    
+        
+        valor_str = str(valor)
+
+        valor_teste = valor_str.replace(".", "")
+        valor_teste = valor_teste[:3] + "." + valor_teste[3:]
+        print(valor_teste)
+        valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
     
+    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
+
+    valores_tratados = []
+
+    for valor in df_novo["VAL_COMISSAO"]:    
+        
+        valor_str = valor
+
+        if type(valor) == str :
+
+            valor_str = str(valor)
+
+            print(valor_str)
+
+            valor_teste = valor_str.replace("R$ ", "")
+            valor_teste = valor_teste.replace(".", "")
+            valor_teste = valor_teste.replace(",", ".")
+            valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
+    
+    df_novo["VAL_COMISSAO"] = valores_tratados
+
+    df_novo["NOM_BANCO"] = "FIT ECONOMIA DE ENERGIA S.A."
+    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+    df_novo["NUM_BANCO"] = 9173
+    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+
     return df_novo
