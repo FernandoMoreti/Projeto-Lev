@@ -111,6 +111,7 @@ function App() {
     "Presenca",
     "QualiBank",
     "SantanderFVEVI",
+    "SantanderOLEWL",
     "V8",
     "VCtex",
     "WebCash"

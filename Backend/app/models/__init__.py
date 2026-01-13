@@ -21,6 +21,7 @@ from .phtech import phtech
 from .presenca import presenca
 from .qualibank import qualibank
 from .santanderFve6 import santanderfvevi
+from .santanderolewl import santanderolewl
 from .v8 import v8
 from .vctex import vctex
 from .webcash import webcash
@@ -49,6 +50,7 @@ bancos = {
     "presenca": presenca,
     "qualibank": qualibank,
     "santanderfvevi": santanderfvevi,
+    "santanderolewl": santanderolewl,
     "v8": v8,
     "vctex": vctex,
     "webcash": webcash

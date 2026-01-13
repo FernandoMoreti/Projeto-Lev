@@ -42,7 +42,7 @@ col_opcoes = [
 def aki(df):
 
     data = df.filename.split("_")[0]
-    resultado = f"{data[:2]}/{data[3:5]}/{data[6:]}"
+    diaMesAno = f"{data[:2]}/{data[3:5]}/{data[6:]}"
 
     df = pd.read_excel(df)
 
@@ -70,7 +70,7 @@ def aki(df):
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
     df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
-    df_novo["DAT_CREDITO"] = resultado
+    df_novo["DAT_CREDITO"] = diaMesAno
     df_novo["NUM_BANCO"] = 1684
     df_novo["NOM_BANCO"] = "AKI CAPITAL"
     
