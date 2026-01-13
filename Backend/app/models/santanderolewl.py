@@ -1,5 +1,4 @@
 import pandas as pd
-from datetime import datetime
 
 col_opcoes = [
    "NUM_BANCO",
@@ -42,9 +41,6 @@ col_opcoes = [
 
 def santanderolewl(df):
 
-    date = datetime.now()
-    dateFormat = date.strftime("%d/%m/%Y")
-
     df = pd.read_csv(df, sep=";")
 
     infos ={
@@ -52,6 +48,7 @@ def santanderolewl(df):
        "Valor Líquido": "VAL_BASE_COMISSAO",
        "Valor Total Comissão": "VAL_COMISSAO",
        "Percentual Comissão": "PCL_COMISSAO",
+       "Data do Cálculo": "DAT_CREDITO",
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -124,6 +121,5 @@ def santanderolewl(df):
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
     df_novo["NUM_BANCO"] = 218
     df_novo["NOM_BANCO"] = "BANCO OLE"
-    df_novo["DAT_CREDITO"] = dateFormat
 
     return df_novo

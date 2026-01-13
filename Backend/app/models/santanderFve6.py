@@ -42,8 +42,6 @@ col_opcoes = [
 
 def santanderfvevi(df):
 
-    data = date.today() - timedelta(days=1)
-
     df = pd.read_csv(df, sep=";")
 
     infos = {
@@ -51,6 +49,7 @@ def santanderfvevi(df):
         "Valor Bruto": "VAL_BASE_COMISSAO",
         "Percentual Comissão": "PCL_COMISSAO",
         "Valor Total Comissão": "VAL_COMISSAO",
+        "Data do Cálculo": "DAT_CREDITO",
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -74,7 +73,6 @@ def santanderfvevi(df):
     df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
     df_novo["NUM_BANCO"] = 351
     df_novo["NOM_BANCO"] = "SANTANDER"
-    df_novo["DAT_CREDITO"] = data
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
     
     return df_novo
