@@ -1,8 +1,7 @@
 import pandas as pd
 from datetime import datetime
-import cols_opcoes
 
-def bv(df):
+def bv(df, cols_opcoes):
 
     data = datetime.now().strftime("%d/%m/%Y")
 
@@ -23,7 +22,7 @@ def bv(df):
         return"ErroColunas"
 
     # Criar o DataFrame com as colunas desejadas
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     # Mapeamento de colunas
     for col_origem, col_destino in infos.items():

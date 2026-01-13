@@ -1,7 +1,6 @@
 import pandas as pd
-import cols_opcoes
 
-def kardbank(df):
+def kardbank(df, cols_opcoes):
 
     df = pd.read_html(df, header=0)[0]
 
@@ -20,7 +19,7 @@ def kardbank(df):
     if not colunas_origem_presentes:
         return"Erro: Colunas necessárias não encontradas no DataFrame."
     
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:

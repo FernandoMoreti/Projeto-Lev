@@ -1,7 +1,6 @@
 import pandas as pd
-import cols_opcoes
 
-def v8(df):
+def v8(df, cols_opcoes):
         
     df = pd.read_excel(df)
 
@@ -28,7 +27,7 @@ def v8(df):
     if not colunas_origem_presentes:
         return"ErroColunas"
 
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:

@@ -1,9 +1,8 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
-import cols_opcoes
 
-def crefisa_adiantamento(df):
+def crefisa_adiantamento(df, cols_opcoes):
         
     df = pd.read_excel(df, engine="xlrd")
 
@@ -24,7 +23,7 @@ def crefisa_adiantamento(df):
         return"ErroColunas"
 
     # Criar o DataFrame com as colunas desejadas
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     # Mapeamento de colunas
     for col_origem, col_destino in infos.items():

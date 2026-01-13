@@ -1,8 +1,7 @@
 import pandas as pd
 from datetime import datetime
-import cols_opcoes
 
-def jbcred(df):
+def jbcred(df, cols_opcoes):
 
     now = datetime.now()
     current_date = now.strftime("%d/%m/%Y")
@@ -21,7 +20,7 @@ def jbcred(df):
     if not colunas_origem_presentes:
         return"ErroColunas"
 
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:

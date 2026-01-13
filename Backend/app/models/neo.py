@@ -1,8 +1,7 @@
 import pandas as pd
 from datetime import datetime
-import cols_opcoes
 
-def neo(df):
+def neo(df, cols_opcoes):
 
     data = df.filename.split("_")[1].split(".")[0]
     resultado = f"{data[:2]}/{data[2:4]}/{data[4:]}"
@@ -23,7 +22,7 @@ def neo(df):
     if not colunas_origem_presentes:
         return"ErroColunas"
     
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:

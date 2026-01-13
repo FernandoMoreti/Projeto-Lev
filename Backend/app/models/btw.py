@@ -1,6 +1,5 @@
 import pandas as pd
 import os
-import cols_opcoes
 
 def meses(mes):
 
@@ -21,7 +20,7 @@ def meses(mes):
 
     return meses.get(mes, "Mês inválido")
 
-def btw(df):
+def btw(df, cols_opcoes):
     numMes = (df.filename.split('_')[2].split('-')[0][4:6])
     mes = meses((df.filename.split('_')[2].split('-')[0][4:6]))
     ano = (df.filename.split('_')[2].split('-')[0][0:4])
@@ -96,7 +95,7 @@ def btw(df):
     if not colunas_origem_presentes:
         return "ErroColunas"
     
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         df_novo[col_destino] = df[col_origem]

@@ -1,8 +1,6 @@
 import pandas as pd
-import Backend.app.models.cols_opcoes as cols_opcoes
 
-
-def aki(df):
+def aki(df, cols_opcoes):
 
     data = df.filename.split("_")[0]
     resultado = f"{data[:2]}/{data[3:5]}/{data[6:]}"
@@ -23,7 +21,7 @@ def aki(df):
     if not colunas_origem_presentes:
         return"ErroColunas"
     
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:

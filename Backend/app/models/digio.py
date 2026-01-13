@@ -1,8 +1,7 @@
 import pandas as pd
 from datetime import datetime
-import cols_opcoes
 
-def digio(df):
+def digio(df, cols_opcoes):
     
     df = pd.read_csv(df, sep=";")
 
@@ -22,7 +21,7 @@ def digio(df):
     if not colunas_origem_presentes:
         return"ErroColunas"
 
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:

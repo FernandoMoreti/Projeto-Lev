@@ -1,8 +1,7 @@
 import pandas as pd
 from datetime import datetime, date, timedelta
-import cols_opcoes
 
-def santanderfvevi(df):
+def santanderfvevi(df, cols_opcoes):
 
     data = date.today() - timedelta(days=1)
 
@@ -23,7 +22,7 @@ def santanderfvevi(df):
     if not colunas_origem_presentes:
         return "Erro: O DataFrame não contém todas as colunas necessárias."
     
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
     
     for col_origem, col_destino in infos.items():
         df_novo[col_destino] = df[col_origem]

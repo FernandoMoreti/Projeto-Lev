@@ -1,7 +1,6 @@
 import pandas as pd
-import cols_opcoes
 
-def grandino(df):
+def grandino(df, cols_opcoes):
 
     df = pd.read_csv(df, sep=";")
 
@@ -21,7 +20,7 @@ def grandino(df):
         return"ErroColunas"
 
     # Criar o DataFrame com as colunas desejadas
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     # Mapeamento de colunas
     for col_origem, col_destino in infos.items():

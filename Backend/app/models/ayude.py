@@ -1,7 +1,6 @@
 import pandas as pd
-import Backend.app.models.cols_opcoes as cols_opcoes
 
-def ayude(df):
+def ayude(df, cols_opcoes):
 
     df_soli = pd.read_excel(df, sheet_name="DADOS DA SOLICITAÇÃO", )
     df = pd.read_excel(df, sheet_name="PROPOSTAS PRÓPRIAS", )
@@ -21,7 +20,7 @@ def ayude(df):
         return"ErroColunas"
 
     # Criar o DataFrame com as colunas desejadas
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     # Mapeamento de colunas
     for col_origem, col_destino in infos.items():

@@ -1,8 +1,7 @@
 import pandas as pd
 import camelot
-import Backend.app.models.cols_opcoes as cols_opcoes
 
-def brbInconta(df):
+def brbInconta(df, cols_opcoes):
 
     tables = camelot.read_pdf(df, pages='all',flavor="stream")
 
@@ -44,7 +43,7 @@ def brbInconta(df):
         return"ErroColunas"
 
     # Criar o DataFrame com as colunas desejadas
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     # Mapeamento de colunas
     for col_origem, col_destino in infos.items():

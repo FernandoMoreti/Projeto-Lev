@@ -1,9 +1,8 @@
 import pandas as pd
 from datetime import datetime
-import Backend.app.models.cols_opcoes as cols_opcoes
 
 
-def amigoz(df):
+def amigoz(df, cols_opcoes):
 
     df = pd.read_excel(df)
 
@@ -21,7 +20,7 @@ def amigoz(df):
         return"ErroColunas"
 
     # Criar o DataFrame com as colunas desejadas
-    df_novo = pd.DataFrame(columns=cols_opcoes.COL_OPCOES)
+    df_novo = pd.DataFrame(columns=cols_opcoes)
 
     # Mapeamento de colunas
     for col_origem, col_destino in infos.items():
