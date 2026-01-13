@@ -20,6 +20,7 @@ from .nyc import nyc
 from .phtech import phtech
 from .presenca import presenca
 from .qualibank import qualibank
+from .queromaiscancelados import queromaiscancelados
 from .queromaiscomissao import queromaiscomisssao
 from .santanderfit import santanderfit
 from .santanderFve6 import santanderfvevi
@@ -51,6 +52,7 @@ bancos = {
     "phtech": phtech, 
     "presenca": presenca,
     "qualibank": qualibank,
+    "queromaiscancelados": queromaiscancelados,
     "queromaiscomissao": queromaiscomisssao,
     "santanderfit": santanderfit,
     "santanderfvevi": santanderfvevi,

@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
-from .models import bancos
+from models import bancos
 from io import BytesIO
 from datetime import datetime
 
