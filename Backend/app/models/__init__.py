@@ -22,6 +22,7 @@ from .presenca import presenca
 from .qualibank import qualibank
 from .queromaiscancelados import queromaiscancelados
 from .queromaiscomissao import queromaiscomisssao
+from .queromaisseguro import queromaisseguro
 from .santanderfit import santanderfit
 from .santanderFve6 import santanderfvevi
 from .santanderolewl import santanderolewl
@@ -54,6 +55,7 @@ bancos = {
     "qualibank": qualibank,
     "queromaiscancelados": queromaiscancelados,
     "queromaiscomissao": queromaiscomisssao,
+    "queromaisseguro": queromaisseguro,
     "santanderfit": santanderfit,
     "santanderfvevi": santanderfvevi,
     "santanderolewl": santanderolewl,
