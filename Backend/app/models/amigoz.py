@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime
-import cols_opcoes
+import Backend.app.models.cols_opcoes as cols_opcoes
+
 
 def amigoz(df):
 

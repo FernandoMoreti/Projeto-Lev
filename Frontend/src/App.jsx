@@ -26,7 +26,6 @@ function App() {
 
     });
     
-    // Properly cleanup all anime.js instances declared inside the scope
     return () => scope.current.revert()
     
   }, []);

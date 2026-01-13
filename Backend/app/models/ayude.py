@@ -1,5 +1,5 @@
 import pandas as pd
-import cols_opcoes
+import Backend.app.models.cols_opcoes as cols_opcoes
 
 def ayude(df):
 
