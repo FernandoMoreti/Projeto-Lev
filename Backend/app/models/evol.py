@@ -70,9 +70,9 @@ def evol(df):
 
     for index, row in df_novo.iterrows():
         if row["DSC_TIPO_PROPOSTA_EMPRESTIMO"] == "PORT + REFIN - NORMAL":
-            df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_LIQUIDO"]
-        else:
             df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_BRUTO"]
+        else:
+            df_novo.at[index, "VAL_BASE_COMISSAO"] = row["VAL_LIQUIDO"]
 
     df_novo["NOM_BANCO"] = "EVOL"
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
