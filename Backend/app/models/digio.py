@@ -44,13 +44,12 @@ def digio(df):
     
     df = pd.read_csv(df, sep=";")
 
-    data = datetime.now().strftime("%d/%m/%Y")
-
     infos = {
         "Prop.": "NUM_PROPOSTA",
         "Base de Cálculo": "VAL_BASE_COMISSAO",
         "Valor Comiss": "VAL_COMISSAO",
         "Parâm": "PCL_COMISSAO",
+        "Dt. Pgto Cmss.": "DAT_CREDITO",
     }
 
     if not isinstance(df, pd.DataFrame):
@@ -71,7 +70,6 @@ def digio(df):
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
     df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
     df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["DAT_CREDITO"] = data
     df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
     df_novo["NUM_BANCO"] = 335
     df_novo["NOM_BANCO"] = "BANCO DIGIO"

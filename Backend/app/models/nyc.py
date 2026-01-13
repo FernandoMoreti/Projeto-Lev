@@ -44,15 +44,15 @@ col_opcoes = [
 
 def nyc(df):
 
-    df = pd.read_excel(df)
-    df = df.iloc[:-3]
+    df = pd.read_excel(df, header=1)
+    df = df.iloc[:-2]
 
     infos ={
        "Id":"NUM_PROPOSTA",
-       "Data Base":"DAT_CREDITO",
+       "DataFinalização":"DAT_CREDITO",
        "ValorLiquido":"VAL_BASE_COMISSAO",
-       "Valor Comissão":"VAL_COMISSAO",
-       "% Comissão":"PCL_COMISSAO"
+       "Valor Comissão Líquida":"VAL_COMISSAO",
+       "% Comissão Líquida":"PCL_COMISSAO"
     }
 
     if not isinstance(df, pd.DataFrame):
