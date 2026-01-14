@@ -17,6 +17,7 @@ from .icred import icred
 from .jbcred import jbcred
 from .kardbank import kardbank
 from .neo import neo
+from .novosaque import novosaque
 from .nyc import nyc
 from .phtech import phtech
 from .presenca import presenca
@@ -52,6 +53,7 @@ bancos = {
     "jbcred": jbcred,
     "kardbank": kardbank,
     "neo": neo,
+    "novosaque": novosaque,
     "nyc": nyc,
     "phtech": phtech,
     "presenca": presenca,
