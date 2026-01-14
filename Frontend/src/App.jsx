@@ -108,6 +108,7 @@ function App() {
     "Kardbank",
     "NEO",
     "NovoSaque",
+    "NovoSaqueCartao",
     "NYC",
     "PHtech",
     "Presenca",
