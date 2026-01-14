@@ -99,6 +99,7 @@ function App() {
     "Digio",
     "Euro",
     "Evol",
+    "Facta",
     "Grandino",
     "Happy",
     "Hope",

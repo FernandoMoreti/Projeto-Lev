@@ -10,6 +10,7 @@ def safracomissaozero(df):
         "Data efetivacao Contrato": "DAT_CREDITO",
         "CPF": "COD_CPF_CLIENTE",
         "Nome Cliente": "NOM_CLIENTE",
+        "Nome Tabela Juros": "DSC_PRODUTO"
     }
 
     Error = validDf(df, infos)

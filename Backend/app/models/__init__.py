@@ -9,6 +9,7 @@ from .caixa import caixa
 from .digio import digio
 from .euro import euro
 from .evol import evol
+from .facta import facta
 from .grandino import grandino
 from .happy import happy
 from .hope import hope
@@ -42,6 +43,7 @@ bancos = {
     "caixa": caixa,
     "euro": euro,
     "evol": evol,
+    "facta": facta,
     "digio": digio,
     "grandino": grandino,
     "happy": happy,
