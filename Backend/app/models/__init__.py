@@ -22,6 +22,7 @@ from .neo import neo
 from .novosaque import novosaque
 from .novosaquecartao import novosaquecartao
 from .nyc import nyc
+from .paranabank import paranabank
 from .phtech import phtech
 from .presenca import presenca
 from .qualibank import qualibank
@@ -62,6 +63,7 @@ bancos = {
     "novosaque": novosaque,
     "novosaquecartao": novosaquecartao,
     "nyc": nyc,
+    "paranabank": paranabank,
     "phtech": phtech,
     "presenca": presenca,
     "qualibank": qualibank,
