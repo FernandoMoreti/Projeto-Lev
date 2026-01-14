@@ -16,8 +16,8 @@ function App() {
   const scope = useRef(null);
 
   useEffect(() => {
-  
-    scope.current = createScope({ root }).add( self => {
+
+    scope.current = createScope({ root }).add( () => {
 
       createDraggable('.logo', {
         container: [0, 0, 0, 0],
@@ -25,11 +25,11 @@ function App() {
       });
 
     });
-    
+
     return () => scope.current.revert()
-    
+
   }, []);
-  
+
   async function handleSubmit(e) {
     e.preventDefault()
 
@@ -113,6 +113,7 @@ function App() {
     "QueroMaisCancelados",
     "QueroMaisComissao",
     "QueroMaisSeguro",
+    "SafraComissaoZero",
     "SantanderFit",
     "SantanderFVEVI",
     "SantanderOleWl",

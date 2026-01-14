@@ -23,6 +23,7 @@ from .qualibank import qualibank
 from .queromaiscancelados import queromaiscancelados
 from .queromaiscomissao import queromaiscomisssao
 from .queromaisseguro import queromaisseguro
+from .safracomissaozero import safracomissaozero
 from .santanderfit import santanderfit
 from .santanderFve6 import santanderfvevi
 from .santanderolewl import santanderolewl
@@ -50,12 +51,13 @@ bancos = {
     "kardbank": kardbank,
     "neo": neo,
     "nyc": nyc,
-    "phtech": phtech, 
+    "phtech": phtech,
     "presenca": presenca,
     "qualibank": qualibank,
     "queromaiscancelados": queromaiscancelados,
     "queromaiscomissao": queromaiscomisssao,
     "queromaisseguro": queromaisseguro,
+    "safracomissaozero": safracomissaozero,
     "santanderfit": santanderfit,
     "santanderfvevi": santanderfvevi,
     "santanderolewl": santanderolewl,
