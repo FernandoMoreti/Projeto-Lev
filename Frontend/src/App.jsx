@@ -107,6 +107,7 @@ function App() {
     "Icred",
     "Jbcred",
     "Kardbank",
+    "NBC",
     "NEO",
     "NovoSaque",
     "NovoSaqueCartao",

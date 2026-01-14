@@ -17,6 +17,7 @@ from .hope import hope
 from .icred import icred
 from .jbcred import jbcred
 from .kardbank import kardbank
+from .nbc import nbc
 from .neo import neo
 from .novosaque import novosaque
 from .novosaquecartao import novosaquecartao
@@ -55,6 +56,7 @@ bancos = {
     "icred": icred,
     "jbcred": jbcred,
     "kardbank": kardbank,
+    "nbc": nbc,
     "neo": neo,
     "novosaque": novosaque,
     "novosaquecartao": novosaquecartao,
