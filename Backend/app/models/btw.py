@@ -1,44 +1,6 @@
 import pandas as pd
 import os
-
-col_opcoes = [
-   "NUM_BANCO",
-   "NOM_BANCO",
-   "NUM_PROPOSTA",
-   "NUM_CONTRATO",
-   "NOM_CLIENTE",
-   "COD_CPF_CLIENTE",
-   "DSC_PRODUTO",
-   "DSC_SITUACAO_BANCO",
-   "DSC_OBSERVACAO",
-   "DAT_CREDITO",
-   "VAL_BRUTO",
-   "VAL_LIQUIDO",
-   "VAL_SALDO_REFINANCIAMENTO",
-   "VAL_BASE_COMISSAO",
-   "VAL_COMISSAO",
-   "PCL_COMISSAO",
-   "DSC_TIPO_COMISSAO",
-   "COD_LOJA",
-   "COD_UNIDADE_EMPRESA",
-   "COD_BANCO",
-   "COD_TIPO_PROPOSTA_EMPRESTIMO",
-   "DSC_TIPO_PROPOSTA_EMPRESTIMO",
-   "NIC_CTR_USUARIO",
-   "COD_PRODUTO",
-   "COD_PRODUTOR_VENDA",
-   "COD_PRODUTOR_VENDA_BANCO",
-   "COD_TIPO_COMISSAO",
-   "COD_SITUACAO_EMPRESTIMO",
-   "QTD_PARCELA",
-   "NUM_PARCELA_DIFERIDA_EMPRESA",
-   "DAT_EMPRESTIMO",
-   "DAT_CONFIRMACAO",
-   "DAT_ESTORNO",
-   "DAT_CTR_INCLUSAO",
-   "TIPO_COMISSAO_BANCO",
-   "PCL_TAXA_EMPRESTIMO"
-]
+from ..utils import createDataframe, inputValueColumns, validDf
 
 def meses(mes):
 
@@ -80,7 +42,7 @@ def btw(df):
         if data in arquivo:
             arquivo_encontrado = arquivo
             break
-    
+
     if arquivo_encontrado:
         caminho_completo = os.path.join(caminho_pasta, arquivo_encontrado)
         df_encontrado = pd.read_excel(caminho_completo)
@@ -97,7 +59,7 @@ def btw(df):
         }, inplace=True)
         df_encontrado['tipo'] = 'DIRETA'
         df['tipo'] = 'BÔNUS'
-    else: 
+    else:
         df_encontrado.rename(columns={
             "Total_Bruto" : "Vr_Comissao_Flat_Bruto",
             "Tx_Serviço" : "Tx_Comissao_Flat",
@@ -117,7 +79,7 @@ def btw(df):
             "Tx_Serviço": "PCL_COMISSAO",
             "tipo": "TIPO_COMISSAO_BANCO",
         }
-    else: 
+    else:
         infos = {
             "Proposta": "NUM_PROPOSTA",
             "DT_Pagamento": "DAT_CREDITO",
@@ -127,18 +89,14 @@ def btw(df):
             "tipo": "TIPO_COMISSAO_BANCO",
         }
 
-    if not isinstance(df, pd.DataFrame):
-        return "Erro: A entrada não é um DataFrame válido."
-    
-    colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
-    if not colunas_origem_presentes:
-        return "ErroColunas"
-    
-    df_novo = pd.DataFrame(columns=col_opcoes)
+    Error = validDf(df, infos)
+    if Error:
+        return Error
 
-    for col_origem, col_destino in infos.items():
-        df_novo[col_destino] = df[col_origem]
-    
+    df_novo = createDataframe()
+
+    df_novo = inputValueColumns(df, df_novo, infos)
+
     df_novo["NUM_BANCO"] = 10501
     df_novo["NOM_BANCO"] = "BTW BANK"
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
