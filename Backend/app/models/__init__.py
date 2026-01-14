@@ -6,6 +6,7 @@ from .brbInconta import brbInconta
 from .btw import btw
 from .bv import bv
 from .caixa import caixa
+from .crefisa import crefisa
 from .digio import digio
 from .empresteicred import empresteicred
 from .euro import euro
@@ -47,6 +48,7 @@ bancos = {
     "btw": btw,
     "bv": bv,
     "caixa": caixa,
+    "crefisa": crefisa,
     "digio": digio,
     "empresteicred": empresteicred,
     "euro": euro,

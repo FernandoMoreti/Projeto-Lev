@@ -2,9 +2,11 @@ import pandas as pd
 from datetime import datetime, timedelta
 from ..utils import createDataframe, inputValueColumns, validDf
 
-def crefisa_adiantamento(df):
+def crefisa(df):
 
-    df = pd.read_excel(df, engine="xlrd")
+    df = pd.read_html(df, header=0)[0]
+
+    print(df["Vlr_Liquido"])
 
     infos ={
        "Num_Proposta":"NUM_PROPOSTA",
@@ -23,18 +25,12 @@ def crefisa_adiantamento(df):
 
     df_novo = inputValueColumns(df, df_novo, infos)
 
+    for index, row in df_novo.iterrows():
+        if row["TIPO_COMISSAO_BANCO"] == "À Vista":
+            df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+
     df_novo["NUM_BANCO"] = '69'
     df_novo["NOM_BANCO"] = 'BANCO CREFISA S.A.'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
-    if"TIPO_COMISSAO_BANCO"in df_novo.columns:
-        df_novo.loc[df_novo["TIPO_COMISSAO_BANCO"] == "à vista","TIPO_COMISSAO_BANCO"] ="DIRETA"
-
-           # Gerar o caminho do arquivo
-    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    caminho_arquivo = f'Z:\COMISSÃO\PROJETO TESTE\CREFISA\CREFISA_{data_arquivo}.xlsx'
-
-    # Salvar como Excel
-    df_novo.to_excel(caminho_arquivo, index=False)
-
-    return caminho_arquivo
+    return df_novo
