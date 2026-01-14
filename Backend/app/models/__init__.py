@@ -32,6 +32,7 @@ from .safracomissaozero import safracomissaozero
 from .santanderfit import santanderfit
 from .santanderFve6 import santanderfvevi
 from .santanderolewl import santanderolewl
+from .totalcash import totalcash
 from .v8 import v8
 from .vctex import vctex
 from .webcash import webcash
@@ -71,6 +72,7 @@ bancos = {
     "santanderfit": santanderfit,
     "santanderfvevi": santanderfvevi,
     "santanderolewl": santanderolewl,
+    "totalcash": totalcash,
     "v8": v8,
     "vctex": vctex,
     "webcash": webcash

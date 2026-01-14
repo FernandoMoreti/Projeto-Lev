@@ -122,6 +122,7 @@ function App() {
     "SantanderFit",
     "SantanderFVEVI",
     "SantanderOleWl",
+    "TotalCash",
     "V8",
     "VCtex",
     "WebCash"

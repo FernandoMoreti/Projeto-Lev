@@ -76,7 +76,6 @@ def nbc(df):
 
     df_novo["PCL_COMISSAO"] = valores_tratados
 
-
     df_novo["NUM_BANCO"] = 753
     df_novo["NOM_BANCO"] = "NBC BANK"
     df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
