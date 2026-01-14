@@ -74,21 +74,21 @@ def amigoz(df):
         # Criar linha seguro
         if row_original.get("Seguro") == "Super diamante" or row_original.get("Seguro") == "Super Diamante":
             nova_linha = row_mapeada.copy()
-            if row_original["Valor Seguro"] < 0: 
+            if row_original["Valor Seguro"] < 0:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO SEGURO"
-            else:    
+            else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO SUPER DIAMANTE"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
             nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
             nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
             novas_linhas.append(nova_linha)
-        
+
         # Criar linha seguro
         if row_original.get("Seguro") == "Diamante":
             nova_linha = row_mapeada.copy()
-            if row_original["Valor Seguro"] < 0: 
+            if row_original["Valor Seguro"] < 0:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO SEGURO"
-            else:    
+            else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO DIAMANTE"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
             nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
@@ -98,7 +98,7 @@ def amigoz(df):
         # Criar linha seguro
         if row_original.get("Seguro") == "Ouro":
             nova_linha = row_mapeada.copy()
-            if row_original["Valor Seguro"] < 0: 
+            if row_original["Valor Seguro"] < 0:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO SEGURO"
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO OURO"
@@ -110,7 +110,7 @@ def amigoz(df):
         # Criar linha seguro
         if row_original.get("Seguro") == "Prata":
             nova_linha = row_mapeada.copy()
-            if row_original["Valor Seguro"] < 0: 
+            if row_original["Valor Seguro"] < 0:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO SEGURO"
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO PRATA"
@@ -132,8 +132,8 @@ def amigoz(df):
         # Criar linha Comissão
         if pd.isna(row_original.get("$ Comissão")) == False:
             nova_linha = row_mapeada.copy()
-            
-            if row_original["$ Comissão"] < 0: 
+
+            if row_original["$ Comissão"] < 0:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="ESTORNO"
             else:
                 nova_linha["TIPO_COMISSAO_BANCO"] ="DIRETA"

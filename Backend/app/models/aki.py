@@ -15,11 +15,11 @@ def aki(df):
         "% Comissão": "PCL_COMISSAO",
         "Valor Comissão": "VAL_COMISSAO",
     }
-    
+
     Error = validDf(df, infos)
     if Error:
         return Error
-    
+
     df_novo = createDataframe()
 
     df_novo = inputValueColumns(df, df_novo, infos)
@@ -31,5 +31,5 @@ def aki(df):
     df_novo["DAT_CREDITO"] = diaMesAno
     df_novo["NUM_BANCO"] = 1684
     df_novo["NOM_BANCO"] = "AKI CAPITAL"
-    
+
     return df_novo
