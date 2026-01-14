@@ -5,7 +5,7 @@ from io import BytesIO
 from datetime import datetime
 
 
-app = Flask(__name__) #cria o app, inicializa a aplicação flask 
+app = Flask(__name__) #cria o app, inicializa a aplicação flask
 CORS(app, origins=["https://projeto-lev.vercel.app", "http://localhost:5173"], expose_headers=["Content-Disposition"])
 
 @app.route("/executar", methods=["POST"])
@@ -16,13 +16,13 @@ def executar():
 
     print(f"Banco selecionado: {nome_banco}")
     print(f"Arquivo recebido: {arquivo.filename if arquivo else 'Nenhum arquivo'}")
-    
+
     if nome_banco not in bancos:
         return jsonify({"erro": "Função não encontrada"}), 400
-    
+
     if not arquivo:
         return jsonify({"erro": "Nenhum arquivo enviado"}), 400
-    
+
     resultado = bancos[nome_banco](arquivo)
 
     print("Log do resultado:" )

@@ -49,10 +49,10 @@ def validDf(df, infos):
         return"Erro: A entrada não é um DataFrame válido."
 
     colunas_origem_presentes = all(col_origem in df.columns for col_origem in infos.keys())
-    
+
     if not colunas_origem_presentes:
         return"ErroColunas"
-    
+
 def inputValueColumns(df, df_novo, infos):
     for col_origem, col_destino in infos.items():
         if col_origem in df.columns:
