@@ -7,6 +7,7 @@ from .btw import btw
 from .bv import bv
 from .caixa import caixa
 from .digio import digio
+from .empresteicred import empresteicred
 from .euro import euro
 from .evol import evol
 from .facta import facta
@@ -43,10 +44,11 @@ bancos = {
     "btw": btw,
     "bv": bv,
     "caixa": caixa,
+    "digio": digio,
+    "empresteicred": empresteicred,
     "euro": euro,
     "evol": evol,
     "facta": facta,
-    "digio": digio,
     "grandino": grandino,
     "happy": happy,
     "hope": hope,

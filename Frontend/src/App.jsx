@@ -97,6 +97,7 @@ function App() {
     "Bv",
     "Caixa",
     "Digio",
+    "EmpresteiCred",
     "Euro",
     "Evol",
     "Facta",
