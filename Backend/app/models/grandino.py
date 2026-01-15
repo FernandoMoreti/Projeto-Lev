@@ -25,5 +25,7 @@ def grandino(df):
     df_novo["NOM_BANCO"] = 'GRANDINO LTDA'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(float)
+    df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"].astype(float)
 
     return df_novo
