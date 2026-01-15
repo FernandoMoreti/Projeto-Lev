@@ -7,6 +7,7 @@ from .btw import btw
 from .bv import bv
 from .c6bankcreditomanual import c6bankcreditomanual
 from .c6bankcomissao import c6bankcomissao
+from .c6bankdebitomanual import c6bankdebitomanual
 from .caixa import caixa
 from .crefisa import crefisa
 from .digio import digio
@@ -51,6 +52,7 @@ bancos = {
     "bv": bv,
     "c6bankcreditomanual": c6bankcreditomanual,
     "c6bankcomissao": c6bankcomissao,
+    "c6bankdebitomanual": c6bankdebitomanual,
     "caixa": caixa,
     "crefisa": crefisa,
     "digio": digio,

@@ -97,6 +97,7 @@ function App() {
     "Bv",
     "C6BankCreditoManual",
     "C6bankComissao",
+    "C6bankDebitoManual",
     "Caixa",
     "Crefisa",
     "Digio",
