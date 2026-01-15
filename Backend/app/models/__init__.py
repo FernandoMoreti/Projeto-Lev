@@ -9,6 +9,7 @@ from .c6auto import c6auto
 from .c6bankcreditomanual import c6bankcreditomanual
 from .c6bankcomissao import c6bankcomissao
 from .c6bankdebitomanual import c6bankdebitomanual
+from .c6equity import c6equity
 from .caixa import caixa
 from .crefisa import crefisa
 from .digio import digio
@@ -55,6 +56,7 @@ bancos = {
     "c6bankcreditomanual": c6bankcreditomanual,
     "c6bankcomissao": c6bankcomissao,
     "c6bankdebitomanual": c6bankdebitomanual,
+    "c6equity": c6equity,
     "caixa": caixa,
     "crefisa": crefisa,
     "digio": digio,
