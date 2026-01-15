@@ -5,6 +5,7 @@ from .brb360 import brb360
 from .brbInconta import brbInconta
 from .btw import btw
 from .bv import bv
+from .c6auto import c6auto
 from .c6bankcreditomanual import c6bankcreditomanual
 from .c6bankcomissao import c6bankcomissao
 from .c6bankdebitomanual import c6bankdebitomanual
@@ -50,6 +51,7 @@ bancos = {
     "brbinconta": brbInconta,
     "btw": btw,
     "bv": bv,
+    "c6auto": c6auto,
     "c6bankcreditomanual": c6bankcreditomanual,
     "c6bankcomissao": c6bankcomissao,
     "c6bankdebitomanual": c6bankdebitomanual,
