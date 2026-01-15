@@ -1,6 +1,7 @@
 from .aki import aki
 from .amigoz import amigoz
 from .ayude import ayude
+from .bmgseguro import bmgseguro
 from .brb360 import brb360
 from .brbInconta import brbInconta
 from .btw import btw
@@ -48,6 +49,7 @@ bancos = {
     "aki": aki,
     "amigoz": amigoz,
     "ayude": ayude,
+    "bmgseguro": bmgseguro,
     "brb360": brb360,
     "brbinconta": brbInconta,
     "btw": btw,
