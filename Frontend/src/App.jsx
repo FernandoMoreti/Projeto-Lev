@@ -44,7 +44,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("https://flask-backend-ipg8.onrender.com/executar", {
+      const response = await fetch("http://127.0.0.1:5000/executar", {
         method: "POST",
         body: formData,
       })
@@ -95,7 +95,8 @@ function App() {
     "BRBInconta",
     "BTW",
     "Bv",
-    "C6Bank",
+    "C6BankCreditoManual",
+    "C6bankComissao",
     "Caixa",
     "Crefisa",
     "Digio",
