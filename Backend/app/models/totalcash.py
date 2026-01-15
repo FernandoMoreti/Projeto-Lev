@@ -22,14 +22,30 @@ def totalcash(df):
 
     df_novo = inputValueColumns(df, df_novo, infos)
 
-    for index, row in df_novo.iterrows():
-        if row["VAL_COMISSAO"] < 0:
-            response = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={row['NUM_PROPOSTA']}", timeout=5)
-            data = response.json()
-            df_novo.at[index, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
-            df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+    session = requests.Session()
+
+    for idx in df_novo.index:
+        val_comissao = df_novo.at[idx, "VAL_COMISSAO"]
+
+        if val_comissao < 0:
+            proposta = df_novo.at[idx, "NUM_PROPOSTA"]
+
+            try:
+                response = session.get(
+                    f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
+                    timeout=5
+                )
+                response.raise_for_status()
+
+                data = response.json()
+                df_novo.at[idx, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
+                df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+
+            except Exception as e:
+                df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ERRO_API"
+                print(f"Erro proposta {proposta}: {e}")
         else:
-            df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
 
     valores_tratados = []
 

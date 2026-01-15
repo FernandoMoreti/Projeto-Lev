@@ -2,31 +2,30 @@ import pandas as pd
 import requests
 
 def facta(df):
-    df = pd.read_excel(df)
+    df = pd.read_excel(df, engine="openpyxl")
 
-    list_prop = []
+    session = requests.Session()
+    bruto_por_proposta = {}
 
-    for index, row in df.iterrows():
-        if "PGTO ADIANTAMENTO" in row["OBSERVACAO"]:
-            list_prop.append(row["CODIGOAF"])
+    for idx in df.index:
+        obs = str(df.at[idx, "OBSERVACAO"])
+        proposta = df.at[idx, "CODIGOAF"]
 
-    list_val_bruto = []
-    new_list_prop = []
+        if "PGTO ADIANTAMENTO" in obs and proposta not in bruto_por_proposta:
+            try:
+                response = session.get(
+                    f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
+                    timeout=5
+                )
+                response.raise_for_status()
 
-    for proposal in list_prop:
-        data = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposal}", timeout=5)
-        if data and data.status_code == 200:
-            result = data.json()
-            list_val_bruto.append(result[0]["bruto"])
-            new_list_prop.append(proposal)
+                data = response.json()
+                bruto_por_proposta[proposta] = data[0]["bruto"]
 
-    print(new_list_prop)
-    print(list_val_bruto)
+            except Exception as e:
+                print(f"Erro proposta {proposta}: {e}")
 
-    for index, row in df.iterrows():
-        if row["CODIGOAF"] in new_list_prop and "PGTO ADIANTAMENTO" in row["OBSERVACAO"]:
-            pos = new_list_prop.index(row["CODIGOAF"])
-            df.at[index, "VLRAF"] = list_val_bruto[pos]
+    df["VLRAF"] = df["CODIGOAF"].map(bruto_por_proposta).fillna(df["VLRAF"])
 
     valores_tratados = []
 
