@@ -24,7 +24,7 @@ def totalcash(df):
 
     for index, row in df_novo.iterrows():
         if row["VAL_COMISSAO"] < 0:
-            response = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={row["NUM_PROPOSTA"]}")
+            response = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={row['NUM_PROPOSTA']}", timeout=5)
             data = response.json()
             df_novo.at[index, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
             df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "ESTORNO"

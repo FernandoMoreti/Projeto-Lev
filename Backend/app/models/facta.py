@@ -14,7 +14,7 @@ def facta(df):
     new_list_prop = []
 
     for proposal in list_prop:
-        data = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposal}")
+        data = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposal}", timeout=5)
         if data and data.status_code == 200:
             result = data.json()
             list_val_bruto.append(result[0]["bruto"])
