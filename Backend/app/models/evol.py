@@ -9,7 +9,7 @@ def evol(df):
         "Id_Operation":"NUM_PROPOSTA",
         "Taxa":"PCL_TAXA_EMPRESTIMO",
         "Valor_Liberado":"VAL_LIQUIDO",
-        "Comissão":"VAL_COMISSAO",
+        "Valor_Saldo":"VAL_COMISSAO",
         "Valor_Bruto":"VAL_BRUTO",
         "Data de Pagamento Comissão":"DAT_CREDITO",
         "Percentual_Comissao":"PCL_COMISSAO",

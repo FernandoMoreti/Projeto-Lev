@@ -6,21 +6,23 @@ def facta(df):
 
     session = requests.Session()
     bruto_por_proposta = {}
+    list_props = []
 
     for idx in df.index:
         obs = str(df.at[idx, "OBSERVACAO"])
         proposta = df.at[idx, "CODIGOAF"]
 
+        list_props.append(proposta)
         if "PGTO ADIANTAMENTO" in obs and proposta not in bruto_por_proposta:
             try:
                 response = session.get(
                     f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
-                    timeout=5
+                    timeout=10
                 )
-                response.raise_for_status()
-
                 data = response.json()
-                bruto_por_proposta[proposta] = data[0]["bruto"]
+
+                if data[0]["tipo"] == "PORTAB/REFIN":
+                    bruto_por_proposta[proposta] = data[0]["bruto"]
 
             except Exception as e:
                 print(f"Erro proposta {proposta}: {e}")
