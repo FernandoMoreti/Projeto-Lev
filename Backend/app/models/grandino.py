@@ -21,11 +21,43 @@ def grandino(df):
 
     df_novo = inputValueColumns(df, df_novo, infos)
 
+    valores_tratados = []
+
+    for valor in df_novo["VAL_BASE_COMISSAO"]:
+        valor_str = valor
+
+        if type(valor) == str :
+
+            valor_str = str(valor)
+
+            valor_teste = valor_str.replace(".", "")
+            valor_teste = valor_teste.replace(",", ".")
+            valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
+
+    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
+
+    valores_tratados = []
+
+    for valor in df_novo["VAL_COMISSAO"]:
+        valor_str = valor
+
+        if type(valor) == str :
+
+            valor_str = str(valor)
+
+            valor_teste = valor_str.replace(".", "")
+            valor_teste = valor_teste.replace(",", ".")
+            valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
+
+    df_novo["VAL_COMISSAO"] = valores_tratados
+
     df_novo["NUM_BANCO"] = '88888'
     df_novo["NOM_BANCO"] = 'GRANDINO LTDA'
     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(float)
-    df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"].astype(float)
 
     return df_novo

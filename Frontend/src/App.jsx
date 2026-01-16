@@ -30,6 +30,25 @@ function App() {
 
   }, []);
 
+  // async function handleGetFile(e) {
+  //   e.preventDefault()
+
+  //   try {
+  //     const response = await fetch("http://127.0.0.1:5000/getfile")
+
+  //     if (!response) {
+  //       return "nenhum arquivo encontrado"
+  //     }
+
+  //     if (response.ok) {
+  //       console.log(response)
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+
   async function handleSubmit(e) {
     e.preventDefault()
 
@@ -44,7 +63,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("https://flask-backend-ipg8.onrender.com/executar", {
+      const response = await fetch("http://127.0.0.1:5000/execute", {
         method: "POST",
         body: formData,
       })
