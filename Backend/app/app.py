@@ -64,12 +64,12 @@ def getfile():
     }
 
     getToken = requests.post(
-        "https://lev.authenticator.elegen.com.br/api/v1/auth/login",
+        os.environ.get("URL_GET_TOKEN_LOGIN"),
         json=user
     )
+
     token = f'Bearer {getToken.json()["token"]}'
-    banks = ["c6"]
-    url = "https://lev.aws-integration.elegen.com.br/api/v1/s3/downloads"
+    banks = ["c6bankdebitomanual"]
 
     header = {
         "Authorization": token,
@@ -80,11 +80,11 @@ def getfile():
     for bank in banks:
 
         payload = {
-            "s3Uri": f"s3://hives-116976060176/integration/{bank}/{today.year}/{today.month:02d}/{today.day:02d}/410a87a7-8120-49b2-91e6-7e2c9a95190e.xlsx"
+            "s3Uri": f"s3://hives-116976060176/comission/{bank}/{today.year}/{today.month:02d}/{today.day:02d}/410a87a7-8120-49b2-91e6-7e2c9a95190e.xlsx"
         }
 
         response = requests.post(
-            url,
+            os.environ.get("URL_GET_FILE"),
             json=payload,
             headers=header
         )
@@ -93,22 +93,22 @@ def getfile():
 
             archive_in_memory = BytesIO(response.content)
 
-            resultado = bancos[bank](archive_in_memory)
+            result = bancos[bank](archive_in_memory)
 
             output = BytesIO()
-            resultado.to_excel(output, index=False)
+            result.to_excel(output, index=False)
             output.seek(0)
-            nome_banco = nome_banco.upper()
 
-            data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-            nome_arquivo = f"{bank} - {data_arquivo}.xlsx"
+            if type(result) == str:
+                return jsonify({"erro": result}), 400
 
             return send_file(
-                output,
+                response.content,
                 mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 as_attachment=True,
-                download_name=nome_arquivo
+                download_name="C6"
             )
+            # requests.post(os.environ.get("URL_UPLOAD_FILE", ))
 
         else:
             return jsonify({"erro": f"Erro ao requisitar arquivo do banco {bank}"}), response.status_code
