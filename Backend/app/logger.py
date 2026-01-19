@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 FORMATTER = logging.Formatter(
          "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
@@ -20,7 +21,12 @@ def setup_logging(name: str, archive: str, level=logging.INFO):
     handler.setLevel(level)
     handler.setFormatter(FORMATTER)
 
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(level)
+    stream_handler.setFormatter(FORMATTER)
+
     logger.addHandler(handler)
+    logger.addHandler(stream_handler)
 
     return logger
 
@@ -33,4 +39,9 @@ def setup_error_logging():
     handler.setFormatter(FORMATTER)
     handler.setLevel(logging.ERROR)
 
+    stream_handler = logging.StreamHandler(sys.stderr)
+    stream_handler.setLevel(logging.ERROR)
+    stream_handler.setFormatter(FORMATTER)
+
     logger.addHandler(handler)
+    logger.addHandler(stream_handler)
