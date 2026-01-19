@@ -9,30 +9,46 @@ def brbInconta(df):
     if not tables:
         return "Nenhuma tabela encontrada no PDF"
 
-    for index, t in enumerate(tables):
-        if index == 1:
-            t.df = t.df.drop(columns=[1])
-            t.df = t.df.drop(columns=[2])
-            t.df = t.df.dropna(axis=1, how="all")
-            t.df.rename(columns={i: i-1 for i in range(1, t.df.shape[0])}, inplace=True)
-        if len(t.df[0]) > 45:
-            t.df = t.df.drop(columns=[1])
-        else:
-            t.df = t.df.iloc[6:]
+    isBigger = False
 
-    df = pd.concat([t.df for t in tables], ignore_index=True)
+    for index, table in enumerate(tables):
+        if index == 1:
+            if len(table.df.columns) > 5:
+                table.df = table.df.drop(columns=[1])
+                table.df = table.df.drop(columns=[2])
+                table.df = table.df.drop(columns=[5])
+                table.df.columns = range(table.df.shape[1])
+        if len(table.df[0]) > 45:
+            table.df = table.df.drop(columns=[1])
+            table.df.columns = range(table.df.shape[1])
+            isBigger = True
+        else:
+            if isBigger or index == 1:
+                table.df = table.df.iloc[2:]
+            else:
+                table.df = table.df.iloc[6:]
+
+    df = pd.concat([table.df for table in tables], ignore_index=True)
 
     df = df.replace(r'^\s*$', pd.NA, regex=True)
 
     df = df.dropna(thresh=8) # remove linhas que tenham pelo menos 10 colunas preenchidas
 
+    if len(df.columns) > 8:
+        df = df.drop(columns=[1])
+        df.columns = range(df.shape[1])
+
+    df[4] = df[4].replace(pd.NA, 0)
+
+    return df
+
     infos = {
-        2 : "NUM_PROPOSTA",
-        3 : "DSC_OBSERVACAO",
-        4 : "QTD_PARCELA",
-        5 : "PCL_COMISSAO",
-        7 : "VAL_BASE_COMISSAO",
-        8 : "VAL_COMISSAO",
+        1 : "NUM_PROPOSTA",
+        2 : "DSC_OBSERVACAO",
+        3 : "QTD_PARCELA",
+        4 : "PCL_COMISSAO",
+        6 : "VAL_BASE_COMISSAO",
+        7 : "VAL_COMISSAO",
     }
 
     Error = validDf(df, infos)
@@ -42,8 +58,6 @@ def brbInconta(df):
     df_novo = createDataframe()
 
     df_novo = inputValueColumns(df, df_novo, infos)
-
-    df_novo = df_novo.iloc[:-1]
 
     valores_tratados = []
 
@@ -103,10 +117,7 @@ def brbInconta(df):
 
     df_novo["PCL_TAXA_EMPRESTIMO"] = valores_tratados
 
-
-
     df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-    df_novo["QTD_PARCELA"] = df_novo["QTD_PARCELA"].astype(int)
     df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
     df_novo["NUM_BANCO"] = 70
