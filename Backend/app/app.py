@@ -3,11 +3,16 @@ from flask_cors import CORS
 from .models import bancos
 from dotenv import load_dotenv
 import os
+from .logger import setup_logging, setup_error_logging
 import requests
 from io import BytesIO
 from datetime import datetime, date
 
 load_dotenv()
+
+bancos_logger = setup_logging("bancos", "bancos.log")
+infos_logger = setup_logging("infos", "infos.log")
+setup_error_logging()
 
 
 app = Flask(__name__) #cria o app, inicializa a aplicação flask
@@ -15,43 +20,60 @@ CORS(app, origins=["https://projeto-lev.vercel.app", "http://localhost:5173"], e
 
 @app.route("/execute", methods=["POST"])
 def execute():
-    nome_banco = request.form.get("banco")
-    arquivo = request.files.get("arquivo")
-    nome_banco = nome_banco.lower()
 
-    print(f"Banco selecionado: {nome_banco}")
-    print(f"Arquivo recebido: {arquivo.filename if arquivo else 'Nenhum arquivo'}")
+    try:
 
-    if nome_banco not in bancos:
-        return jsonify({"erro": "Função não encontrada"}), 400
+        infos_logger.info("Iniciando o sistema de envio do arquivo para edicao")
 
-    if not arquivo:
-        return jsonify({"erro": "Nenhum arquivo enviado"}), 400
+        nome_banco = request.form.get("banco")
+        arquivo = request.files.get("arquivo")
+        nome_banco = nome_banco.lower()
 
-    resultado = bancos[nome_banco](arquivo)
+        if not nome_banco:
+            infos_logger.warning("Nao foi recebido nenhum Banco")
+            return jsonify({"erro": "Não recebemos um valor para o nome do banco"}), 400
 
-    print("Log do resultado:" )
-    print(resultado)
+        if  not arquivo:
+            infos_logger.warning("Nao foi recebido nenhum arquivo")
+            return jsonify({"erro": "Não recebemos um valor de arquivo"}), 400
 
-    if type(resultado) is str:
-        return jsonify({"erro": resultado}), 400
+        if nome_banco not in bancos:
+            infos_logger.error("Nao foi localizado o banco %s no nosso sistema", nome_banco)
+            return jsonify({"erro": f"Função não encontrada para o banco: {nome_banco}"}), 400
 
-    output = BytesIO()
-    resultado.to_excel(output, index=False)
-    output.seek(0)
-    nome_banco = nome_banco.upper()
+        infos_logger.info("Arquivo: %s do banco %s enviado para tratamento", arquivo, nome_banco)
+        resultado = bancos[nome_banco](arquivo)
 
-    # Criar nome do arquivo
-    data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-    nome_arquivo = f"{nome_banco} - {data_arquivo}.xlsx"
 
-    # Enviar para download
-    return send_file(
-        output,
-        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        as_attachment=True,
-        download_name=nome_arquivo
-    )
+        if type(resultado) is str:
+            infos_logger.error(f"Recebemos um retorno inesperado da funcao: {resultado}")
+            return jsonify({"erro": resultado}), 400
+
+        infos_logger.info("Recebemos um retorno valido e OK da funcao")
+
+        output = BytesIO()
+        resultado.to_excel(output, index=False)
+        output.seek(0)
+        nome_banco = nome_banco.upper()
+
+        infos_logger.info("Arquivo convertido em excel e enviado para download")
+
+        # Criar nome do arquivo
+        data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
+        nome_arquivo = f"{nome_banco} - {data_arquivo}.xlsx"
+
+        # Enviar para download
+        return send_file(
+            output,
+            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            as_attachment=True,
+            download_name=nome_arquivo
+        )
+    except Exception:
+        infos_logger.exception("Erro crítico ao executar /execute")
+        return jsonify({"error": "Erro interno inesperado"})
+    finally:
+        infos_logger.info("Finalizando o sistema de envio de arquivo para edicao e download")
 
 @app.route("/getfile", methods=["GET"])
 def getfile():
