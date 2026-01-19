@@ -1,4 +1,4 @@
-from .aki import aki
+from .aki import Aki
 from .amigoz import amigoz
 from .ayude import ayude
 from .bmgseguro import bmgseguro
@@ -46,7 +46,7 @@ from .vctex import vctex
 from .webcash import webcash
 
 bancos = {
-    "aki": aki,
+    "aki": lambda df: Aki().run(df),
     "amigoz": amigoz,
     "ayude": ayude,
     "bmgseguro": bmgseguro,
