@@ -3,7 +3,7 @@ from flask_cors import CORS
 from .models import bancos
 from dotenv import load_dotenv
 import os
-from logger import setup_logging, setup_error_logging
+from .logger import setup_logging, setup_error_logging
 import requests
 from io import BytesIO
 from datetime import datetime, date
@@ -31,14 +31,17 @@ def execute():
 
         if not nome_banco:
             infos_logger.warning("Nao foi recebido nenhum Banco")
+            return jsonify({"erro": "Não recebemos um valor para o nome do banco"}), 400
 
         if  not arquivo:
             infos_logger.warning("Nao foi recebido nenhum arquivo")
+            return jsonify({"erro": "Não recebemos um valor de arquivo"}), 400
 
         if nome_banco not in bancos:
-            infos_logger.error(f"Nao foi localizado o banco {nome_banco} no nosso sistema")
-            return jsonify({"erro": "Função não encontrada"}), 400
+            infos_logger.error("Nao foi localizado o banco %s no nosso sistema", nome_banco)
+            return jsonify({"erro": f"Função não encontrada para o banco: {nome_banco}"}), 400
 
+        infos_logger.info("Arquivo: %s do banco %s enviado para tratamento", arquivo, nome_banco)
         resultado = bancos[nome_banco](arquivo)
 
 
@@ -46,7 +49,7 @@ def execute():
             infos_logger.error(f"Recebemos um retorno inesperado da funcao: {resultado}")
             return jsonify({"erro": resultado}), 400
 
-        infos_logger.info("Recebemos um retorno valido da funcao")
+        infos_logger.info("Recebemos um retorno valido e OK da funcao")
 
         output = BytesIO()
         resultado.to_excel(output, index=False)

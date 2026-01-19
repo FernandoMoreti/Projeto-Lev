@@ -30,7 +30,7 @@ def setup_error_logging():
     logger.setLevel(logging.ERROR)
 
     handler = logging.FileHandler("logs/error.log", encoding="utf-8")
-    handler.formatter(FORMATTER)
+    handler.setFormatter(FORMATTER)
     handler.setLevel(logging.ERROR)
 
     logger.addHandler(handler)
