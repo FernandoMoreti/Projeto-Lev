@@ -1,10 +1,8 @@
 from .aki import Aki
-from .amigoz import amigoz
-from .ayude import ayude
-from .bmgseguro import bmgseguro
-from .brb360 import brb360
-from .brbInconta import brbInconta
-from .btw import btw
+from .amigoz import Amigoz
+from .brb360 import Brb360
+from .brbInconta import Brbinconta
+from .btw import Btw
 from .bv import bv
 from .c6auto import c6auto
 from .c6bankcreditomanual import c6bankcreditomanual
@@ -47,12 +45,10 @@ from .webcash import webcash
 
 bancos = {
     "aki": lambda df: Aki().run(df),
-    "amigoz": amigoz,
-    "ayude": ayude,
-    "bmgseguro": bmgseguro,
-    "brb360": brb360,
-    "brbinconta": brbInconta,
-    "btw": btw,
+    "amigoz": lambda df: Amigoz().run(df),
+    "brb360": lambda df: Brb360().run(df),
+    "brbinconta": lambda df: Brbinconta().run(df),
+    "btw": lambda df: Btw().run(df),
     "bv": bv,
     "c6auto": c6auto,
     "c6bankcreditomanual": c6bankcreditomanual,
