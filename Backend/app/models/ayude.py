@@ -1,31 +1,39 @@
-import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+# import pandas as pd
+# from ..utils import createDataframe, inputValueColumns, validDf
+# from .bank import Bank
 
-def ayude(df):
+# # class Ayude:
+# #     def __init__(self, name, num, type):
+# #         super().__init__(name, num, type)
 
-    df_soli = pd.read_excel(df, sheet_name="DADOS DA SOLICITAÇÃO", )
-    df = pd.read_excel(df, sheet_name="PROPOSTAS PRÓPRIAS", )
-    df = df.iloc[:-3]
+# # def ayude(df):
 
-    infos ={
-       "ID DA PROPOSTA":"NUM_PROPOSTA",
-       "VALOR DA PROPOSTA":"VAL_BASE_COMISSAO",
-       "VALOR DA COMISSÃO":"VAL_COMISSAO"
-    }
+# #     df_soli = pd.read_excel(df, sheet_name="DADOS DA SOLICITAÇÃO", )
+# #     df = pd.read_excel(df, sheet_name="PROPOSTAS PRÓPRIAS", )
+# #     df = df.iloc[:-3]
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+# #     infos ={
+# #        "ID DA PROPOSTA":"NUM_PROPOSTA",
+# #        "VALOR DA PROPOSTA":"VAL_BASE_COMISSAO",
+# #        "VALOR DA COMISSÃO":"VAL_COMISSAO"
+# #     }
 
-    df_novo = createDataframe()
+# #     Error = validDf(df, infos)
+# #     if Error:
+# #         return Error
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+# #     df_novo = createDataframe()
 
-    df_novo["NUM_BANCO"] = '1723'
-    df_novo["NOM_BANCO"] = 'AYUDE'
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["DAT_CREDITO"] = df_soli["SOLICITADO EM"]
-    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100
+# #     df_novo = inputValueColumns(df, df_novo, infos)
 
-    return df_novo
+# #     df_novo["NUM_BANCO"] = '1723'
+# #     df_novo["NOM_BANCO"] = 'AYUDE'
+# #     df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+# #     df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+# #     df_novo["DAT_CREDITO"] = df_soli["SOLICITADO EM"]
+# #     df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100
+
+# #     return df_novo
+
+
+## PAUSADO POR TEMPO INDETERMINADO

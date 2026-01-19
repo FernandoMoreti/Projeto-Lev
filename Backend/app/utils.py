@@ -59,3 +59,21 @@ def inputValueColumns(df, df_novo, infos):
             df_novo[col_destino] = df[col_origem]
 
     return df_novo
+
+def convertValues(df_novo, columns):
+    valores_tratados = []
+
+    for valor in df_novo[columns]:
+        valor_str = valor
+
+        if type(valor) == str :
+
+            valor_str = str(valor)
+
+            valor_teste = valor_str.replace(".", "")
+            valor_teste = valor_teste.replace(",", ".")
+            valor_str = float(valor_teste)
+
+        valores_tratados.append(valor_str)
+
+    return valores_tratados
