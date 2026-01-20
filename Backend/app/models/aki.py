@@ -1,5 +1,5 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import validDf
 import logging
 from .bank import Bank
 
@@ -38,16 +38,11 @@ class Aki(Bank):
                 "% Comissão": "PCL_COMISSAO",
                 "Valor Comissão": "VAL_COMISSAO",
             }
-
-            logger.info("Validando dataframe")
-
-            Error = validDf(df, infos)
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
             if Error:
                 return Error
-
-            logger.info("Dataframe validado")
-            logger.info("Criando Dataframe")
-
+            logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
@@ -63,8 +58,7 @@ class Aki(Bank):
             df_novo["NOM_BANCO"] = "AKI CAPITAL"
 
             return df_novo
-
-        except:
+        except Exception:
             logger.exception("Erro ao editar Aki")
             logger.error("Erro ao editar Aki")
             return "Erro ao editar Aki"

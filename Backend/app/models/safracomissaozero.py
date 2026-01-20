@@ -1,48 +1,64 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+import logging
+from ..utils import convertValues
+from .bank import Bank
 
-def safracomissaozero(df):
-    df = pd.read_csv(df, sep=';')
+logger = logging.getLogger("bancos")
 
-    infos = {
-        "Contrato": "NUM_PROPOSTA",
-        "Valor Principal": "VAL_BASE_COMISSAO",
-        "Data efetivacao Contrato": "DAT_CREDITO",
-        "CPF": "COD_CPF_CLIENTE",
-        "Nome Cliente": "NOM_CLIENTE",
-        "Nome Tabela Juros": "DSC_PRODUTO"
-    }
+class Safracomissaozero(Bank):
+    def __init__(self, name = "Safra", num = 42, type = "csv"):
+        super().__init__(name, num, type)
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def readArchive(self, df):
+        try:
+            df = pd.read_csv(df, sep=';')
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    df_novo = createDataframe()
+    def run(self, df):
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+        try:
+            logger.info("Iniciando processo de edicao do Safracomissaozero")
 
-    valores_tratados = []
+            df = self.readArchive(df)
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
-        valor_str = valor
+            infos = {
+                "Contrato": "NUM_PROPOSTA",
+                "Valor Principal": "VAL_BASE_COMISSAO",
+                "Data efetivacao Contrato": "DAT_CREDITO",
+                "CPF": "COD_CPF_CLIENTE",
+                "Nome Cliente": "NOM_CLIENTE",
+                "Nome Tabela Juros": "DSC_PRODUTO"
+            }
 
-        if type(valor) == str :
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-            valor_str = str(valor)
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
 
-        valores_tratados.append(valor_str)
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["NOM_BANCO"] = "Safra"
+            df_novo["NUM_BANCO"] = 42
+            df_novo["TIPO_COMISSAO_BANCO"] = "AUTORREGULAÇAO"
 
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["NOM_BANCO"] = "Safra"
-    df_novo["NUM_BANCO"] = 42
-    df_novo["TIPO_COMISSAO_BANCO"] = "AUTORREGULAÇAO"
-
-    return df_novo
+            logger.info("Processamento do Safracomissaozero finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Safracomissaozero")
+            logger.error("Erro ao editar Safracomissaozero")
+            return "Erro ao editar Safracomissaozero"
+        finally:
+            logger.info("Finalizado processo de edicao Safracomissaozero")

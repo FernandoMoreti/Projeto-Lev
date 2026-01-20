@@ -1,71 +1,68 @@
 import pandas as pd
 from datetime import datetime
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import convertValues
+import logging
+from .bank import Bank
 
-def bv(df):
+logger = logging.getLogger("bancos")
 
-    data = datetime.now().strftime("%d/%m/%Y")
+class Bv(Bank):
+    def __init__(self, name = "BV", num = 44, type = "excel"):
+        super().__init__(name, num, type)
 
-    df = pd.read_excel(df)
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    infos ={
-       "NUM_PROPOSTA":"NUM_PROPOSTA",
-       "NUM_CONTRATO":"NUM_CONTRATO",
-       "VAL_LIQUIDO": "VAL_BASE_COMISSAO",
-       "VAL_COMISSAO":"VAL_COMISSAO"
-    }
+    def run(self, df):
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+        try:
 
-    df_novo = createDataframe()
+            df = self.readArchive(df)
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            infos ={
+                "NUM_PROPOSTA":"NUM_PROPOSTA",
+                "NUM_CONTRATO":"NUM_CONTRATO",
+                "VAL_LIQUIDO": "VAL_BASE_COMISSAO",
+                "VAL_COMISSAO":"VAL_COMISSAO"
+            }
 
-    valores_tratados = []
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
 
-        valor_str = valor
+            df_novo = self.inputValues(df, df_novo, infos)
 
-        if type(valor) == str:
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-            valor_str = str(valor)
-            valor_teste = valor_str.replace("R$", "")
-            valor_teste = valor_teste.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_teste = valor_teste.strip()
-            valor_str = float(valor_teste)
+            data = datetime.now().strftime("%d/%m/%Y")
 
-        valores_tratados.append(valor_str)
+            df_novo["DAT_CREDITO"] = data
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100)
+            df_novo["NUM_BANCO"] = 44
+            df_novo["NOM_BANCO"] = 'BV'
+            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
 
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
+            logger.info("Processamento do BV finalizado com sucesso")
+            return df_novo
 
-    valores_tratados = []
-
-
-    for valor in df_novo["VAL_COMISSAO"]:
-
-        valor_str = valor
-
-        if type(valor) == str:
-
-            valor_str = str(valor)
-            valor_teste = valor_str.replace("R$", "")
-            valor_teste = valor_teste.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_teste = valor_teste.strip()
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_COMISSAO"] = valores_tratados
-    df_novo["DAT_CREDITO"] = data
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100)
-    df_novo["NUM_BANCO"] = 44
-    df_novo["NOM_BANCO"] = 'BV'
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
-    return df_novo
+        except Exception:
+            logger.exception("Erro ao editar BV")
+            logger.error("Erro ao editar BV")
+            return "Erro ao editar BV"
+        finally:
+            logger.info("Finalizado processo de edicao BV")

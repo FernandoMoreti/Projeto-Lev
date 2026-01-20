@@ -1,0 +1,28 @@
+2026-01-20 08:56:24,627 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-20 08:56:24,628 | INFO | bancos | Validando DataFrame
+2026-01-20 08:56:24,628 | INFO | bancos | Criando novo DataFrame
+2026-01-20 08:56:24,633 | INFO | bancos | Processamento do BV finalizado com sucesso
+2026-01-20 08:56:24,633 | INFO | bancos | Finalizado processo de edicao BV
+2026-01-20 09:13:22,220 | INFO | bancos | Iniciando processo de edicao do Facta
+2026-01-20 09:13:22,466 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-20 09:13:23,952 | ERROR | bancos | Erro proposta 115597891: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:24,672 | ERROR | bancos | Erro proposta 115641944: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:25,983 | ERROR | bancos | Erro proposta 115681622: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:28,069 | ERROR | bancos | Erro proposta 116011306: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:28,726 | ERROR | bancos | Erro proposta 116011900: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:41,607 | ERROR | bancos | Erro proposta 116129983: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:42,987 | ERROR | bancos | Erro proposta 116131780: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:45,040 | ERROR | bancos | Erro proposta 116098093: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:46,669 | ERROR | bancos | Erro proposta 116131977: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:13:57,647 | ERROR | bancos | Erro proposta 116138798: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:14:14,309 | ERROR | bancos | Erro proposta 116142686: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:15:06,278 | ERROR | bancos | Erro proposta 116025145: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:15:14,382 | ERROR | bancos | Erro proposta 116173989: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:15:41,415 | ERROR | bancos | Erro proposta 116205943: Expecting value: line 1 column 1 (char 0)
+2026-01-20 09:15:52,415 | INFO | bancos | Processamento do Facta finalizado com sucesso
+2026-01-20 09:15:52,415 | INFO | bancos | Finalizado processo de edicao Facta
+2026-01-20 10:19:12,235 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-20 10:19:12,236 | INFO | bancos | Validando DataFrame
+2026-01-20 10:19:12,236 | INFO | bancos | Criando novo DataFrame
+2026-01-20 10:19:12,240 | INFO | bancos | Processamento do Jbcred finalizado com sucesso
+2026-01-20 10:19:12,241 | INFO | bancos | Finalizado processo de edicao Jbcred

@@ -62,56 +62,75 @@ class Brbinconta(Bank):
 
     def run(self, df):
 
-        df = self.readArchive(df)
+        try:
+            logger.info("Iniciando processo de edicao do BrbInconta")
 
-        infos = {
-            1 : "NUM_PROPOSTA",
-            2 : "DSC_OBSERVACAO",
-            3 : "QTD_PARCELA",
-            4 : "PCL_COMISSAO",
-            6 : "VAL_BASE_COMISSAO",
-            7 : "VAL_COMISSAO",
-        }
+            df = self.readArchive(df)
 
-        Error = self.validDataframe(df, infos)
-        if Error:
-            return Error
+            infos = {
+                1 : "NUM_PROPOSTA",
+                2 : "DSC_OBSERVACAO",
+                3 : "QTD_PARCELA",
+                4 : "PCL_COMISSAO",
+                6 : "VAL_BASE_COMISSAO",
+                7 : "VAL_COMISSAO",
+            }
 
-        df_novo = self.createDataframe()
+            logger.info("Iniciando processo de edicao do BTW")
 
-        df_novo = self.inputValues(df, df_novo, infos)
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-        df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
-        df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            logger.info("Iniciando processo de edicao do BTW")
+            logger.info("Iniciando processo de edicao do BTW")
 
-        valores_tratados = []
+            df_novo = self.createDataframe()
 
-        for valor in df_novo["DSC_OBSERVACAO"]:
+            df_novo = self.inputValues(df, df_novo, infos)
 
-            valor_str = valor
+            logger.info("Iniciando processo de edicao do BTW")
+            logger.info("Iniciando processo de edicao do BTW")
 
-            if type(valor) == str :
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-                valor_str = str(valor)
+            valores_tratados = []
 
-                valor_teste = valor_str.replace("%", "")
-                valor_teste = valor_teste.strip()
-                valor_teste = valor_teste.split(" ")[-1]
-                valor_teste = valor_teste.replace(",", ".")
-                if valor_teste == "SAQUE":
-                    valor_teste = "0"
-                valor_str = float(valor_teste)
+            for valor in df_novo["DSC_OBSERVACAO"]:
 
-            valores_tratados.append(valor_str)
+                valor_str = valor
 
-        df_novo["PCL_TAXA_EMPRESTIMO"] = valores_tratados
+                if type(valor) == str :
 
-        df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-        df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
-        df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-        df_novo["NUM_BANCO"] = 70
-        df_novo["NOM_BANCO"] = 'BRB - BANCO DE BRASÍLIA'
-        df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-        df_novo["DSC_OBSERVACAO"] = None
+                    valor_str = str(valor)
 
-        return df_novo
+                    valor_teste = valor_str.replace("%", "")
+                    valor_teste = valor_teste.strip()
+                    valor_teste = valor_teste.split(" ")[-1]
+                    valor_teste = valor_teste.replace(",", ".")
+                    if valor_teste == "SAQUE":
+                        valor_teste = "0"
+                    valor_str = float(valor_teste)
+
+                valores_tratados.append(valor_str)
+
+            df_novo["PCL_TAXA_EMPRESTIMO"] = valores_tratados
+
+            logger.info("Iniciando processo de edicao do BTW")
+
+            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
+            df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["NUM_BANCO"] = 70
+            df_novo["NOM_BANCO"] = 'BRB - BANCO DE BRASÍLIA'
+            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DSC_OBSERVACAO"] = None
+
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar BrbInconta")
+            logger.error("Erro ao editar BrbInconta")
+            return "Erro ao editar BrbInconta"
+        finally:
+            logger.info("Finalizado processo de edicao BrbInconta")

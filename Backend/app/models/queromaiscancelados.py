@@ -1,61 +1,74 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import convertValues
+import logging
+from .bank import Bank
 
-def queromaiscancelados(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_excel(df)
+class Queromaiscancelados(Bank):
+    def __init__(self, name = "QUERO MAIS CREDITO", num = 3030, type = "excel"):
+        super().__init__(name, num, type)
 
-    infos = {
-       "CONTRATO":"NUM_PROPOSTA",
-       "Valor Prêmio":"VAL_COMISSAO",
-    }
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def run(self, df):
 
-    df_novo = createDataframe()
+        try:
+            logger.info("Iniciando processo de edicao do Queromaiscancelados")
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            df = self.readArchive(df)
 
-    list_val_bruto = []
+            infos = {
+               "CONTRATO":"NUM_PROPOSTA",
+               "Valor Prêmio":"VAL_COMISSAO",
+            }
 
-    for prop in df_novo["NUM_PROPOSTA"]:
-        data = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={prop}")
-        if data:
-            result = data.json()
-            list_val_bruto.append(result[0]["bruto"])
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-    df_novo["VAL_BRUTO"] = list_val_bruto
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-    valores_tratados = []
+            list_val_bruto = []
 
-    for valor in df_novo["VAL_BRUTO"]:
+            for prop in df_novo["NUM_PROPOSTA"]:
+                data = requests.get(f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={prop}")
+                if data:
+                    result = data.json()
+                    list_val_bruto.append(result[0]["bruto"])
 
-        valor_str = valor
+            df_novo["VAL_BRUTO"] = list_val_bruto
 
-        if type(valor) == str :
+            df_novo["VAL_BRUTO"] = convertValues(df_novo, "VAL_BRUTO")
 
-            valor_str = str(valor)
+            df_novo["NUM_BANCO"] = 3030
+            df_novo["NOM_BANCO"] = 'QUERO MAIS CREDITO'
+            df_novo["DAT_CREDITO"] = datetime.now().date()
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BRUTO"]
+            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BRUTO"]
+            df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BRUTO"] * 100
+            df_novo["TIPO_COMISSAO_BANCO"] = 'ESTORNO'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_BRUTO"] = valores_tratados
-
-    df_novo["NUM_BANCO"] = 3030
-    df_novo["NOM_BANCO"] = 'QUERO MAIS CREDITO'
-    df_novo["DAT_CREDITO"] = datetime.now().date()
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BRUTO"]
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BRUTO"]
-    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BRUTO"] * 100
-    df_novo["TIPO_COMISSAO_BANCO"] = 'ESTORNO'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
-    return df_novo
+            logger.info("Processamento do Queromaiscancelados finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Queromaiscancelados")
+            logger.error("Erro ao editar Queromaiscancelados")
+            return "Erro ao editar Queromaiscancelados"
+        finally:
+            logger.info("Finalizado processo de edicao Queromaiscancelados")

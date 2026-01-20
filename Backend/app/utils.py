@@ -69,8 +69,8 @@ def convertValues(df_novo, columns):
         if type(valor) == str :
 
             valor_str = str(valor)
-
-            valor_teste = valor_str.replace(".", "")
+            valor_teste = valor_str.replace("R$", "")
+            valor_teste = valor_teste.replace(".", "")
             valor_teste = valor_teste.replace(",", ".")
             valor_str = float(valor_teste)
 

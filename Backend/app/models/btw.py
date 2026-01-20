@@ -84,7 +84,6 @@ class Btw(Bank):
             logger.exception("Erro ao renomear colunas")
             return df_encontrado, df
 
-
     def meses(self, mes):
 
         meses= {
@@ -106,7 +105,7 @@ class Btw(Bank):
 
     def run(self, df):
         try:
-            logger.info("Iniciando processamento do BTW")
+            logger.info("Iniciando processo de edicao do BTW")
 
             df_encontrado, name = self.findArchive(df)
 
@@ -153,6 +152,9 @@ class Btw(Bank):
 
             logger.info("Processamento do BTW finalizado com sucesso")
             return df_novo
-        except Exception as e:
-            logger.exception("Erro no processamento do BTW")
-            return f"Erro no processamento: {str(e)}"
+        except Exception:
+            logger.exception("Erro ao editar BTW")
+            logger.error("Erro ao editar BTW")
+            return "Erro ao editar BTW"
+        finally:
+            logger.info("Finalizado processo de edicao BTW")

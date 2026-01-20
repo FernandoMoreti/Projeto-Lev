@@ -1,35 +1,61 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
-from ..utils import createDataframe, inputValueColumns, validDf
+import logging
+from .bank import Bank
 
-def nyc(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_excel(df, header=1)
-    df = df.iloc[:-2]
+class Nyc(Bank):
+    def __init__(self, name = "NYC BANK", num = 1728, type = "excel"):
+        super().__init__(name, num, type)
 
-    infos ={
-       "Id":"NUM_PROPOSTA",
-       "DataFinalização":"DAT_CREDITO",
-       "ValorLiquido":"VAL_BASE_COMISSAO",
-       "Valor Comissão Líquida":"VAL_COMISSAO",
-       "% Comissão Líquida":"PCL_COMISSAO"
-    }
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df, header=1)
+            df = df.iloc[:-2]
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def run(self, df):
 
-    df_novo = createDataframe()
+        try:
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            df = self.readArchive(df)
 
-    df_novo["NUM_BANCO"] = '1728'
-    df_novo["NOM_BANCO"] = 'NYC BANK'
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            infos ={
+               "Id":"NUM_PROPOSTA",
+               "DataFinalização":"DAT_CREDITO",
+               "ValorLiquido":"VAL_BASE_COMISSAO",
+               "Valor Comissão Líquida":"VAL_COMISSAO",
+               "% Comissão Líquida":"PCL_COMISSAO"
+            }
 
-    if"PCL_COMISSAO"in df_novo.columns:
-        df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-    return df_novo
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
+
+            df_novo["NUM_BANCO"] = '1728'
+            df_novo["NOM_BANCO"] = 'NYC BANK'
+            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+            if"PCL_COMISSAO"in df_novo.columns:
+                df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
+
+            logger.info("Processamento do Nyc finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Nyc")
+            logger.error("Erro ao editar Nyc")
+            return "Erro ao editar Nyc"
+        finally:
+            logger.info("Finalizado processo de edicao Nyc")
