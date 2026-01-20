@@ -1,49 +1,67 @@
 import pandas as pd
 import requests
+from ..utils import convertValues
+import logging
+from .bank import Bank
 
-def facta(df):
-    df = pd.read_excel(df, engine="openpyxl")
+logger = logging.getLogger("bancos")
 
-    session = requests.Session()
-    bruto_por_proposta = {}
-    list_props = []
+class Facta(Bank):
+    def __init__(self, name = "FACTA", num = 0, type = "excel"):  # num não especificado, coloquei 0
+        super().__init__(name, num, type)
 
-    for idx in df.index:
-        obs = str(df.at[idx, "OBSERVACAO"])
-        proposta = df.at[idx, "CODIGOAF"]
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df, engine="openpyxl")
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-        list_props.append(proposta)
-        if "PGTO ADIANTAMENTO" in obs and proposta not in bruto_por_proposta:
-            try:
-                response = session.get(
-                    f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
-                    timeout=10
-                )
-                data = response.json()
+    def run(self, df):
 
-                if data[0]["tipo"] == "PORTAB/REFIN":
-                    bruto_por_proposta[proposta] = data[0]["bruto"]
+        try:
+            logger.info("Iniciando processo de edicao do Facta")
 
-            except Exception as e:
-                print(f"Erro proposta {proposta}: {e}")
+            df = self.readArchive(df)
+            if isinstance(df, str):
+                return df
 
-    df["VLRAF"] = df["CODIGOAF"].map(bruto_por_proposta).fillna(df["VLRAF"])
+            session = requests.Session()
+            bruto_por_proposta = {}
+            list_props = []
 
-    valores_tratados = []
+            for idx in df.index:
+                obs = str(df.at[idx, "OBSERVACAO"])
+                proposta = df.at[idx, "CODIGOAF"]
 
-    for valor in df["VLRAF"]:
-        valor_str = valor
+                list_props.append(proposta)
+                if "PGTO ADIANTAMENTO" in obs and proposta not in bruto_por_proposta:
+                    try:
+                        response = session.get(
+                            f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
+                            timeout=10
+                        )
+                        data = response.json()
 
-        if type(valor) == str :
+                        if data[0]["tipo"] == "PORTAB/REFIN":
+                            bruto_por_proposta[proposta] = data[0]["bruto"]
 
-            valor_str = str(valor)
+                    except Exception as e:
+                        logger.error(f"Erro proposta {proposta}: {e}")
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df["VLRAF"] = df["CODIGOAF"].map(bruto_por_proposta).fillna(df["VLRAF"])
 
-        valores_tratados.append(valor_str)
+            df["VLRAF"] = convertValues(df, "VLRAF")
 
-    df["VLRAF"] = valores_tratados
-
-    return df
+            logger.info("Processamento do Facta finalizado com sucesso")
+            return df
+        except Exception:
+            logger.exception("Erro ao editar Facta")
+            logger.error("Erro ao editar Facta")
+            return "Erro ao editar Facta"
+        finally:
+            logger.info("Finalizado processo de edicao Facta")

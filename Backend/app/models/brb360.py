@@ -24,32 +24,40 @@ class Brb360(Bank):
 
     def run(self, df):
 
-        df = self.readArchive(df)
+        try:
 
-        infos ={
-            "PROPOSTA": "NUM_PROPOSTA",
-            "DT PAGTO": "DAT_CREDITO",
-            "VR BASE": "VAL_BASE_COMISSAO",
-            "VR CMS": "VAL_COMISSAO",
-            "% CMS": "PCL_COMISSAO",
-            "TIPO CMS": "TIPO_COMISSAO_BANCO"
-        }
+            df = self.readArchive(df)
 
-        Error = self.validDataframe(df, infos)
-        if Error:
-            return Error
+            infos ={
+                "PROPOSTA": "NUM_PROPOSTA",
+                "DT PAGTO": "DAT_CREDITO",
+                "VR BASE": "VAL_BASE_COMISSAO",
+                "VR CMS": "VAL_COMISSAO",
+                "% CMS": "PCL_COMISSAO",
+                "TIPO CMS": "TIPO_COMISSAO_BANCO"
+            }
 
-        df_novo = self.createDataframe()
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-        df_novo = self.inputValues(df, df_novo, infos)
+            df_novo = self.createDataframe()
 
-        df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
-        df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo = self.inputValues(df, df_novo, infos)
 
-        df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-        df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-        df_novo["NUM_BANCO"] = 701
-        df_novo["NOM_BANCO"] = 'BRB'
-        df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-        return df_novo
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["NUM_BANCO"] = 701
+            df_novo["NOM_BANCO"] = 'BRB'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Brb360")
+            logger.error("Erro ao editar Brb360")
+            return "Erro ao editar Brb360"
+        finally:
+            logger.info("Finalizado processo de edicao Brb360")

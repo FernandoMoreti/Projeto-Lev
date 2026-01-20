@@ -1,39 +1,67 @@
 import pandas as pd
 from datetime import datetime
-from ..utils import createDataframe, inputValueColumns, validDf
+import logging
+from .bank import Bank
 
-def neo(df):
+logger = logging.getLogger("bancos")
 
-    data = df.filename.split("_")[1].split(".")[0]
-    resultado = f"{data[:2]}/{data[2:4]}/{data[4:]}"
+class Neo(Bank):
+    def __init__(self, name = "NEO CREDITO", num = 3333333, type = "excel"):
+        super().__init__(name, num, type)
 
-    df = pd.read_excel(df)
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    infos ={
-       "PROPOSTA":"NUM_PROPOSTA",
-       "VALOR BRUTO":"VAL_BASE_COMISSAO",
-       "CMS R$":"VAL_COMISSAO",
-       "CMS %":"PCL_COMISSAO",
-    }
+    def run(self, df):
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+        try:
 
-    df_novo = createDataframe()
+            data = df.filename.split("_")[1].split(".")[0]
+            resultado = f"{data[:2]}/{data[2:4]}/{data[4:]}"
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            df = self.readArchive(df)
 
-    tamanho = len(df_novo)
+            infos ={
+               "PROPOSTA":"NUM_PROPOSTA",
+               "VALOR BRUTO":"VAL_BASE_COMISSAO",
+               "CMS R$":"VAL_COMISSAO",
+               "CMS %":"PCL_COMISSAO",
+            }
 
-    df_novo = df_novo.drop(index=[tamanho -1, tamanho -2, tamanho -3, tamanho -4])
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-    df_novo["PCL_COMISSAO"] = round(df_novo["PCL_COMISSAO"] * 100, 2)
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-    df_novo["NUM_BANCO"] = 3333333
-    df_novo["NOM_BANCO"] = "NEO CREDITO"
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-    df_novo["DAT_CREDITO"] = resultado
+            tamanho = len(df_novo)
 
-    return df_novo
+            df_novo = df_novo.drop(index=[tamanho -1, tamanho -2, tamanho -3, tamanho -4])
+
+            df_novo["PCL_COMISSAO"] = round(df_novo["PCL_COMISSAO"] * 100, 2)
+
+            df_novo["NUM_BANCO"] = 3333333
+            df_novo["NOM_BANCO"] = "NEO CREDITO"
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DAT_CREDITO"] = resultado
+
+            logger.info("Processamento do Neo finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Neo")
+            logger.error("Erro ao editar Neo")
+            return "Erro ao editar Neo"
+        finally:
+            logger.info("Finalizado processo de edicao Neo")

@@ -1,49 +1,62 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import convertValues
+import logging
+from .bank import Bank
 
-def kardbank(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_html(df, header=0)[0]
+class Kardbank(Bank):
+    def __init__(self, name = "KARDBANK", num = 6910, type = "html"):
+        super().__init__(name, num, type)
 
-    infos ={
-        "Número Ade":"NUM_PROPOSTA",
-        "Data Pgto Vendedor":"DAT_CREDITO",
-        "Valor Bruto":"VAL_BASE_COMISSAO",
-        "% Comissão":"PCL_COMISSAO",
-    }
+    def readArchive(self, df):
+        try:
+            df = pd.read_html(df, header=0)[0]
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def run(self, df):
 
-    df_novo = createDataframe()
+        try:
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            df = self.readArchive(df)
 
-    valores_tratados = []
+            infos ={
+                "Número Ade":"NUM_PROPOSTA",
+                "Data Pgto Vendedor":"DAT_CREDITO",
+                "Valor Bruto":"VAL_BASE_COMISSAO",
+                "% Comissão":"PCL_COMISSAO",
+            }
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-        valor_str = valor
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-        if type(valor) == str :
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
 
-            valor_str = str(valor)
-            valor_teste = valor_str.replace("R$ ", "")
-            valor_teste = valor_teste.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo["NOM_BANCO"] = "KARDBANK"
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] * (df_novo["PCL_COMISSAO"] / 100)
+            df_novo["NUM_BANCO"] = 6910
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    df_novo["NOM_BANCO"] = "KARDBANK"
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] * (df_novo["PCL_COMISSAO"] / 100)
-    df_novo["NUM_BANCO"] = 6910
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-
-    return df_novo
+            logger.info("Processamento do Kardbank finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Kardbank")
+            logger.error("Erro ao editar Kardbank")
+            return "Erro ao editar Kardbank"
+        finally:
+            logger.info("Finalizado processo de edicao Kardbank")

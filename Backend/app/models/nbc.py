@@ -1,85 +1,68 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import convertValues
+import logging
+from .bank import Bank
 
-def nbc(df):
-    df = pd.read_excel(df, header=10)
+logger = logging.getLogger("bancos")
 
-    infos = {
-        "Nr. Proposta": "NUM_PROPOSTA",
-        "Base de Cálculo": "VAL_BASE_COMISSAO",
-        "Valor da Comissão": "VAL_COMISSAO",
-        "Percentual": "PCL_COMISSAO",
-        "Data Base": "DAT_CREDITO"
-    }
+class Nbc(Bank):
+    def __init__(self, name = "NBC BANK", num = 753, type = "excel"):
+        super().__init__(name, num, type)
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df, header=10)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    df_novo = createDataframe()
+    def run(self, df):
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+        try:
 
-    length = len(df_novo["NUM_PROPOSTA"])
-    df_novo = df_novo.drop(df_novo.index[length-1])
-    df_novo = df_novo.drop(df_novo.index[length-2])
-    df_novo = df_novo.drop(df_novo.index[length-3])
+            df = self.readArchive(df)
 
-    valores_tratados = []
+            infos = {
+                "Nr. Proposta": "NUM_PROPOSTA",
+                "Base de Cálculo": "VAL_BASE_COMISSAO",
+                "Valor da Comissão": "VAL_COMISSAO",
+                "Percentual": "PCL_COMISSAO",
+                "Data Base": "DAT_CREDITO"
+            }
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
-        valor_str = valor
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-        if type(valor) == str :
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-            valor_str = str(valor)
+            length = len(df_novo["NUM_PROPOSTA"])
+            df_novo = df_novo.drop(df_novo.index[length-1])
+            df_novo = df_novo.drop(df_novo.index[length-2])
+            df_novo = df_novo.drop(df_novo.index[length-3])
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo["PCL_COMISSAO"] = convertValues(df_novo, "PCL_COMISSAO")
 
-        valores_tratados.append(valor_str)
+            df_novo["NUM_BANCO"] = 753
+            df_novo["NOM_BANCO"] = "NBC BANK"
+            df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    valores_tratados = []
-
-    for valor in df_novo["VAL_COMISSAO"]:
-        valor_str = valor
-
-        if type(valor) == str :
-
-            valor_str = str(valor)
-
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_COMISSAO"] = valores_tratados
-
-    valores_tratados = []
-
-    for valor in df_novo["PCL_COMISSAO"]:
-        valor_str = valor
-
-        if type(valor) == str :
-
-            valor_str = str(valor)
-
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["PCL_COMISSAO"] = valores_tratados
-
-    df_novo["NUM_BANCO"] = 753
-    df_novo["NOM_BANCO"] = "NBC BANK"
-    df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-
-    return df_novo
+            logger.info("Processamento do Nbc finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Nbc")
+            logger.error("Erro ao editar Nbc")
+            return "Erro ao editar Nbc"
+        finally:
+            logger.info("Finalizado processo de edicao Nbc")

@@ -1,31 +1,61 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+import logging
+from .bank import Bank
 
-def c6equity(df):
-    df = pd.read_excel(df)
+logger = logging.getLogger("bancos")
 
-    infos = {
-        "CD CONTRATO": "NUM_PROPOSTA",
-        "DT PRODUÇÃO": "DAT_CREDITO",
-        "VL PRINCIPAL": "VAL_BASE_COMISSAO",
-        "PC COMISSAO FLAT": "PCL_COMISSAO",
-        "VALOR COMISSAO": "VAL_COMISSAO"
-    }
+class C6equity(Bank):
+    def __init__(self, name = "C6 BANK", num = 336, type = "excel"):
+        super().__init__(name, num, type)
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    df_novo = createDataframe()
+    def run(self, df):
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+        try:
+            logger.info("Iniciando processo de edicao do C6equity")
 
-    df_novo["NUM_BANCO"] = 336
-    df_novo["NOM_BANCO"] = 'C6 BANK'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
-    df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            df = self.readArchive(df)
 
-    return df_novo
+            infos = {
+                "CD CONTRATO": "NUM_PROPOSTA",
+                "DT PRODUÇÃO": "DAT_CREDITO",
+                "VL PRINCIPAL": "VAL_BASE_COMISSAO",
+                "PC COMISSAO FLAT": "PCL_COMISSAO",
+                "VALOR COMISSAO": "VAL_COMISSAO"
+            }
+
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
+
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
+
+            df_novo["NUM_BANCO"] = 336
+            df_novo["NOM_BANCO"] = 'C6 BANK'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+
+            logger.info("Processamento do C6equity finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar C6equity")
+            logger.error("Erro ao editar C6equity")
+            return "Erro ao editar C6equity"
+        finally:
+            logger.info("Finalizado processo de edicao C6equity")

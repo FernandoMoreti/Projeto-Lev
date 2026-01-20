@@ -1,63 +1,62 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+import logging
+from ..utils import convertValues
+from .bank import Bank
 
-def grandino(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_csv(df, sep=";")
+class Grandino(Bank):
+    def __init__(self, name = "GRANDINO LTDA", num = 88888, type = "csv"):
+        super().__init__(name, num, type)
 
-    infos ={
-       "Nro Proposta":"NUM_PROPOSTA",
-       "Data de Fechamento":"DAT_CREDITO",
-       "Base de Cálculo":"VAL_BASE_COMISSAO",
-       "Valor Comissão":"VAL_COMISSAO",
-       "Porcentagem":"PCL_COMISSAO"
-    }
+    def readArchive(self, df):
+        try:
+            df = pd.read_csv(df, sep=";")
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def run(self, df):
 
-    df_novo = createDataframe()
+        try:
+            logger.info("Iniciando processo de edicao do Grandino")
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            df = self.readArchive(df)
 
-    valores_tratados = []
+            infos ={
+               "Nro Proposta":"NUM_PROPOSTA",
+               "Data de Fechamento":"DAT_CREDITO",
+               "Base de Cálculo":"VAL_BASE_COMISSAO",
+               "Valor Comissão":"VAL_COMISSAO",
+               "Porcentagem":"PCL_COMISSAO"
+            }
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
-        valor_str = valor
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-        if type(valor) == str :
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-            valor_str = str(valor)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo["NUM_BANCO"] = '88888'
+            df_novo["NOM_BANCO"] = 'GRANDINO LTDA'
+            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    valores_tratados = []
-
-    for valor in df_novo["VAL_COMISSAO"]:
-        valor_str = valor
-
-        if type(valor) == str :
-
-            valor_str = str(valor)
-
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_COMISSAO"] = valores_tratados
-
-    df_novo["NUM_BANCO"] = '88888'
-    df_novo["NOM_BANCO"] = 'GRANDINO LTDA'
-    df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
-    return df_novo
+            logger.info("Processamento do Grandino finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Grandino")
+            logger.error("Erro ao editar Grandino")
+            return "Erro ao editar Grandino"
+        finally:
+            logger.info("Finalizado processo de edicao Grandino")
