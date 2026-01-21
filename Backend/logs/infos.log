@@ -150,3 +150,8 @@ ImportError: Missing optional dependency 'html5lib'.  Use pip or conda to instal
 2026-01-21 11:53:54,436 | INFO | infos | Recebemos um retorno valido e OK da funcao
 2026-01-21 11:53:54,527 | INFO | infos | Arquivo convertido em excel e enviado para download
 2026-01-21 11:53:54,528 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-21 12:25:31,718 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-21 12:25:31,720 | INFO | infos | Arquivo: <FileStorage: 'TOTAL_CASH_PLUS_SERVICOS_DE_INFORMACOES_CADASTRAIS_LTDA 20.01.xlsx' ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')> do banco totalcash enviado para tratamento
+2026-01-21 12:25:42,766 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-21 12:25:42,837 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-21 12:25:42,838 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download

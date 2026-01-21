@@ -116,3 +116,9 @@ KeyError: 'VAL'
 2026-01-21 11:53:44,046 | INFO | bancos | Criando novo DataFrame
 2026-01-21 11:53:54,434 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
 2026-01-21 11:53:54,435 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 12:25:31,720 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 12:25:31,980 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 12:25:31,980 | INFO | bancos | Validando DataFrame
+2026-01-21 12:25:31,981 | INFO | bancos | Criando novo DataFrame
+2026-01-21 12:25:42,764 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
+2026-01-21 12:25:42,765 | INFO | bancos | Finalizado processo de edicao Totalcash

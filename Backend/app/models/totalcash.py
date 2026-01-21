@@ -13,7 +13,12 @@ class Totalcash(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df)
+            df = pd.read_excel(df, usecols=[
+                    "Nr Proposta",
+                    "Valor Liberado Cliente",
+                    "Valor Comissão",
+                    "Taxa Pagamento"
+                ])
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -44,6 +49,12 @@ class Totalcash(Bank):
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
+
+            del df
+
+            mask_estorno = df_novo["VAL_COMISSAO"] < 0
+
+            df_novo.loc[~mask_estorno, "TIPO_COMISSAO_BANCO"] = "DIRETA"
 
             session = requests.Session()
 
