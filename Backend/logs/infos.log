@@ -1,0 +1,5 @@
+2026-01-21 10:00:58,945 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-21 10:00:58,947 | INFO | infos | Arquivo: <FileStorage: 'Pagamentos_LECCA_20260120 - Plus.xlsx' ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')> do banco btw enviado para tratamento
+2026-01-21 10:00:59,473 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-21 10:00:59,521 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-21 10:00:59,522 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
