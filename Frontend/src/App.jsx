@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import logo from "../public/logo.jpg"
-import { createScope, createDraggable, createSpring } from "animejs"
 
 function App() {
 
@@ -11,24 +10,6 @@ function App() {
   const [validar, setValidar] = useState(false)
   const [mostrar, setMostrar] = useState(false)
   const [mensagem, setMensagem] = useState(false)
-
-  const root = useRef(null);
-  const scope = useRef(null);
-
-  useEffect(() => {
-
-    scope.current = createScope({ root }).add( () => {
-
-      createDraggable('.logo', {
-        container: [0, 0, 0, 0],
-        releaseEase: createSpring({ stiffness: 200 })
-      });
-
-    });
-
-    return () => scope.current.revert()
-
-  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -90,8 +71,6 @@ function App() {
   const bancos = [
     "Aki",
     "Amigoz",
-    "Ayude",
-    "BmgSeguro",
     "BRB360",
     "BRBInconta",
     "BTW",
@@ -137,7 +116,7 @@ function App() {
 
   return (
     <>
-      <div ref={root}>
+      <div>
         <section className='flex flex-col h-screen'>
           <p className={`absolute p-5 w-full text-white transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : mensagem ? "Faltando credenciais" : "Não foi possivel editar"}</p>
           <div className='flex-1 flex justify-center items-center bg-black/10'>

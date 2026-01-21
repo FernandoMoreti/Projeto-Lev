@@ -1,95 +1,91 @@
-from .aki import aki
-from .amigoz import amigoz
-from .ayude import ayude
-from .bmgseguro import bmgseguro
-from .brb360 import brb360
-from .brbInconta import brbInconta
-from .btw import btw
-from .bv import bv
-from .c6auto import c6auto
-from .c6bankcreditomanual import c6bankcreditomanual
-from .c6bankcomissao import c6bankcomissao
-from .c6bankdebitomanual import c6bankdebitomanual
-from .c6equity import c6equity
-from .caixa import caixa
-from .crefisa import crefisa
-from .digio import digio
-from .empresteicred import empresteicred
-from .euro import euro
-from .evol import evol
-from .facta import facta
-from .grandino import grandino
-from .happy import happy
-from .hope import hope
-from .icred import icred
-from .jbcred import jbcred
-from .kardbank import kardbank
-from .nbc import nbc
-from .neo import neo
-from .novosaque import novosaque
-from .novosaquecartao import novosaquecartao
-from .nyc import nyc
-from .paranabank import paranabank
-from .phtech import phtech
-from .presenca import presenca
-from .qualibank import qualibank
-from .queromaiscancelados import queromaiscancelados
-from .queromaiscomissao import queromaiscomisssao
-from .queromaisseguro import queromaisseguro
-from .safracomissaozero import safracomissaozero
-from .santanderfit import santanderfit
-from .santanderFve6 import santanderfvevi
-from .santanderolewl import santanderolewl
-from .totalcash import totalcash
-from .v8 import v8
-from .vctex import vctex
-from .webcash import webcash
+from .aki import Aki
+from .amigoz import Amigoz
+from .brb360 import Brb360
+from .brbInconta import Brbinconta
+from .btw import Btw
+from .bv import Bv
+from .c6auto import C6auto
+from .c6bankcreditomanual import C6bankcreditomanual
+from .c6bankcomissao import C6bankcomissao
+from .c6bankdebitomanual import C6bankdebitomanual
+from .c6equity import C6equity
+from .caixa import Caixa
+from .crefisa import Crefisa
+from .digio import Digio
+from .empresteicred import Empresteicred
+from .euro import Euro
+from .evol import Evol
+from .facta import Facta
+from .grandino import Grandino
+from .happy import Happy
+from .hope import Hope
+from .icred import Icred
+from .jbcred import Jbcred
+from .kardbank import Kardbank
+from .nbc import Nbc
+from .neo import Neo
+from .novosaque import Novosaque
+from .novosaquecartao import Novosaquecartao
+from .nyc import Nyc
+from .paranabank import Paranabank
+from .phtech import Phtech
+from .presenca import Presenca
+from .qualibank import Qualibank
+from .queromaiscancelados import Queromaiscancelados
+from .queromaiscomissao import Queromaiscomissao
+from .queromaisseguro import Queromaisseguro
+from .safracomissaozero import Safracomissaozero
+from .santanderfit import Santanderfit
+from .santanderFve6 import Santanderfvevi
+from .santanderolewl import Santanderolewl
+from .totalcash import Totalcash
+from .v8 import V8
+from .vctex import Vctex
+from .webcash import Webcash
 
 bancos = {
-    "aki": aki,
-    "amigoz": amigoz,
-    "ayude": ayude,
-    "bmgseguro": bmgseguro,
-    "brb360": brb360,
-    "brbinconta": brbInconta,
-    "btw": btw,
-    "bv": bv,
-    "c6auto": c6auto,
-    "c6bankcreditomanual": c6bankcreditomanual,
-    "c6bankcomissao": c6bankcomissao,
-    "c6bankdebitomanual": c6bankdebitomanual,
-    "c6equity": c6equity,
-    "caixa": caixa,
-    "crefisa": crefisa,
-    "digio": digio,
-    "empresteicred": empresteicred,
-    "euro": euro,
-    "evol": evol,
-    "facta": facta,
-    "grandino": grandino,
-    "happy": happy,
-    "hope": hope,
-    "icred": icred,
-    "jbcred": jbcred,
-    "kardbank": kardbank,
-    "nbc": nbc,
-    "neo": neo,
-    "novosaque": novosaque,
-    "novosaquecartao": novosaquecartao,
-    "nyc": nyc,
-    "paranabank": paranabank,
-    "phtech": phtech,
-    "presenca": presenca,
-    "qualibank": qualibank,
-    "queromaiscancelados": queromaiscancelados,
-    "queromaiscomissao": queromaiscomisssao,
-    "queromaisseguro": queromaisseguro,
-    "safracomissaozero": safracomissaozero,
-    "santanderfit": santanderfit,
-    "santanderfvevi": santanderfvevi,
-    "santanderolewl": santanderolewl,
-    "totalcash": totalcash,
-    "v8": v8,
-    "vctex": vctex,
-    "webcash": webcash
+    "aki": lambda df: Aki().run(df),
+    "amigoz": lambda df: Amigoz().run(df),
+    "brb360": lambda df: Brb360().run(df),
+    "brbinconta": lambda df: Brbinconta().run(df),
+    "btw": lambda df: Btw().run(df),
+    "bv": lambda df: Bv().run(df),
+    "c6auto": lambda df: C6auto().run(df),
+    "c6bankcreditomanual": lambda df: C6bankcreditomanual().run(df),
+    "c6bankcomissao": lambda df: C6bankcomissao().run(df),
+    "c6bankdebitomanual": lambda df: C6bankdebitomanual().run(df),
+    "c6equity": lambda df: C6equity().run(df),
+    "caixa": lambda df: Caixa().run(df),
+    "crefisa": lambda df: Crefisa().run(df),
+    "digio": lambda df: Digio().run(df),
+    "empresteicred": lambda df: Empresteicred().run(df),
+    "euro": lambda df: Euro().run(df),
+    "evol": lambda df: Evol().run(df),
+    "facta": lambda df: Facta().run(df),
+    "grandino": lambda df: Grandino().run(df),
+    "happy": lambda df: Happy().run(df),
+    "hope": lambda df: Hope().run(df),
+    "icred": lambda df: Icred().run(df),
+    "jbcred": lambda df: Jbcred().run(df),
+    "kardbank": lambda df: Kardbank().run(df),
+    "nbc": lambda df: Nbc().run(df),
+    "neo": lambda df: Neo().run(df),
+    "novosaque": lambda df: Novosaque().run(df),
+    "novosaquecartao": lambda df: Novosaquecartao().run(df),
+    "nyc": lambda df: Nyc().run(df),
+    "paranabank": lambda df: Paranabank().run(df),
+    "phtech": lambda df: Phtech().run(df),
+    "presenca": lambda df: Presenca().run(df),
+    "qualibank": lambda df: Qualibank().run(df),
+    "queromaiscancelados": lambda df: Queromaiscancelados().run(df),
+    "queromaiscomissao": lambda df: Queromaiscomissao().run(df),
+    "queromaisseguro": lambda df: Queromaisseguro().run(df),
+    "safracomissaozero": lambda df: Safracomissaozero().run(df),
+    "santanderfit": lambda df: Santanderfit().run(df),
+    "santanderfvevi": lambda df: Santanderfvevi().run(df),
+    "santanderolewl": lambda df: Santanderolewl().run(df),
+    "totalcash": lambda df: Totalcash().run(df),
+    "v8": lambda df: V8().run(df),
+    "vctex": lambda df: Vctex().run(df),
+    "webcash": lambda df: Webcash().run(df)
 }

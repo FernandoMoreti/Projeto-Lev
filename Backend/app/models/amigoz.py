@@ -1,29 +1,28 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import validDf
+import logging
+from .bank import Bank
 
-def amigoz(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_excel(df)
+class Amigoz(Bank):
+    def __init__(self, name = "AMIGOZ", num = 7996, type = "excel"):
+        super().__init__(name, num, type)
 
-    infos ={
-       "Nr Proposta": "NUM_PROPOSTA",
-       "Data Status": "DAT_CREDITO",
-       "Observações": "DSC_OBSERVACAO"
-    }
+    def readArchive(self, df):
+        try:
+            logger.info("Inicio do processo de leitura do df-Amigoz")
+            df = pd.read_excel(df)
+            logger.info("Lido o arquivo do Amigoz")
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.erro("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
-
-    df_novo = createDataframe()
-
-    df_novo = inputValueColumns(df, df_novo, infos)
-
-    df_novo["NUM_BANCO"] = '7996'
-    df_novo["NOM_BANCO"] = 'AMIGOZ'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
-    def expandir_linhas(row_original, row_mapeada):
+    def expandir_linhas(self, row_original, row_mapeada):
         novas_linhas = []
 
         # Criar linha seguro
@@ -104,30 +103,53 @@ def amigoz(df):
 
         return novas_linhas
 
-    # Aplicar a expansão de linhas
-    linhas_expandidas = []
-    for index, row_original in df.iterrows():
-        row_mapeada = df_novo.loc[index].to_dict() if index < len(df_novo) else {}
-        linhas_expandidas.append(row_mapeada)
-        linhas_expandidas.extend(expandir_linhas(row_original, row_mapeada))
+    def run(self, df):
+        try:
+            df = self.readArchive(df)
 
-    df_novo = pd.DataFrame(linhas_expandidas)
+            infos ={
+                "Nr Proposta": "NUM_PROPOSTA",
+                "Data Status": "DAT_CREDITO",
+                "Observações": "DSC_OBSERVACAO"
+            }
 
-    if "PCL_COMISSAO" in df_novo.columns:
-        df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
+            logger.info("Validando dataframe")
 
-    if "DAT_CREDITO" in df_novo.columns:
-        df_novo['DAT_CREDITO'] = pd.to_datetime(df_novo['DAT_CREDITO'], errors='coerce')
-        data_arquivo = pd.Timestamp.now()
-        df_novo.loc[df_novo["DAT_CREDITO"].isna(), "DAT_CREDITO"] = data_arquivo
-        df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%d/%m/%Y')
+            Error = validDf(df, infos)
+            if Error:
+                return Error
 
+            logger.info("Dataframe validado")
+            logger.info("Criando Dataframe")
 
-    if "DSC_OBSERVACAO" in df_novo.columns:
-        mask = df_novo["DSC_OBSERVACAO"] == "Credito devido estorno feito em duplicidade"
-        df_novo.loc[mask, "TIPO_COMISSAO_BANCO"] = "REEMBOLSO"
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-    df_novo = df_novo[df_novo["TIPO_COMISSAO_BANCO"].notna()]
-    df_novo = df_novo[df_novo["VAL_COMISSAO"].notna()]
+            logger.info("Dataframe criado com sucesso")
+            logger.info("Adicionando valores de forma fixa")
 
-    return df_novo
+            df_novo["NUM_BANCO"] = '7996'
+            df_novo["NOM_BANCO"] = 'AMIGOZ'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+            linhas_expandidas = []
+            for index, row_original in df.iterrows():
+                row_mapeada = df_novo.loc[index].to_dict() if index < len(df_novo) else {}
+                linhas_expandidas.append(row_mapeada)
+                linhas_expandidas.extend(self.expandir_linhas(row_original, row_mapeada))
+
+            df_novo = pd.DataFrame(linhas_expandidas)
+
+            if "DSC_OBSERVACAO" in df_novo.columns:
+                mask = df_novo["DSC_OBSERVACAO"] == "Credito devido estorno feito em duplicidade"
+                df_novo.loc[mask, "TIPO_COMISSAO_BANCO"] = "REEMBOLSO"
+
+            df_novo = df_novo[df_novo["TIPO_COMISSAO_BANCO"].notna()]
+            df_novo = df_novo[df_novo["VAL_COMISSAO"].notna()]
+            return df_novo
+        except:
+            logger.exception("Erro ao editar Amigoz")
+            logger.error("Erro ao editar Amigoz")
+            return "Erro ao editar Amigoz"
+        finally:
+            logger.info("Finalizado processo de edicao Amigoz")

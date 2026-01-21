@@ -1,73 +1,89 @@
 import pandas as pd
+import logging
 from datetime import datetime
+from ..utils import convertValues
 import requests
-from ..utils import createDataframe, inputValueColumns, validDf
+from .bank import Bank
 
-def totalcash(df):
-    df = pd.read_excel(df)
+logger = logging.getLogger("bancos")
 
-    infos = {
-        "Nr Proposta": "NUM_PROPOSTA",
-        "Valor Proposta": "VAL_BASE_COMISSAO",
-        "Valor Comissão": "VAL_COMISSAO",
-        "% Comissao": "PCL_COMISSAO",
-        "Taxa Pagamento": "PCL_TAXA_EMPRESTIMO"
-    }
+class Totalcash(Bank):
+    def __init__(self, name = "TOTALCASH", num = 1731, type = "excel"):
+        super().__init__(name, num, type)
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    df_novo = createDataframe()
+    def run(self, df):
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+        try:
+            logger.info("Iniciando processo de edicao do Totalcash")
 
-    session = requests.Session()
+            df = self.readArchive(df)
 
-    for idx in df_novo.index:
-        val_comissao = df_novo.at[idx, "VAL_COMISSAO"]
+            infos = {
+                "Nr Proposta": "NUM_PROPOSTA",
+                "Valor Proposta": "VAL_BASE_COMISSAO",
+                "Valor Comissão": "VAL_COMISSAO",
+                "% Comissao": "PCL_COMISSAO",
+                "Taxa Pagamento": "PCL_TAXA_EMPRESTIMO"
+            }
 
-        if val_comissao < 0:
-            proposta = df_novo.at[idx, "NUM_PROPOSTA"]
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-            try:
-                response = session.get(
-                    f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
-                    timeout=5
-                )
-                response.raise_for_status()
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-                data = response.json()
-                df_novo.at[idx, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
-                df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+            session = requests.Session()
 
-            except Exception as e:
-                df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ERRO_API"
-                print(f"Erro proposta {proposta}: {e}")
-        else:
-            df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+            for idx in df_novo.index:
+                val_comissao = df_novo.at[idx, "VAL_COMISSAO"]
 
-    valores_tratados = []
+                if val_comissao < 0:
+                    proposta = df_novo.at[idx, "NUM_PROPOSTA"]
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
-        valor_str = valor
+                    try:
+                        response = session.get(
+                            f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
+                            timeout=5
+                        )
+                        response.raise_for_status()
 
-        if type(valor) == str :
+                        data = response.json()
+                        df_novo.at[idx, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
+                        df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
 
-            valor_str = str(valor)
+                    except Exception as e:
+                        df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ERRO_API"
+                        print(f"Erro proposta {proposta}: {e}")
+                else:
+                    df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
 
-        valores_tratados.append(valor_str)
+            df_novo["NUM_BANCO"] = 1731
+            df_novo["NOM_BANCO"] = "TOTALCASH"
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["DAT_CREDITO"] = datetime.now().date()
+            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
 
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    df_novo["NUM_BANCO"] = 1731
-    df_novo["NOM_BANCO"] = "TOTALCASH"
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["DAT_CREDITO"] = datetime.now().date()
-    df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
-
-    return df_novo
+            logger.info("Processamento do Totalcash finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Totalcash")
+            logger.error("Erro ao editar Totalcash")
+            return "Erro ao editar Totalcash"
+        finally:
+            logger.info("Finalizado processo de edicao Totalcash")

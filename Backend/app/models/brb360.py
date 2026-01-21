@@ -1,67 +1,63 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import convertValues
+from .bank import Bank
+import logging
 
-def brb360(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_excel(df, header=2)
+class Brb360(Bank):
+    def __init__(self, name = "BRB", num = 701, type = "excel"):
+        super().__init__(name, num, type)
 
-    infos ={
-       "PROPOSTA": "NUM_PROPOSTA",
-       "DT PAGTO": "DAT_CREDITO",
-       "VR BASE": "VAL_BASE_COMISSAO",
-       "VR CMS": "VAL_COMISSAO",
-       "% CMS": "PCL_COMISSAO",
-       "TIPO CMS": "TIPO_COMISSAO_BANCO"
-    }
+    def readArchive(self, df):
+        try:
+            logger.info("Inicio do processo de leitura do df-BRB360")
+            df = pd.read_excel(df, header=2)
+            logger.info("Lido o arquivo do BRB360")
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.erro("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+           logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+    def run(self, df):
 
-    df_novo = createDataframe()
+        try:
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            df = self.readArchive(df)
 
-    valores_tratados = []
+            infos ={
+                "PROPOSTA": "NUM_PROPOSTA",
+                "DT PAGTO": "DAT_CREDITO",
+                "VR BASE": "VAL_BASE_COMISSAO",
+                "VR CMS": "VAL_COMISSAO",
+                "% CMS": "PCL_COMISSAO",
+                "TIPO CMS": "TIPO_COMISSAO_BANCO"
+            }
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
-        valor_str = valor
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-        if type(valor) == str :
+            df_novo = self.createDataframe()
 
-            valor_str = str(valor)
+            df_novo = self.inputValues(df, df_novo, infos)
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-        valores_tratados.append(valor_str)
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["NUM_BANCO"] = 701
+            df_novo["NOM_BANCO"] = 'BRB'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
-
-    valores_tratados = []
-
-    for valor in df_novo["VAL_COMISSAO"]:
-
-        valor_str = valor
-
-        if type(valor) == str :
-
-            valor_str = str(valor)
-
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["VAL_COMISSAO"] = valores_tratados
-
-
-    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["NUM_BANCO"] = 701
-    df_novo["NOM_BANCO"] = 'BRB'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
-    return df_novo
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Brb360")
+            logger.error("Erro ao editar Brb360")
+            return "Erro ao editar Brb360"
+        finally:
+            logger.info("Finalizado processo de edicao Brb360")

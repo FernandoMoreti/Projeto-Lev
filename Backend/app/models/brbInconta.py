@@ -1,128 +1,136 @@
 import pandas as pd
 import camelot
-from ..utils import createDataframe, inputValueColumns, validDf
+from ..utils import convertValues
+from .bank import Bank
+import logging
 
-def brbInconta(df):
+logger = logging.getLogger("bancos")
 
-    tables = camelot.read_pdf(df, pages='all',flavor="stream")
+class Brbinconta(Bank):
+    def __init__(self, name = "BRB - BANCO DE BRASÍLIA", num = 70, type = "pdf"):
+        super().__init__(name, num, type)
 
-    if not tables:
-        return "Nenhuma tabela encontrada no PDF"
+    def readArchive(self, df):
+        try:
+            logger.info("Inicio do processo de leitura do df-BRBInconta")
+            tables = camelot.read_pdf(df, pages='all',flavor="stream")
 
-    isBigger = False
+            if not tables:
+                logger.error("Nenhuma tabela encontrada no pdf")
+                return "Nenhuma tabela encontrada no PDF"
 
-    for index, table in enumerate(tables):
-        if index == 1:
-            if len(table.df.columns) > 5:
-                table.df = table.df.drop(columns=[1])
-                table.df = table.df.drop(columns=[2])
-                table.df = table.df.drop(columns=[5])
-                table.df.columns = range(table.df.shape[1])
-        if len(table.df[0]) > 45:
-            table.df = table.df.drop(columns=[1])
-            table.df.columns = range(table.df.shape[1])
-            isBigger = True
-        else:
-            if isBigger or index == 1:
-                table.df = table.df.iloc[2:]
-            else:
-                table.df = table.df.iloc[6:]
+            isBigger = False
 
-    df = pd.concat([table.df for table in tables], ignore_index=True)
+            for index, table in enumerate(tables):
+                if index == 1:
+                    if len(table.df.columns) > 5:
+                        table.df = table.df.drop(columns=[1])
+                        table.df = table.df.drop(columns=[2])
+                        table.df = table.df.drop(columns=[5])
+                        table.df.columns = range(table.df.shape[1])
+                if len(table.df[0]) > 45:
+                    table.df = table.df.drop(columns=[1])
+                    table.df.columns = range(table.df.shape[1])
+                    isBigger = True
+                else:
+                    if isBigger or index == 1:
+                        table.df = table.df.iloc[2:]
+                    else:
+                        table.df = table.df.iloc[6:]
 
-    df = df.replace(r'^\s*$', pd.NA, regex=True)
+            df = pd.concat([table.df for table in tables], ignore_index=True)
 
-    df = df.dropna(thresh=8) # remove linhas que tenham pelo menos 10 colunas preenchidas
+            df = df.replace(r'^\s*$', pd.NA, regex=True)
 
-    if len(df.columns) > 8:
-        df = df.drop(columns=[1])
-        df.columns = range(df.shape[1])
+            df = df.dropna(thresh=8) # remove linhas que tenham pelo menos 10 colunas preenchidas
 
-    df[4] = df[4].replace(pd.NA, 0)
+            if len(df.columns) > 8:
+                df = df.drop(columns=[1])
+                df.columns = range(df.shape[1])
 
-    return df
+            df[4] = df[4].replace(pd.NA, 0)
 
-    infos = {
-        1 : "NUM_PROPOSTA",
-        2 : "DSC_OBSERVACAO",
-        3 : "QTD_PARCELA",
-        4 : "PCL_COMISSAO",
-        6 : "VAL_BASE_COMISSAO",
-        7 : "VAL_COMISSAO",
-    }
+            logger.info("Lido o arquivo do BRBInconta")
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.erro("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+           logger.info("Finalizando processo de leitura do arquivo")
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
 
-    df_novo = createDataframe()
+    def run(self, df):
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+        try:
+            logger.info("Iniciando processo de edicao do BrbInconta")
 
-    valores_tratados = []
+            df = self.readArchive(df)
 
-    for valor in df_novo["VAL_BASE_COMISSAO"]:
+            infos = {
+                1 : "NUM_PROPOSTA",
+                2 : "DSC_OBSERVACAO",
+                3 : "QTD_PARCELA",
+                4 : "PCL_COMISSAO",
+                6 : "VAL_BASE_COMISSAO",
+                7 : "VAL_COMISSAO",
+            }
 
-        valor_str = valor
+            logger.info("Iniciando processo de edicao do BTW")
 
-        if type(valor) == str :
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-            valor_str = str(valor)
+            logger.info("Iniciando processo de edicao do BTW")
+            logger.info("Iniciando processo de edicao do BTW")
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            df_novo = self.createDataframe()
 
-        valores_tratados.append(valor_str)
+            df_novo = self.inputValues(df, df_novo, infos)
 
-    df_novo["VAL_BASE_COMISSAO"] = valores_tratados
+            logger.info("Iniciando processo de edicao do BTW")
+            logger.info("Iniciando processo de edicao do BTW")
 
-    valores_tratados = []
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-    for valor in df_novo["VAL_COMISSAO"]:
+            valores_tratados = []
 
-        valor_str = valor
+            for valor in df_novo["DSC_OBSERVACAO"]:
 
-        if type(valor) == str :
+                valor_str = valor
 
-            valor_str = str(valor)
+                if type(valor) == str :
 
-            valor_teste = valor_str.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+                    valor_str = str(valor)
 
-        valores_tratados.append(valor_str)
+                    valor_teste = valor_str.replace("%", "")
+                    valor_teste = valor_teste.strip()
+                    valor_teste = valor_teste.split(" ")[-1]
+                    valor_teste = valor_teste.replace(",", ".")
+                    if valor_teste == "SAQUE":
+                        valor_teste = "0"
+                    valor_str = float(valor_teste)
 
-    df_novo["VAL_COMISSAO"] = valores_tratados
+                valores_tratados.append(valor_str)
 
-    valores_tratados = []
+            df_novo["PCL_TAXA_EMPRESTIMO"] = valores_tratados
 
-    for valor in df_novo["DSC_OBSERVACAO"]:
+            logger.info("Iniciando processo de edicao do BTW")
 
-        valor_str = valor
+            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
+            df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["NUM_BANCO"] = 70
+            df_novo["NOM_BANCO"] = 'BRB - BANCO DE BRASÍLIA'
+            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DSC_OBSERVACAO"] = None
 
-        if type(valor) == str :
-
-            valor_str = str(valor)
-
-            valor_teste = valor_str.replace("%", "")
-            valor_teste = valor_teste.strip()
-            valor_teste = valor_teste.split(" ")[-1]
-            valor_teste = valor_teste.replace(",", ".")
-            if valor_teste == "SAQUE":
-                valor_teste = "0"
-            valor_str = float(valor_teste)
-
-        valores_tratados.append(valor_str)
-
-    df_novo["PCL_TAXA_EMPRESTIMO"] = valores_tratados
-
-    df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-    df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-    df_novo["NUM_BANCO"] = 70
-    df_novo["NOM_BANCO"] = 'BRB - BANCO DE BRASÍLIA'
-    df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
-    df_novo["DSC_OBSERVACAO"] = None
-
-    return df_novo
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar BrbInconta")
+            logger.error("Erro ao editar BrbInconta")
+            return "Erro ao editar BrbInconta"
+        finally:
+            logger.info("Finalizado processo de edicao BrbInconta")

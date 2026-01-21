@@ -1,46 +1,72 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime, timedelta
-from ..utils import createDataframe, inputValueColumns, validDf
+import logging
+from .bank import Bank
 
-def presenca(df):
+logger = logging.getLogger("bancos")
 
-    df = pd.read_excel(df, header=2)
+class Presenca(Bank):
+    def __init__(self, name = "PRESENCA BANK SCP", num = 482, type = "excel"):
+        super().__init__(name, num, type)
 
-    infos ={
-       "PROPOSTA":"NUM_PROPOSTA",
-       "DT PAGTO":"DAT_CREDITO",
-       "VR BASE":"VAL_BASE_COMISSAO",
-       "VR CMS":"VAL_COMISSAO",
-       "% CMS":"PCL_COMISSAO",
-    }
+    def readArchive(self, df):
+        try:
+            df = pd.read_excel(df, header=2)
+            return df
+        except Exception:
+            logger.exception("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
+            return "Erro ao ler arquivo"
+        finally:
+            logger.info("Finalizando processo de leitura do arquivo")
 
-    tamanho = len(df["PROPOSTA"])
+    def run(self, df):
 
-    df = df.drop(index=[tamanho -1])
+        try:
 
-    Error = validDf(df, infos)
-    if Error:
-        return Error
+            df = self.readArchive(df)
 
-    df_novo = createDataframe()
+            infos ={
+               "PROPOSTA":"NUM_PROPOSTA",
+               "DT PAGTO":"DAT_CREDITO",
+               "VR BASE":"VAL_BASE_COMISSAO",
+               "VR CMS":"VAL_COMISSAO",
+               "% CMS":"PCL_COMISSAO",
+            }
 
-    df_novo = inputValueColumns(df, df_novo, infos)
+            length = len(df["PROPOSTA"])
 
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str)
-    mascara = df_novo["VAL_BASE_COMISSAO"].str.len() <= 6
-    df_novo.loc[mascara, "VAL_BASE_COMISSAO"] = df_novo.loc[mascara, "VAL_BASE_COMISSAO"].str.replace(".", ",", regex=False)
-    df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].str.replace(".", "").str.replace(",", ".").astype(float)
-    df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-    df_novo["NUM_BANCO"] = 482
-    df_novo["NOM_BANCO"] = 'PRESENCA BANK SCP'
-    df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df = df.drop(index=[length -1])
 
-    for i in range(len(df_novo["VAL_BASE_COMISSAO"])):
-        if df_novo["VAL_BASE_COMISSAO"][i] < 0:
-            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'ESTORNO'
-        else:
-            df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-    return df_novo
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
+
+            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str)
+            mascara = df_novo["VAL_BASE_COMISSAO"].str.len() <= 6
+            df_novo.loc[mascara, "VAL_BASE_COMISSAO"] = df_novo.loc[mascara, "VAL_BASE_COMISSAO"].str.replace(".", ",", regex=False)
+            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].str.replace(".", "").str.replace(",", ".").astype(float)
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["NUM_BANCO"] = 482
+            df_novo["NOM_BANCO"] = 'PRESENCA BANK SCP'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+            for i in range(len(df_novo["VAL_BASE_COMISSAO"])):
+                if df_novo["VAL_BASE_COMISSAO"][i] < 0:
+                    df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'ESTORNO'
+                else:
+                    df_novo.loc[i, "TIPO_COMISSAO_BANCO"] = 'DIRETA'
+
+            logger.info("Processamento do Presenca finalizado com sucesso")
+            return df_novo
+        except Exception:
+            logger.exception("Erro ao editar Presenca")
+            logger.error("Erro ao editar Presenca")
+            return "Erro ao editar Presenca"
+        finally:
+            logger.info("Finalizado processo de edicao Presenca")
