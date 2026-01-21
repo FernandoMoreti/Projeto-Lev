@@ -31,9 +31,8 @@ class Totalcash(Bank):
 
             infos = {
                 "Nr Proposta": "NUM_PROPOSTA",
-                "Valor Proposta": "VAL_BASE_COMISSAO",
+                "Valor Liberado Cliente": "VAL_BASE_COMISSAO",
                 "Valor Comissão": "VAL_COMISSAO",
-                "% Comissao": "PCL_COMISSAO",
                 "Taxa Pagamento": "PCL_TAXA_EMPRESTIMO"
             }
 
@@ -51,25 +50,33 @@ class Totalcash(Bank):
             for idx in df_novo.index:
                 val_comissao = df_novo.at[idx, "VAL_COMISSAO"]
 
-                if val_comissao < 0:
-                    proposta = df_novo.at[idx, "NUM_PROPOSTA"]
+                proposta = df_novo.at[idx, "NUM_PROPOSTA"]
 
-                    try:
-                        response = session.get(
-                            f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
-                            timeout=5
-                        )
-                        response.raise_for_status()
+                try:
+                    response = session.get(
+                        f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
+                        timeout=5
+                    )
 
-                        data = response.json()
-                        df_novo.at[idx, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
-                        df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+                    response.raise_for_status()
 
-                    except Exception as e:
-                        df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ERRO_API"
-                        print(f"Erro proposta {proposta}: {e}")
-                else:
-                    df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+                    data = response.json()
+
+                    if val_comissao < 0:
+                            df_novo.at[idx, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
+                            df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+
+                    else:
+                        if data[0]["tipo"] == "PORTAB/REFIN":
+                            df_novo.at[idx, "VAL_BASE_COMISSAO"] = data[0]["bruto"]
+
+                        df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+
+
+                except Exception as e:
+                    df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ERRO_API"
+                    print(f"Erro proposta {proposta}: {e}")
+
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
 
@@ -77,7 +84,7 @@ class Totalcash(Bank):
             df_novo["NOM_BANCO"] = "TOTALCASH"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["DAT_CREDITO"] = datetime.now().date()
-            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
 
             logger.info("Processamento do Totalcash finalizado com sucesso")
             return df_novo

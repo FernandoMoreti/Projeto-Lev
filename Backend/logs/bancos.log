@@ -26,3 +26,93 @@
 2026-01-20 10:19:12,236 | INFO | bancos | Criando novo DataFrame
 2026-01-20 10:19:12,240 | INFO | bancos | Processamento do Jbcred finalizado com sucesso
 2026-01-20 10:19:12,241 | INFO | bancos | Finalizado processo de edicao Jbcred
+2026-01-21 11:01:00,654 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:01:00,842 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:01:00,842 | INFO | bancos | Validando DataFrame
+2026-01-21 11:01:00,843 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:01:00,846 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
+2026-01-21 11:01:00,847 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:29:18,020 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:29:18,239 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:29:18,239 | INFO | bancos | Validando DataFrame
+2026-01-21 11:29:18,239 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:29:44,895 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:29:45,096 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:29:45,096 | INFO | bancos | Validando DataFrame
+2026-01-21 11:29:45,097 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:30:28,923 | ERROR | bancos | Erro ao editar Totalcash
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VAL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\totalcash.py", line 88, in run
+    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL"]
+                                                        ~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\site-packages\pandas\core\frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VAL'
+2026-01-21 11:30:28,942 | ERROR | bancos | Erro ao editar Totalcash
+2026-01-21 11:30:28,943 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:45:15,808 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:45:16,013 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:45:16,013 | INFO | bancos | Validando DataFrame
+2026-01-21 11:45:16,013 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:45:27,925 | ERROR | bancos | Erro ao editar Totalcash
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VAL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\totalcash.py", line 88, in run
+    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL"]
+                                                        ~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\site-packages\pandas\core\frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VAL'
+2026-01-21 11:45:27,932 | ERROR | bancos | Erro ao editar Totalcash
+2026-01-21 11:45:27,933 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:45:55,412 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:45:55,618 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:45:55,618 | INFO | bancos | Validando DataFrame
+2026-01-21 11:45:55,618 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:46:09,043 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
+2026-01-21 11:46:09,043 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:48:58,158 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:48:58,349 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:48:58,349 | INFO | bancos | Validando DataFrame
+2026-01-21 11:48:58,350 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:49:09,598 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
+2026-01-21 11:49:09,598 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:52:11,095 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:52:11,292 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:52:11,292 | INFO | bancos | Validando DataFrame
+2026-01-21 11:52:11,293 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:52:24,029 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
+2026-01-21 11:52:24,030 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-21 11:53:43,813 | INFO | bancos | Iniciando processo de edicao do Totalcash
+2026-01-21 11:53:44,045 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-21 11:53:44,046 | INFO | bancos | Validando DataFrame
+2026-01-21 11:53:44,046 | INFO | bancos | Criando novo DataFrame
+2026-01-21 11:53:54,434 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
+2026-01-21 11:53:54,435 | INFO | bancos | Finalizado processo de edicao Totalcash
