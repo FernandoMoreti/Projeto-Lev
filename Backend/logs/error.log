@@ -80,3 +80,52 @@ ImportError: Missing optional dependency 'html5lib'.  Use pip or conda to instal
 2026-01-20 09:15:06,278 | ERROR | bancos | Erro proposta 116025145: Expecting value: line 1 column 1 (char 0)
 2026-01-20 09:15:14,382 | ERROR | bancos | Erro proposta 116173989: Expecting value: line 1 column 1 (char 0)
 2026-01-20 09:15:41,415 | ERROR | bancos | Erro proposta 116205943: Expecting value: line 1 column 1 (char 0)
+2026-01-21 11:29:18,240 | ERROR | infos | Recebemos um retorno inesperado da funcao: ErroColunas
+2026-01-21 11:30:28,923 | ERROR | bancos | Erro ao editar Totalcash
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VAL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\totalcash.py", line 88, in run
+    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL"]
+                                                        ~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\site-packages\pandas\core\frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VAL'
+2026-01-21 11:30:28,942 | ERROR | bancos | Erro ao editar Totalcash
+2026-01-21 11:30:28,943 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar Totalcash
+2026-01-21 11:45:27,925 | ERROR | bancos | Erro ao editar Totalcash
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VAL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\totalcash.py", line 88, in run
+    df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL"]
+                                                        ~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\site-packages\pandas\core\frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Python313\Lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VAL'
+2026-01-21 11:45:27,932 | ERROR | bancos | Erro ao editar Totalcash
+2026-01-21 11:45:27,933 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar Totalcash
