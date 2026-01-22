@@ -122,3 +122,12 @@ KeyError: 'VAL'
 2026-01-21 12:25:31,981 | INFO | bancos | Criando novo DataFrame
 2026-01-21 12:25:42,764 | INFO | bancos | Processamento do Totalcash finalizado com sucesso
 2026-01-21 12:25:42,765 | INFO | bancos | Finalizado processo de edicao Totalcash
+2026-01-22 11:37:58,755 | INFO | bancos | Inicio do processo de leitura do df-Amigoz
+2026-01-22 11:37:59,034 | INFO | bancos | Lido o arquivo do Amigoz
+2026-01-22 11:37:59,035 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-22 11:37:59,035 | INFO | bancos | Validando dataframe
+2026-01-22 11:37:59,037 | INFO | bancos | Dataframe validado
+2026-01-22 11:37:59,038 | INFO | bancos | Criando Dataframe
+2026-01-22 11:37:59,043 | INFO | bancos | Dataframe criado com sucesso
+2026-01-22 11:37:59,043 | INFO | bancos | Adicionando valores de forma fixa
+2026-01-22 11:37:59,053 | INFO | bancos | Finalizado processo de edicao Amigoz

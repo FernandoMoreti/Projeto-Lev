@@ -34,7 +34,7 @@ class Amigoz(Bank):
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO SUPER DIAMANTE"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
             nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
-            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
+            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"] * 100
             novas_linhas.append(nova_linha)
 
         # Criar linha seguro
@@ -46,7 +46,7 @@ class Amigoz(Bank):
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO DIAMANTE"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
             nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
-            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
+            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"] * 100
             novas_linhas.append(nova_linha)
 
         # Criar linha seguro
@@ -58,7 +58,7 @@ class Amigoz(Bank):
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO OURO"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
             nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
-            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
+            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"] * 100
             novas_linhas.append(nova_linha)
 
         # Criar linha seguro
@@ -70,7 +70,7 @@ class Amigoz(Bank):
                 nova_linha["TIPO_COMISSAO_BANCO"] ="SEGURO PRATA"
             nova_linha["VAL_COMISSAO"] = row_original["Valor Seguro"]
             nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
-            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"]
+            nova_linha["PCL_COMISSAO"] = row_original["% Seguro"] * 100
             novas_linhas.append(nova_linha)
 
         # Criar linha Pré-Adesão
@@ -98,7 +98,7 @@ class Amigoz(Bank):
                 nova_linha["VAL_BASE_COMISSAO"] = row_original["Valor Proposta"]
 
             nova_linha["VAL_COMISSAO"] = row_original["$ Comissão"]
-            nova_linha["PCL_COMISSAO"] = row_original["% Comissao"]
+            nova_linha["PCL_COMISSAO"] = row_original["% Comissao"] * 100
             novas_linhas.append(nova_linha)
 
         return novas_linhas
