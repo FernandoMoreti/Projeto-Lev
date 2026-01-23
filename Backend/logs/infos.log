@@ -160,3 +160,12 @@ ImportError: Missing optional dependency 'html5lib'.  Use pip or conda to instal
 2026-01-22 11:37:59,054 | INFO | infos | Recebemos um retorno valido e OK da funcao
 2026-01-22 11:37:59,082 | INFO | infos | Arquivo convertido em excel e enviado para download
 2026-01-22 11:37:59,083 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-23 15:17:18,606 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-23 15:17:18,609 | INFO | infos | Arquivo: <FileStorage: 'EVOL_23-01.xlsx' ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')> do banco evol enviado para tratamento
+2026-01-23 15:17:18,914 | ERROR | infos | Recebemos um retorno inesperado da funcao: ErroColunas
+2026-01-23 15:17:18,914 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-23 15:20:04,510 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-23 15:20:04,513 | INFO | infos | Arquivo: <FileStorage: 'EVOL_23-01.xlsx' ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')> do banco evol enviado para tratamento
+2026-01-23 15:20:04,724 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-23 15:20:04,815 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-23 15:20:04,816 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download

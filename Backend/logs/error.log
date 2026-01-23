@@ -129,3 +129,4 @@ Traceback (most recent call last):
 KeyError: 'VAL'
 2026-01-21 11:45:27,932 | ERROR | bancos | Erro ao editar Totalcash
 2026-01-21 11:45:27,933 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar Totalcash
+2026-01-23 15:17:18,914 | ERROR | infos | Recebemos um retorno inesperado da funcao: ErroColunas

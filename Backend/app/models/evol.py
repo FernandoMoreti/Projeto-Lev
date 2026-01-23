@@ -32,7 +32,7 @@ class Evol(Bank):
                 "Valor_Liberado":"VAL_LIQUIDO",
                 "Valor_Saldo":"VAL_COMISSAO",
                 "Valor_Bruto":"VAL_BRUTO",
-                "Data de Pagamento Comissão":"DAT_CREDITO",
+                "Data_Lancto":"DAT_CREDITO",
                 "Percentual_Comissao":"PCL_COMISSAO",
                 "Descricao_Tipo_Operacao" :"DSC_TIPO_PROPOSTA_EMPRESTIMO"
             }

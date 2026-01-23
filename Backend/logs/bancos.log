@@ -131,3 +131,11 @@ KeyError: 'VAL'
 2026-01-22 11:37:59,043 | INFO | bancos | Dataframe criado com sucesso
 2026-01-22 11:37:59,043 | INFO | bancos | Adicionando valores de forma fixa
 2026-01-22 11:37:59,053 | INFO | bancos | Finalizado processo de edicao Amigoz
+2026-01-23 15:17:18,910 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-23 15:17:18,910 | INFO | bancos | Validando DataFrame
+2026-01-23 15:17:18,913 | INFO | bancos | Finalizado processo de edicao Evol
+2026-01-23 15:20:04,706 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-23 15:20:04,707 | INFO | bancos | Validando DataFrame
+2026-01-23 15:20:04,707 | INFO | bancos | Criando novo DataFrame
+2026-01-23 15:20:04,723 | INFO | bancos | Processamento do Evol finalizado com sucesso
+2026-01-23 15:20:04,723 | INFO | bancos | Finalizado processo de edicao Evol
