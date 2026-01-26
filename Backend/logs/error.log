@@ -130,3 +130,88 @@ KeyError: 'VAL'
 2026-01-21 11:45:27,932 | ERROR | bancos | Erro ao editar Totalcash
 2026-01-21 11:45:27,933 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar Totalcash
 2026-01-23 15:17:18,914 | ERROR | infos | Recebemos um retorno inesperado da funcao: ErroColunas
+2026-01-23 16:52:23,427 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 95, in run
+    df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\utils.py", line 75, in convertValues
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'CPF/CNPJ'
+2026-01-23 16:52:23,430 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-23 16:52:23,430 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-23 16:53:40,387 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 96, in run
+    df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\utils.py", line 75, in convertValues
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'CPF/CNPJ'
+2026-01-23 16:53:40,389 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-23 16:53:40,390 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 08:53:36,216 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 96, in run
+    df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\utils.py", line 75, in convertValues
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'CPF/CNPJ'
+2026-01-26 08:53:36,219 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 08:53:36,220 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:14:27,038 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 100, in run
+    df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\utils.py", line 75, in convertValues
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'Vlr Venda'
+2026-01-26 09:14:27,040 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:14:27,041 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:19:38,429 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 103, in run
+    df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\utils.py", line 75, in convertValues
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'Vlr Venda'
+2026-01-26 09:19:38,431 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:19:38,432 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:21:59,472 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 123, in run
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'MARGEM'
+2026-01-26 09:21:59,474 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:21:59,474 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:24:13,266 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 123, in run
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'MARGEM'
+2026-01-26 09:24:13,267 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:24:13,268 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:24:45,783 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 127, in run
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: 'MARGEM'
+2026-01-26 09:24:45,784 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:24:45,785 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:27:43,064 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 126, in run
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: '/1.70'
+2026-01-26 09:27:43,065 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:27:43,066 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:28:20,202 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 126, in run
+    valor_str = float(valor_teste)
+ValueError: could not convert string to float: '/1.70'
+2026-01-26 09:28:20,203 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:28:20,204 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta

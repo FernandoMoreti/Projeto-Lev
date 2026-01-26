@@ -1,5 +1,6 @@
 import pandas as pd
 import camelot
+from PyPDF2 import PdfReader
 from ..utils import convertValues
 from .bank import Bank
 import logging
@@ -15,28 +16,32 @@ class Brbinconta(Bank):
             logger.info("Inicio do processo de leitura do df-BRBInconta")
             tables = camelot.read_pdf(df, pages='all',flavor="stream")
 
+            reader = PdfReader(df)
+            pages = len(reader.pages)
+
             if not tables:
                 logger.error("Nenhuma tabela encontrada no pdf")
                 return "Nenhuma tabela encontrada no PDF"
 
             isBigger = False
 
-            for index, table in enumerate(tables):
-                if index == 1:
-                    if len(table.df.columns) > 5:
-                        table.df = table.df.drop(columns=[1])
-                        table.df = table.df.drop(columns=[2])
-                        table.df = table.df.drop(columns=[5])
+            if pages < 3:
+                for index, table in enumerate(tables):
+                    if index == 1:
+                        if len(table.df.columns) > 5:
+                            table.df = table.df.drop(columns=[1])
+                            table.df = table.df.drop(columns=[2])
+                            table.df = table.df.drop(columns=[5])
                         table.df.columns = range(table.df.shape[1])
-                if len(table.df[0]) > 45:
-                    table.df = table.df.drop(columns=[1])
-                    table.df.columns = range(table.df.shape[1])
-                    isBigger = True
-                else:
-                    if isBigger or index == 1:
-                        table.df = table.df.iloc[2:]
+                    if len(table.df[0]) > 45:
+                        table.df = table.df.drop(columns=[1])
+                        table.df.columns = range(table.df.shape[1])
+                        isBigger = True
                     else:
-                        table.df = table.df.iloc[6:]
+                        if isBigger or index == 1:
+                            table.df = table.df.iloc[2:]
+                        else:
+                            table.df = table.df.iloc[6:]
 
             df = pd.concat([table.df for table in tables], ignore_index=True)
 
@@ -49,6 +54,10 @@ class Brbinconta(Bank):
                 df.columns = range(df.shape[1])
 
             df[4] = df[4].replace(pd.NA, 0)
+
+            if pages > 2:
+                df = df.iloc[:-1]
+                df = df.iloc[1:]
 
             logger.info("Lido o arquivo do BRBInconta")
             return df
@@ -107,7 +116,10 @@ class Brbinconta(Bank):
 
                     valor_teste = valor_str.replace("%", "")
                     valor_teste = valor_teste.strip()
-                    valor_teste = valor_teste.split(" ")[-1]
+                    if valor_teste.split(" ")[-1] == "MARGEM":
+                        valor_teste = valor_teste.split(" ")[-2].replace("/", "")
+                    else:
+                        valor_teste = valor_teste.split(" ")[-1]
                     valor_teste = valor_teste.replace(",", ".")
                     if valor_teste == "SAQUE":
                         valor_teste = "0"
