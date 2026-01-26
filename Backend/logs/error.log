@@ -215,3 +215,27 @@ Traceback (most recent call last):
 ValueError: could not convert string to float: '/1.70'
 2026-01-26 09:28:20,203 | ERROR | bancos | Erro ao editar BrbInconta
 2026-01-26 09:28:20,204 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:49:40,969 | ERROR | bancos | Erro ao ler arquivo
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 19, in readArchive
+    print(tables.df)
+          ^^^^^^^^^
+AttributeError: 'TableList' object has no attribute 'df'
+2026-01-26 09:49:40,973 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 19, in readArchive
+    print(tables.df)
+          ^^^^^^^^^
+AttributeError: 'TableList' object has no attribute 'df'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 79, in run
+    df = self.readArchive(df)
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 68, in readArchive
+    logger.erro("Erro ao ler arquivo")
+    ^^^^^^^^^^^
+AttributeError: 'Logger' object has no attribute 'erro'. Did you mean: 'error'?
+2026-01-26 09:49:40,975 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:49:40,978 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta

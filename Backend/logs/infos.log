@@ -322,3 +322,52 @@ ImportError: Missing optional dependency 'html5lib'.  Use pip or conda to instal
 2026-01-26 09:29:11,406 | INFO | infos | Recebemos um retorno valido e OK da funcao
 2026-01-26 09:29:11,424 | INFO | infos | Arquivo convertido em excel e enviado para download
 2026-01-26 09:29:11,425 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:48:47,488 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:48:47,490 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:48:47,928 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:48:48,114 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:48:48,115 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:49:19,005 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:49:19,010 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:49:19,573 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:49:19,837 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:49:19,837 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:49:40,525 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:49:40,527 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:49:40,978 | ERROR | infos | Recebemos um retorno inesperado da funcao: Erro ao editar BrbInconta
+2026-01-26 09:49:40,979 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:50:32,682 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:50:32,685 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:50:33,148 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:50:33,383 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:50:33,384 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:50:46,512 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:50:46,514 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:50:47,050 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:50:47,263 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:50:47,263 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:51:34,158 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:51:34,160 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:51:34,621 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:51:34,809 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:51:34,810 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:53:09,031 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:53:09,034 | INFO | infos | Arquivo: <FileStorage: '1496 16.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:53:09,347 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:53:09,522 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:53:09,523 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:54:16,440 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:54:16,442 | INFO | infos | Arquivo: <FileStorage: '1496 16.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:54:16,735 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:54:16,901 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:54:16,901 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:54:53,719 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:54:53,723 | INFO | infos | Arquivo: <FileStorage: '1496 23.01.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:54:54,178 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:54:54,190 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:54:54,191 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download
+2026-01-26 09:57:39,128 | INFO | infos | Iniciando o sistema de envio do arquivo para edicao
+2026-01-26 09:57:39,130 | INFO | infos | Arquivo: <FileStorage: '1496 19.12.pdf' ('application/pdf')> do banco brbinconta enviado para tratamento
+2026-01-26 09:57:39,353 | INFO | infos | Recebemos um retorno valido e OK da funcao
+2026-01-26 09:57:39,364 | INFO | infos | Arquivo convertido em excel e enviado para download
+2026-01-26 09:57:39,364 | INFO | infos | Finalizando o sistema de envio de arquivo para edicao e download

@@ -448,3 +448,108 @@ ValueError: could not convert string to float: '/1.70'
 2026-01-26 09:29:11,404 | INFO | bancos | Iniciando processo de edicao do BTW
 2026-01-26 09:29:11,405 | INFO | bancos | Iniciando processo de edicao do BTW
 2026-01-26 09:29:11,406 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:48:47,491 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:48:47,491 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:48:47,917 | INFO | bancos | Lido o arquivo do BRBInconta
+2026-01-26 09:48:47,918 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:48:47,921 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:48:47,921 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:48:47,922 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:48:47,925 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:48:47,925 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:48:47,926 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:48:47,928 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:49:19,011 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:49:19,011 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:49:19,560 | INFO | bancos | Lido o arquivo do BRBInconta
+2026-01-26 09:49:19,560 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:49:19,566 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:49:19,566 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:49:19,567 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:49:19,569 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:49:19,569 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:49:19,570 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:49:19,572 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:49:40,528 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:49:40,528 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:49:40,969 | ERROR | bancos | Erro ao ler arquivo
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 19, in readArchive
+    print(tables.df)
+          ^^^^^^^^^
+AttributeError: 'TableList' object has no attribute 'df'
+2026-01-26 09:49:40,973 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:49:40,973 | ERROR | bancos | Erro ao editar BrbInconta
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 19, in readArchive
+    print(tables.df)
+          ^^^^^^^^^
+AttributeError: 'TableList' object has no attribute 'df'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 79, in run
+    df = self.readArchive(df)
+  File "C:\Users\fernando.m\Projetos\Projeto-Lev\Backend\app\models\brbInconta.py", line 68, in readArchive
+    logger.erro("Erro ao ler arquivo")
+    ^^^^^^^^^^^
+AttributeError: 'Logger' object has no attribute 'erro'. Did you mean: 'error'?
+2026-01-26 09:49:40,975 | ERROR | bancos | Erro ao editar BrbInconta
+2026-01-26 09:49:40,977 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:50:32,685 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:50:32,685 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:50:33,137 | INFO | bancos | Lido o arquivo do BRBInconta
+2026-01-26 09:50:33,137 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:50:33,142 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:33,142 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:33,142 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:33,145 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:33,145 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:33,146 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:33,147 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:50:46,515 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:50:46,515 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:50:47,038 | INFO | bancos | Lido o arquivo do BRBInconta
+2026-01-26 09:50:47,038 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:50:47,041 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:47,042 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:47,042 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:47,047 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:47,048 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:47,049 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:50:47,050 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:51:34,161 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:51:34,161 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:51:34,611 | INFO | bancos | Lido o arquivo do BRBInconta
+2026-01-26 09:51:34,611 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:51:34,615 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:51:34,616 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:51:34,616 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:51:34,618 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:51:34,619 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:51:34,619 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:51:34,621 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:53:09,034 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:53:09,034 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:53:09,335 | INFO | bancos | Lido o arquivo do BRBInconta
+2026-01-26 09:53:09,336 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:53:09,339 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:53:09,339 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:53:09,339 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:53:09,343 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:53:09,343 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:53:09,344 | INFO | bancos | Iniciando processo de edicao do BTW
+2026-01-26 09:53:09,346 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:54:16,442 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:54:16,443 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:54:16,733 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:54:16,735 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:54:53,724 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:54:53,724 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:54:54,176 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:54:54,178 | INFO | bancos | Finalizado processo de edicao BrbInconta
+2026-01-26 09:57:39,130 | INFO | bancos | Iniciando processo de edicao do BrbInconta
+2026-01-26 09:57:39,130 | INFO | bancos | Inicio do processo de leitura do df-BRBInconta
+2026-01-26 09:57:39,351 | INFO | bancos | Finalizando processo de leitura do arquivo
+2026-01-26 09:57:39,353 | INFO | bancos | Finalizado processo de edicao BrbInconta
