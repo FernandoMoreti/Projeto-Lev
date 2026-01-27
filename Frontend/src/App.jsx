@@ -81,7 +81,6 @@ function App() {
     "C6bankDebitoManual",
     "C6Equity",
     "Caixa",
-    "Crefisa",
     "Digio",
     "EmpresteiCred",
     "Euro",

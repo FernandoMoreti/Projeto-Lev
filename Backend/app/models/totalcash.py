@@ -88,7 +88,6 @@ class Totalcash(Bank):
                     df_novo.at[idx, "TIPO_COMISSAO_BANCO"] = "ERRO_API"
                     print(f"Erro proposta {proposta}: {e}")
 
-
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
 
             df_novo["NUM_BANCO"] = 1731
