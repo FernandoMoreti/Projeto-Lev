@@ -45,7 +45,23 @@ class Novosaquecartao(Bank):
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
-            df_novo["PCL_COMISSAO"] = convertValues(df_novo, "PCL_COMISSAO")
+
+            valores_tratados = []
+
+            for valor in df_novo["PCL_COMISSAO"]:
+                valor_str = valor
+
+                if type(valor) == str :
+
+                    valor_str = str(valor)
+                    valor_teste = valor_str.replace("%", "")
+                    valor_teste = valor_teste.replace(".", "")
+                    valor_teste = valor_teste.replace(",", ".")
+                    valor_str = float(valor_teste)
+
+                valores_tratados.append(valor_str)
+
+            df_novo["PCL_COMISSAO"] = valores_tratados
 
 
             df_novo["NUM_BANCO"] = 1234
