@@ -85,6 +85,7 @@ function App() {
     "EmpresteiCred",
     "Euro",
     "Evol",
+    "Facta",
     "Grandino",
     "Happy",
     "Hope",
