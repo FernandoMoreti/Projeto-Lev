@@ -1,9 +1,10 @@
 import pandas as pd
 import camelot
 from PyPDF2 import PdfReader
-from ..utils import convertValues
+from ..utils import convertValues, paintLine
 from .bank import Bank
 import logging
+from datetime import datetime
 
 logger = logging.getLogger("bancos")
 
@@ -43,6 +44,12 @@ class Brbinconta(Bank):
                         else:
                             table.df = table.df.iloc[6:]
 
+            if pages > 3:
+                for index, table in enumerate(tables):
+                    if index == 1:
+                        table.df = table.df.drop(columns=[1])
+                        table.df.columns = range(table.df.shape[1])
+
             df = pd.concat([table.df for table in tables], ignore_index=True)
 
             df = df.replace(r'^\s*$', pd.NA, regex=True)
@@ -75,6 +82,7 @@ class Brbinconta(Bank):
             logger.info("Iniciando processo de edicao do BrbInconta")
 
             df = self.readArchive(df)
+            date = datetime.now().strftime("%d/%m/%Y")
 
             infos = {
                 1 : "NUM_PROPOSTA",
@@ -132,12 +140,15 @@ class Brbinconta(Bank):
             logger.info("Iniciando processo de edicao do BTW")
 
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].astype(int)
+            df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].fillna("0").replace("", "0").astype(int)
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["NUM_BANCO"] = 70
             df_novo["NOM_BANCO"] = 'BRB - BANCO DE BRASÍLIA'
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["DSC_OBSERVACAO"] = None
+            df_novo["DAT_CREDITO"] = date
+
+            df_novo = df_novo.style.apply(paintLine, axis=1)
 
             return df_novo
         except Exception:

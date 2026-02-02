@@ -77,3 +77,8 @@ def convertValues(df_novo, columns):
         valores_tratados.append(valor_str)
 
     return valores_tratados
+
+def paintLine(row):
+    if row["NUM_PROPOSTA"] == 0:
+        return ["background-color: #ffcccc"] * len(row)
+    return [""] * len(row)
