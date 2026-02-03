@@ -39,21 +39,27 @@ class Btw(Bank):
             caminho_pasta = f"Z:\COMISSÃO\DOCS - WORK BANK {ano}\BTW\\{numMes} - {mes}"
             arquivos = os.listdir(caminho_pasta)
 
+            if not os.path.exists(caminho_pasta):
+                logger.warning(f"Pasta não encontrada: {caminho_pasta}")
+                return None, name
+
             arquivo_encontrado = None
+            arquivos = os.listdir(caminho_pasta)
 
             for arquivo in arquivos:
                 if data in arquivo:
                     arquivo_encontrado = arquivo
                     break
 
-            if arquivo_encontrado:
-                caminho_completo = os.path.join(caminho_pasta, arquivo_encontrado)
-                df_encontrado = pd.read_excel(caminho_completo)
-                logger.info(f"Arquivo relacionado encontrado: {arquivo_encontrado}")
-                return df_encontrado, name
-            else:
-                logger.error(f"Arquivo não encontrado para a data: {data}")
-                return "Arquivo não encontrado para a data:", None
+            if not arquivo_encontrado:
+                logger.info("Nenhum arquivo relacionado encontrado.")
+                return None, name
+
+            caminho_completo = os.path.join(caminho_pasta, arquivo_encontrado)
+            df_encontrado = pd.read_excel(caminho_completo)
+
+            logger.info(f"Arquivo relacionado encontrado: {arquivo_encontrado}")
+            return df_encontrado, name
         except Exception as e:
             logger.exception("Erro ao buscar arquivo relacionado")
             return f"Erro ao buscar arquivo: {str(e)}", None
@@ -61,7 +67,6 @@ class Btw(Bank):
             logger.info("Finalizando busca por arquivo relacionado")
 
     def renameColumns(self, df_encontrado, df, name):
-        print(df)
         try:
             logger.info(f"Renomeando colunas para {name}")
             if name == "LECCA":
@@ -107,43 +112,62 @@ class Btw(Bank):
         try:
             logger.info("Iniciando processo de edicao do BTW")
 
-            df_encontrado, name = self.findArchive(df)
+            unique = False
 
-            df = self.readArchive(df)
+            df_encontrado, related_name = self.findArchive(df)
 
-            df_encontrado, df = self.renameColumns(df_encontrado, df, name)
+            df_main = self.readArchive(df)
+            if isinstance(df_main, str):
+                return df_main
 
-            df = pd.concat([df_encontrado, df], ignore_index=True)
-            logger.info("DataFrames concatenados")
+            if df_encontrado is not None:
+                df_encontrado, df_main = self.renameColumns(df_encontrado, df_main, related_name)
+                df_final = pd.concat([df_encontrado, df_main], ignore_index=True)
 
-            if name == "LECCA":
-                infos = {
-                    "Proposta": "NUM_PROPOSTA",
-                    "DT_Pagamento": "DAT_CREDITO",
-                    "Valor_Liberado": "VAL_BASE_COMISSAO",
-                    "Total_Bruto": "VAL_COMISSAO",
-                    "Tx_Serviço": "PCL_COMISSAO",
-                    "tipo": "TIPO_COMISSAO_BANCO",
-                }
+                if related_name == "LECCA":
+                    infos = {
+                        "Proposta": "NUM_PROPOSTA",
+                        "DT_Pagamento": "DAT_CREDITO",
+                        "Valor_Liberado": "VAL_BASE_COMISSAO",
+                        "Total_Bruto": "VAL_COMISSAO",
+                        "Tx_Serviço": "PCL_COMISSAO",
+                        "tipo": "TIPO_COMISSAO_BANCO",
+                    }
+                else:
+                    infos = {
+                        "Proposta": "NUM_PROPOSTA",
+                        "DT_Pagamento": "DAT_CREDITO",
+                        "Valor_Liberado": "VAL_BASE_COMISSAO",
+                        "Vr_Comissao_Flat_Bruto": "VAL_COMISSAO",
+                        "Tx_Comissao_Flat": "PCL_COMISSAO",
+                        "tipo": "TIPO_COMISSAO_BANCO",
+                    }
+
             else:
+
+                df_final = df_main
+                unique = True
+
                 infos = {
                     "Proposta": "NUM_PROPOSTA",
                     "DT_Pagamento": "DAT_CREDITO",
                     "Valor_Liberado": "VAL_BASE_COMISSAO",
                     "Vr_Comissao_Flat_Bruto": "VAL_COMISSAO",
                     "Tx_Comissao_Flat": "PCL_COMISSAO",
-                    "tipo": "TIPO_COMISSAO_BANCO",
                 }
 
             logger.info("Validando DataFrame")
-            Error = self.validDataframe(df, infos)
+            Error = self.validDataframe(df_final, infos)
             if Error:
                 return Error
 
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
+            df_novo = self.inputValues(df_final, df_novo, infos)
 
-            df_novo = self.inputValues(df, df_novo, infos)
+            if unique:
+                print("ok")
+                df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
             df_novo["NUM_BANCO"] = 10501
             df_novo["NOM_BANCO"] = "BTW BANK"
@@ -152,9 +176,9 @@ class Btw(Bank):
 
             logger.info("Processamento do BTW finalizado com sucesso")
             return df_novo
+
         except Exception:
             logger.exception("Erro ao editar BTW")
-            logger.error("Erro ao editar BTW")
             return "Erro ao editar BTW"
         finally:
             logger.info("Finalizado processo de edicao BTW")
