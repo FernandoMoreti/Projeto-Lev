@@ -77,8 +77,6 @@ function App() {
     "Bv",
     "C6Auto",
     "C6bankComissao",
-    "C6BankCreditoManual Validar",
-    "C6bankDebitoManual",
     "C6Equity",
     "Caixa",
     "Digio",
