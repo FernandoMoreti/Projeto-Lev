@@ -5,7 +5,7 @@ from .bank import Bank
 logger = logging.getLogger("bancos")
 
 class C6bankcomissao(Bank):
-    def __init__(self, name = "C6 BANK COMISSAO", num = 0, type = "excel"):  # num não especificado, coloquei 0
+    def __init__(self, name = "C6 AUTO", num = 3336, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
@@ -19,30 +19,44 @@ class C6bankcomissao(Bank):
         finally:
             logger.info("Finalizando processo de leitura do arquivo")
 
+
     def run(self, df):
 
         try:
-            logger.info("Iniciando processo de edicao do C6bankcomissao")
 
             df = self.readArchive(df)
-            if isinstance(df, str):
-                return df
 
-            validNames = ["PACOTE"]
+            infos = {
+                "Número Proposta": "NUM_PROPOSTA",
+                "Data Pagamento": "DAT_CREDITO",
+                "Parcelas": "QTD_PARCELA",
+                "Valor Base": "VAL_BASE_COMISSAO",
+                "Perc à Vista": "PCL_COMISSAO",
+                "Motivo": "DSC_OBSERVACAO",
+                "Valor Bruto": "VAL_COMISSAO",
+            }
 
-            for i, row in df.iterrows():
-                if row["Nome Comissionado"] != "LEV":
-                    df.at[i, "Vlr Bruto"] = 0
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-                if any(name in row["Possui Pacote/Seguro?"] for name in validNames) and row["Possui Pacote/Seguro?"] != "SEM PACOTE":
-                    df.at[i, "Tabela Cod Desc"] = None
-                    df.at[i, "Cod Produto"] = 0
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+            df_novo = self.inputValues(df, df_novo, infos)
 
-            logger.info("Processamento do C6bankcomissao finalizado com sucesso")
-            return df
+            df_novo["NUM_BANCO"] = 3336
+            df_novo["NOM_BANCO"] = 'C6 AUTO'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+
+            logger.info("Processamento do c6bankcomissao finalizado com sucesso")
+            return df_novo
         except Exception:
-            logger.exception("Erro ao editar C6bankcomissao")
-            logger.error("Erro ao editar C6bankcomissao")
-            return "Erro ao editar C6bankcomissao"
+            logger.exception("Erro ao editar c6bankcomissao")
+            logger.error("Erro ao editar c6bankcomissao")
+            return "Erro ao editar c6bankcomissao"
         finally:
-            logger.info("Finalizado processo de edicao C6bankcomissao")
+            logger.info("Finalizado processo de edicao c6autocomissao")

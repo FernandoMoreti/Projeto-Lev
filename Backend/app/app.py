@@ -27,7 +27,7 @@ def execute():
 
         nome_banco = request.form.get("banco")
         arquivo = request.files.get("arquivo")
-        nome_banco = nome_banco.lower()
+        nome_banco = nome_banco.split(" ")[0].lower()
 
         if not nome_banco:
             infos_logger.warning("Nao foi recebido nenhum Banco")
