@@ -45,11 +45,30 @@ class C6bankcomissao(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
+            for row in df.iterrows():
+                if row[1]["Nome Comissionado"] != "LEV":
+                    df_novo.at[row[0], "VAL_COMISSAO"] = 0
+
+                if row[1]["Débito/Crédito"] == "D":
+                    if row[1]["Motivo"].split(" ")[1] == "SEGURO":
+                        df_novo.at[row[0], "TIPO_COMISSAO_BANCO"] = "ESTORNO SEGURO"
+                    elif row[1]["Motivo"].split(" ")[2] == "PACOTE":
+                        df_novo.at[row[0], "TIPO_COMISSAO_BANCO"] = "ESTORNO PACOTE BENEFICIO"
+                    else:
+                        df_novo.at[row[0], "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+
+                if row[1]["Débito/Crédito"] == "C":
+                    if row[1]["Motivo"].split(" ")[1] == "SEGURO":
+                        df_novo.at[row[0], "TIPO_COMISSAO_BANCO"] = "SEGURO"
+                    elif row[1]["Motivo"].split(" ")[2] == "PACOTE":
+                        df_novo.at[row[0], "TIPO_COMISSAO_BANCO"] = "PACOTE BENEFICIO"
+                    else:
+                        df_novo.at[row[0], "TIPO_COMISSAO_BANCO"] = "DIRETA"
+
             df_novo["NUM_BANCO"] = 3336
             df_novo["NOM_BANCO"] = 'C6 AUTO'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
 
             logger.info("Processamento do c6bankcomissao finalizado com sucesso")
