@@ -33,6 +33,7 @@ class Santanderolewl(Bank):
                "Valor Total Comissão": "VAL_COMISSAO",
                "Percentual Comissão": "PCL_COMISSAO",
                "Data do Cálculo": "DAT_CREDITO",
+               "Autorregulação": "DSC_OBSERVACAO"
             }
 
             logger.info("Validando DataFrame")
