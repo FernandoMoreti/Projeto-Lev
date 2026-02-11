@@ -1,6 +1,8 @@
 import pandas as pd
 import logging
 from .bank import Bank
+from ..utils import convertValues
+
 
 logger = logging.getLogger("bancos")
 
@@ -42,14 +44,14 @@ class Presenca(Bank):
             if Error:
                 return Error
 
+
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
-            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str)
-            mascara = df_novo["VAL_BASE_COMISSAO"].str.len() <= 6
-            df_novo.loc[mascara, "VAL_BASE_COMISSAO"] = df_novo.loc[mascara, "VAL_BASE_COMISSAO"].str.replace(".", ",", regex=False)
-            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].str.replace(".", "").str.replace(",", ".").astype(float)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["NUM_BANCO"] = 482
