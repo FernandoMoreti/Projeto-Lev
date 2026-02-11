@@ -29,8 +29,9 @@ class Santanderfvevi(Bank):
             infos = {
                 "Proposta": "NUM_PROPOSTA",
                 "Valor Bruto": "VAL_BASE_COMISSAO",
+                "Valor Líquido": "VAL_LIQUIDO",
                 "Percentual Comissão": "PCL_COMISSAO",
-                "Valor Total Comissão": "VAL_COMISSAO",
+                "Valor A Vista": "VAL_COMISSAO",
                 "Data do Cálculo": "DAT_CREDITO",
             }
 
@@ -39,14 +40,20 @@ class Santanderfvevi(Bank):
             if Error:
                 return Error
 
+
+
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
+            for idx, row in df.iterrows():
+                if row["Modalidade"] == "Refinanciamento":
+                    df_novo.loc[idx, "VAL_BASE_COMISSAO"] = row["Valor Líquido"]
+
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
-            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["VAL_BRUTO"] = df["Valor Bruto"].astype(str).str.replace(",", ".").astype(float)
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_LIQUIDO"].astype(str).str.replace(",", ".").astype(float)
             df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
             df_novo["NUM_BANCO"] = 351
