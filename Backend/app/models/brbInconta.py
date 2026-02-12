@@ -44,6 +44,15 @@ class Brbinconta(Bank):
                         else:
                             table.df = table.df.iloc[6:]
 
+            if pages == 3:
+                for index, table in enumerate(tables):
+                    if index == 1 or index == 2:
+                        pass
+                    else:
+                        if len(table.df.columns) > 9:
+                            table.df = table.df.drop(columns=[1])
+                            table.df.columns = range(table.df.shape[1])
+
             if pages > 3:
                 for index, table in enumerate(tables):
                     if index == 1:
