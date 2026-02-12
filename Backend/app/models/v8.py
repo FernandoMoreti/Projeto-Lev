@@ -3,16 +3,17 @@ import logging
 from pathlib import Path
 from datetime import datetime, timedelta
 from .bank import Bank
+from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
 class V8(Bank):
-    def __init__(self, name = "V8 DIGITAL", num = 1725, type = "excel"):
+    def __init__(self, name = "V8 DIGITAL", num = 1725, type = "csv"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df)
+            df = pd.read_csv(df, sep=";", encoding="latin-1")
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -51,6 +52,9 @@ class V8(Bank):
             if"NUM_PROPOSTA"in df.columns:
                 df["NUM_PROPOSTA"] = df["NUM_PROPOSTA"].astype(str)
 
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo["PCL_COMISSAO"] = convertValues(df_novo, "PCL_COMISSAO")
             df_novo["NUM_BANCO"] = '1725'
             df_novo["NOM_BANCO"] = 'V8 DIGITAL'
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
