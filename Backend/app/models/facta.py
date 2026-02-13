@@ -53,6 +53,9 @@ class Facta(Bank):
                     except Exception as e:
                         logger.error(f"Erro proposta {proposta}: {e}")
 
+                if "Desconto IR" in obs:
+                    df.drop(idx, inplace=True)
+
             df["VLRAF"] = df["CODIGOAF"].map(bruto_por_proposta).fillna(df["VLRAF"])
 
             df["VLRAF"] = convertValues(df, "VLRAF")

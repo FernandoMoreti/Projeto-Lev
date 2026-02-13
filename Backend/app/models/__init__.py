@@ -37,7 +37,7 @@ from .queromaisseguro import Queromaisseguro
 from .safracomissaozero import Safracomissaozero
 from .santanderfit import Santanderfit
 from .santanderFve6 import Santanderfvevi
-from .santanderolewl import Santanderolewl
+from .OLE_FVE import OLE_FVE
 from .totalcash import Totalcash
 from .v8 import V8
 from .vctex import Vctex
@@ -83,7 +83,7 @@ bancos = {
     "safracomissaozero": lambda df: Safracomissaozero().run(df),
     "santanderfit": lambda df: Santanderfit().run(df),
     "santanderfvevi": lambda df: Santanderfvevi().run(df),
-    "OLE_FVE": lambda df: Santanderolewl().run(df),
+    "OLE_FVE": lambda df: OLE_FVE().run(df),
     "totalcash": lambda df: Totalcash().run(df),
     "v8": lambda df: V8().run(df),
     "vctex": lambda df: Vctex().run(df),

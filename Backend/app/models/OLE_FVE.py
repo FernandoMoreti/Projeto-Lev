@@ -5,7 +5,7 @@ from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
-class Santanderolewl(Bank):
+class OLE_FVE(Bank):
     def __init__(self, name = "BANCO OLE", num = 218, type = "csv"):
         super().__init__(name, num, type)
 
