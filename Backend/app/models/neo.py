@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime
+from datetime import date
 import logging
 from .bank import Bank
 
@@ -25,7 +25,7 @@ class Neo(Bank):
         try:
 
             data = df.filename.split("_")[1].split(".")[0]
-            resultado = f"{data[:2]}/{data[2:4]}/{data[4:]}"
+            resultado = date(int(data[:4]), int(data[4:6]), int(data[6:8]))
 
             df = self.readArchive(df)
 
