@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 from .bank import Bank
+from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
@@ -33,14 +34,13 @@ class Santanderfvevi(Bank):
                 "Percentual Comissão": "PCL_COMISSAO",
                 "Valor A Vista": "VAL_COMISSAO",
                 "Data do Cálculo": "DAT_CREDITO",
+                "Autorregulação": "DSC_OBSERVACAO"
             }
 
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df, infos)
             if Error:
                 return Error
-
-
 
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
@@ -51,11 +51,11 @@ class Santanderfvevi(Bank):
                     df_novo.loc[idx, "VAL_BASE_COMISSAO"] = row["Valor Líquido"]
 
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["VAL_BRUTO"] = df["Valor Bruto"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["VAL_LIQUIDO"] = df_novo["VAL_LIQUIDO"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_BRUTO"] = convertValues(df_novo, "VAL_BRUTO")
+            df_novo["VAL_LIQUIDO"] = convertValues(df_novo, "VAL_LIQUIDO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NUM_BANCO"] = 351
             df_novo["NOM_BANCO"] = "SANTANDER"
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
