@@ -86,7 +86,7 @@ function App() {
     "Facta",
     "Grandino",
     "Happy",
-    "Hope",
+    // "Hope",
     "Icred",
     "Jbcred",
     "Kardbank",
