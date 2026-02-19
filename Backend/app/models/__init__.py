@@ -83,7 +83,7 @@ bancos = {
     "safracomissaozero": lambda df: Safracomissaozero().run(df),
     "santanderfit": lambda df: Santanderfit().run(df),
     "santanderfvevi": lambda df: Santanderfvevi().run(df),
-    "OLE_FVE": lambda df: OLE_FVE().run(df),
+    "ole_fve": lambda df: OLE_FVE().run(df),
     "totalcash": lambda df: Totalcash().run(df),
     "v8": lambda df: V8().run(df),
     "vctex": lambda df: Vctex().run(df),
