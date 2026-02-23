@@ -77,6 +77,7 @@ function App() {
     "Bv",
     "C6Auto",
     "C6bankComissao",
+    "C6bankComissaoWorkbank",
     "C6Equity",
     "Caixa",
     "Digio",

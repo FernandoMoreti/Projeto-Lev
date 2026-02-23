@@ -7,6 +7,7 @@ from .bv import Bv
 from .c6auto import C6auto
 from .c6bankcreditomanual import C6bankcreditomanual
 from .c6bankcomissao import C6bankcomissao
+from .c6bankcomissaoWorkbank import C6bankcomissaoWorkbank
 from .c6bankdebitomanual import C6bankdebitomanual
 from .c6equity import C6equity
 from .caixa import Caixa
@@ -53,6 +54,7 @@ bancos = {
     "c6auto": lambda df: C6auto().run(df),
     "c6bankcreditomanual": lambda df: C6bankcreditomanual().run(df),
     "c6bankcomissao": lambda df: C6bankcomissao().run(df),
+    "c6bankcomissaoworkbank": lambda df: C6bankcomissaoWorkbank().run(df),
     "c6bankdebitomanual": lambda df: C6bankdebitomanual().run(df),
     "c6equity": lambda df: C6equity().run(df),
     "caixa": lambda df: Caixa().run(df),
