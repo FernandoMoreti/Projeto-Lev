@@ -54,6 +54,15 @@ class Brb360(Bank):
             df_novo["NOM_BANCO"] = 'BRB'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
+            types = []
+
+            for type in df_novo["TIPO_COMISSAO_BANCO"]:
+                if type == "BONUS_PERFORMANCE":
+                    type = "BONUS EXTRA"
+                types.append(type)
+
+            df_novo["TIPO_COMISSAO_BANCO"] = types
+
             return df_novo
         except Exception:
             logger.exception("Erro ao editar Brb360")
