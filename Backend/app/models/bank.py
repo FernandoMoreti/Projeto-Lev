@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import pandas as pd
 
 class Bank(ABC):
 
@@ -10,6 +11,17 @@ class Bank(ABC):
     @abstractmethod
     def readArchive(self):
         pass
+
+    def inputAllProposalInListByQueue(self, queueId: int):
+        from ..utils import getAllProposalByQueueId
+
+        return getAllProposalByQueueId(queueId)
+
+    def joinProposalsInDataframe(self, proposals: list):
+
+        df = pd.DataFrame(proposals)
+
+        return df
 
     def validDataframe(self, df, infos):
         from ..utils import validDf

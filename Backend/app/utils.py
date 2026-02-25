@@ -1,4 +1,10 @@
+import os
+
 import pandas as pd
+import requests
+import json
+from dotenv import load_dotenv
+load_dotenv()
 
 col_opcoes = [
    "NUM_BANCO",
@@ -38,6 +44,66 @@ col_opcoes = [
    "TIPO_COMISSAO_BANCO",
    "PCL_TAXA_EMPRESTIMO"
 ]
+
+def getAuthToken():
+    user = {
+        "email": os.environ.get("AUTH_LOGIN_EMAIL"),
+        "password": os.environ.get("AUTH_LOGIN_PASSWORD")
+    }
+
+    getToken = requests.post(
+        os.environ.get("URL_GET_TOKEN_LOGIN"),
+        json=user
+    )
+
+    token = f'Bearer {getToken.json()["token"]}'
+
+    return token
+
+def getAllProposalByQueueId(queueId: int):
+
+    token = getAuthToken()
+
+    header = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/12.2.0"
+    }
+
+    listOfProposal = []
+    page = 1
+    isThereMorePages = True
+
+    while isThereMorePages:
+
+        params = {
+            "page": page,
+            "pageSize": 100
+        }
+
+        response = requests.get(
+            f'{os.environ.get("UPLOADER_URL_GET_PROPOSAL_BY_QUEUE")}{queueId}',
+            headers=header,
+            params=params
+        )
+
+        response_json = response.json()
+
+        dataByPage = response_json.get("data", [])
+
+        if len(dataByPage) == 0:
+            print("Fim das páginas alcançado!")
+            isThereMorePages = False
+            break
+
+        for data in dataByPage:
+            payload = json.loads(data["payload"])
+            listOfProposal.append(payload)
+
+        page += 1
+
+    print(f"Busca finalizada! Total de propostas resgatadas: {len(listOfProposal)}")
+    return listOfProposal
 
 def createDataframe():
     newDataFrame = pd.DataFrame(columns=col_opcoes)
