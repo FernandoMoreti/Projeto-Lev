@@ -18,7 +18,6 @@ class Bank(ABC):
         return getAllProposalByQueueId(queueId)
 
     def joinProposalsInDataframe(self, proposals: list):
-
         df = pd.DataFrame(proposals)
 
         return df

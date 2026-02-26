@@ -79,27 +79,30 @@ def execute():
 def groupProposal():
 
     try:
-        nameBank = request.form.get("name")
-        nameBank = nameBank.lower()
+        nameBank = request.form.get("banco")
+        nameBank = nameBank.lower().split("|")[0]
         queueId = request.form.get("queueId")
 
-        dfEdited = banks[nameBank].run(queueId)
+        print(queueId)
+        print(nameBank)
 
-        archiveName = f"{nameBank}.xlsx"
+        # dfEdited = banks[nameBank].run(queueId)
 
-        tempDir = os.path.join(os.getcwd(), "temp")
+        # archiveName = f"{nameBank}.xlsx"
 
-        os.makedirs(tempDir, exist_ok=True)
+        # tempDir = os.path.join(os.getcwd(), "temp")
 
-        path = os.path.join(tempDir, archiveName)
+        # os.makedirs(tempDir, exist_ok=True)
 
-        dfEdited.to_excel(path, index=False)
+        # path = os.path.join(tempDir, archiveName)
 
-        return jsonify({
-            "message": "Arquivo gerado e salvo com sucesso",
-            "fileName": archiveName,
-            "filePath": path
-        }), 200
+        # dfEdited.to_excel(path, index=False)
+
+        # return jsonify({
+        #     "message": "Arquivo gerado e salvo com sucesso",
+        #     "fileName": archiveName,
+        #     "filePath": path
+        # }), 200
 
     except Exception as e:
         print("Error")
@@ -107,6 +110,39 @@ def groupProposal():
             "error": "Erro interno ao processar e gerar o arquivo Excel.",
             "details": str(e)
         }), 500
+
+# @app.route("/groupProposal", methods=["POST"])
+# def groupProposal():
+
+#     try:
+#         nameBank = request.form.get("name")
+#         nameBank = nameBank.lower()
+#         queueId = request.form.get("queueId")
+
+#         dfEdited = banks[nameBank].run(queueId)
+
+#         archiveName = f"{nameBank}.xlsx"
+
+#         tempDir = os.path.join(os.getcwd(), "temp")
+
+#         os.makedirs(tempDir, exist_ok=True)
+
+#         path = os.path.join(tempDir, archiveName)
+
+#         dfEdited.to_excel(path, index=False)
+
+#         return jsonify({
+#             "message": "Arquivo gerado e salvo com sucesso",
+#             "fileName": archiveName,
+#             "filePath": path
+#         }), 200
+
+#     except Exception as e:
+#         print("Error")
+#         return jsonify({
+#             "error": "Erro interno ao processar e gerar o arquivo Excel.",
+#             "details": str(e)
+#         }), 500
 
 
 
