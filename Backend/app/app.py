@@ -75,66 +75,6 @@ def execute():
     finally:
         infos_logger.info("Finalizando o sistema de envio de arquivo para edicao e download")
 
-@app.route("/getfile", methods=["GET"])
-def getfile():
-
-    today = date.today()
-
-    user = {
-        "email": os.environ.get("AUTH_LOGIN_EMAIL"),
-        "password": os.environ.get("AUTH_LOGIN_PASSWORD")
-    }
-
-    getToken = requests.post(
-        os.environ.get("URL_GET_TOKEN_LOGIN"),
-        json=user
-    )
-
-    token = f'Bearer {getToken.json()["token"]}'
-    banks = ["c6bankdebitomanual"]
-
-    header = {
-        "Authorization": token,
-        "Content-Type": "application/json",
-        "User-Agent": "insomnia/12.2.0"
-    }
-
-    for bank in banks:
-
-        payload = {
-            "s3Uri": f"s3://hives-116976060176/comission/{bank}/{today.year}/{today.month:02d}/{today.day:02d}/410a87a7-8120-49b2-91e6-7e2c9a95190e.xlsx"
-        }
-
-        response = requests.post(
-            os.environ.get("URL_GET_FILE"),
-            json=payload,
-            headers=header
-        )
-
-        if response.status_code == 200:
-
-            archive_in_memory = BytesIO(response.content)
-
-            result = bancos[bank](archive_in_memory)
-
-            output = BytesIO()
-            result.to_excel(output, index=False)
-            output.seek(0)
-
-            if type(result) == str:
-                return jsonify({"erro": result}), 400
-
-            return send_file(
-                response.content,
-                mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                as_attachment=True,
-                download_name="C6"
-            )
-            # requests.post(os.environ.get("URL_UPLOAD_FILE", ))
-
-        else:
-            return jsonify({"erro": f"Erro ao requisitar arquivo do banco {bank}"}), response.status_code
-
 @app.route("/groupProposal", methods=["POST"])
 def groupProposal():
 

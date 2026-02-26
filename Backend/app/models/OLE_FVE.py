@@ -28,12 +28,11 @@ class OLE_FVE(Bank):
             df = self.readArchive(df)
 
             infos ={
-               "Proposta": "NUM_PROPOSTA",
-               "Valor Líquido": "VAL_BASE_COMISSAO",
-               "Valor Total Comissão": "VAL_COMISSAO",
-               "Percentual Comissão": "PCL_COMISSAO",
-               "Data do Cálculo": "DAT_CREDITO",
-               "Autorregulação": "DSC_OBSERVACAO"
+                "Proposta": "NUM_PROPOSTA",
+                "Valor Líquido": "VAL_BASE_COMISSAO",
+                "Valor A Vista": "VAL_COMISSAO",
+                "Data do Cálculo": "DAT_CREDITO",
+                "Autorregulação": "DSC_OBSERVACAO"
             }
 
             logger.info("Validando DataFrame")
@@ -47,8 +46,8 @@ class OLE_FVE(Bank):
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
-            df_novo["PCL_COMISSAO"] = convertValues(df_novo, "PCL_COMISSAO")
 
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["NUM_BANCO"] = 218
