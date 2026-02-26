@@ -9,6 +9,7 @@ from .c6bankcreditomanual import C6bankcreditomanual
 from .c6bankcomissao import C6bankcomissao
 from .banksRobot.C6_Bank import C6_Bank
 from .c6bankdebitomanual import C6bankdebitomanual
+from .c6kgiro import C6kgiro
 from .c6equity import C6equity
 from .caixa import Caixa
 from .crefisa import Crefisa
@@ -55,6 +56,7 @@ bancos = {
     "c6bankcreditomanual": lambda df: C6bankcreditomanual().run(df),
     "c6bankcomissao": lambda df: C6bankcomissao().run(df),
     "c6bankdebitomanual": lambda df: C6bankdebitomanual().run(df),
+    "c6kgiro": lambda df: C6kgiro().run(df),
     "c6equity": lambda df: C6equity().run(df),
     "caixa": lambda df: Caixa().run(df),
     "crefisa": lambda df: Crefisa().run(df),
