@@ -80,11 +80,12 @@ def groupProposal():
 
     try:
         nameBank = request.form.get("banco")
-        nameBank = nameBank.lower().split("|")[0]
+        nameBank = nameBank.lower().split("|")[0].replace(" ", "")
         queueId = request.form.get("queueId")
 
-        print(queueId)
-        print(nameBank)
+        
+
+
 
         # dfEdited = banks[nameBank].run(queueId)
 

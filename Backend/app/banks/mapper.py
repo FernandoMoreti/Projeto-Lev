@@ -1,0 +1,23 @@
+from abc import ABC, abstractmethod
+
+class Mapper(ABC):
+
+    columns = [
+        "NUM_BANCO", "NOM_BANCO", "NUM_PROPOSTA", "NUM_CONTRATO", "NOM_CLIENTE",
+        "COD_CPF_CLIENTE", "DSC_PRODUTO", "DSC_SITUACAO_BANCO", "DSC_OBSERVACAO",
+        "DAT_CREDITO", "VAL_BRUTO", "VAL_LIQUIDO", "VAL_SALDO_REFINANCIAMENTO",
+        "VAL_BASE_COMISSAO", "VAL_COMISSAO", "PCL_COMISSAO", "DSC_TIPO_COMISSAO",
+        "COD_LOJA", "COD_UNIDADE_EMPRESA", "COD_BANCO", "COD_TIPO_PROPOSTA_EMPRESTIMO",
+        "DSC_TIPO_PROPOSTA_EMPRESTIMO", "NIC_CTR_USUARIO", "COD_PRODUTO",
+        "COD_PRODUTOR_VENDA", "COD_PRODUTOR_VENDA_BANCO", "COD_TIPO_COMISSAO",
+        "COD_SITUACAO_EMPRESTIMO", "QTD_PARCELA", "NUM_PARCELA_DIFERIDA_EMPRESA",
+        "DAT_EMPRESTIMO", "DAT_CONFIRMACAO", "DAT_ESTORNO", "DAT_CTR_INCLUSAO",
+        "TIPO_COMISSAO_BANCO", "PCL_TAXA_EMPRESTIMO"
+    ]
+
+    def createNullModel(self):
+        return {chave: None for chave in self.columns}
+
+    @abstractmethod
+    def map(self, line):
+        pass
