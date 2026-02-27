@@ -1,12 +1,12 @@
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
-from .models import bancos, banks
+from .models import bancos
 from dotenv import load_dotenv
 import os
 from .logger import setup_logging, setup_error_logging
-import requests
 from io import BytesIO
-from datetime import datetime, date
+from datetime import datetime
+from .robot.factory import factoryBanks
 
 load_dotenv()
 
@@ -83,27 +83,9 @@ def groupProposal():
         nameBank = nameBank.lower().split("|")[0].replace(" ", "")
         queueId = request.form.get("queueId")
 
-        
+        factoryBanks[nameBank].run(queueId, nameBank)
 
-
-
-        # dfEdited = banks[nameBank].run(queueId)
-
-        # archiveName = f"{nameBank}.xlsx"
-
-        # tempDir = os.path.join(os.getcwd(), "temp")
-
-        # os.makedirs(tempDir, exist_ok=True)
-
-        # path = os.path.join(tempDir, archiveName)
-
-        # dfEdited.to_excel(path, index=False)
-
-        # return jsonify({
-        #     "message": "Arquivo gerado e salvo com sucesso",
-        #     "fileName": archiveName,
-        #     "filePath": path
-        # }), 200
+        return jsonify({"status": 200})
 
     except Exception as e:
         print("Error")

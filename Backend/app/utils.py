@@ -47,12 +47,12 @@ col_opcoes = [
 
 def getAuthToken():
     user = {
-        "email": "davi.lemos@levnegocios.com.br",
-        "password": "895sk53TKUq3394YrfW7B94"
+        "email": os.environ.get("AUTH_LOGIN_EMAIL"),
+        "password": os.environ.get("AUTH_LOGIN_PASSWORD")
     }
 
     getToken = requests.post(
-        os.environ.get("https://lev.authenticator.elegen.com.br/api/v1/auth/login"),
+        os.environ.get("URL_GET_TOKEN_LOGIN"),
         json=user
     )
 

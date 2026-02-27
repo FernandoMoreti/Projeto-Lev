@@ -7,7 +7,6 @@ from .bv import Bv
 from .c6auto import C6auto
 from .c6bankcreditomanual import C6bankcreditomanual
 from .c6bankcomissao import C6bankcomissao
-from .banksRobot.C6_Bank import C6_Bank
 from .c6bankdebitomanual import C6bankdebitomanual
 from .c6kgiro import C6kgiro
 from .c6equity import C6equity
@@ -91,8 +90,4 @@ bancos = {
     "v8": lambda df: V8().run(df),
     "vctex": lambda df: Vctex().run(df),
     "webcash": lambda df: Webcash().run(df)
-}
-
-banks = {
-    "c6_bank": C6_Bank(),
 }

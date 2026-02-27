@@ -3,9 +3,8 @@ import pandas as pd
 import os
 import requests
 from ..utils import getAuthToken
-import json
 import io
-from ..banks.factory import banks
+from ..robot.factory import factoryBanksMapper
 
 class Bank(ABC):
 
@@ -18,7 +17,7 @@ class Bank(ABC):
     def readArchive(self):
         pass
 
-    def getReportByQueueId(queueId):
+    def getReportByQueueId(self, queueId):
 
         token = getAuthToken()
 
@@ -29,9 +28,10 @@ class Bank(ABC):
         }
 
         try:
+            print("Buscando o arquivo")
 
             response = requests.get(
-                f'https://beta.uploader.elegen.com.br/api/v1/queues/{queueId}/file',
+                f'{os.environ.get("URL_UPLOADER_GET_ARCHIVE")}{queueId}/file',
                 headers=header,
             )
 
@@ -44,12 +44,13 @@ class Bank(ABC):
 
             df = pd.read_excel(archiveInMemory)
 
+            print("Arquivo encontrado e lido com sucesso")
+
             return df
-
         except:
-            print("Algo deu errado")
+            print(f"Erro ao buscar relaotrio do id: {queueId}")
 
-    def inputProposalInEvent(df, queueId, bank):
+    def inputProposalsInEvent(self, df, queueId, bank):
 
         token = getAuthToken()
 
@@ -59,9 +60,15 @@ class Bank(ABC):
             "User-Agent": "insomnia/12.2.0"
         }
 
-        mapper = banks.get(bank)
+        mapper = factoryBanksMapper.get(bank)
 
-        for line in df.itertuples():
+        print("Inicializando o upload proposta por proposta")
+
+        listNotInEvents = []
+        session = requests.Session()
+        session.headers.update(header)
+
+        for line in df.to_dict(orient="records"):
 
             payload = mapper.map(line)
 
@@ -74,9 +81,20 @@ class Bank(ABC):
             }
 
             try:
-                requests.post("https://beta.uploader.elegen.com.br/api/v1/events/operations/", json=body, headers=header)
+                response = session.post(
+                    os.environ.get("URL_UPLOADER_POST_PROPOSAL"),
+                    json=body,
+                    timeout=15
+                )
+                if not response.ok:
+                    listNotInEvents.append(line.get("Número Proposta"))
             except:
-                print("Erro inesperado ao subir proposta")
+                listNotInEvents.append(line.get("Número Proposta"))
+        session.close()
+        if len(listNotInEvents) > 0:
+            print(f"Propostas subiram com sucesso, exceto: {listNotInEvents}")
+        else:
+            print("Propostas subiram com sucesso")
 
     def inputAllProposalInListByQueue(self, queueId: int):
         from ..utils import getAllProposalByQueueId
