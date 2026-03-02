@@ -1,4 +1,4 @@
-from ..mapper import Mapper
+from ...mapper import Mapper
 import json
 
 class C6bankMapper(Mapper):

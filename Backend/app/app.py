@@ -7,6 +7,8 @@ from .logger import setup_logging, setup_error_logging
 from io import BytesIO
 from datetime import datetime
 from .robot.factory import factoryBanks
+from .pricing.factory import factoryBanksPricing
+from .utils import sendMail
 
 load_dotenv()
 
@@ -75,11 +77,11 @@ def execute():
     finally:
         infos_logger.info("Finalizando o sistema de envio de arquivo para edicao e download")
 
-@app.route("/groupProposal", methods=["POST"])
+@app.route("/proposal", methods=["POST"])
 def groupProposal():
 
     try:
-        nameBank = request.form.get("banco")
+        nameBank = request.form.get("bank")
         nameBank = nameBank.lower().split("|")[0].replace(" ", "")
         queueId = request.form.get("queueId")
 
@@ -94,39 +96,43 @@ def groupProposal():
             "details": str(e)
         }), 500
 
-# @app.route("/groupProposal", methods=["POST"])
-# def groupProposal():
+@app.route("/editProposals", methods=["POST"])
+def editProposals():
 
-#     try:
-#         nameBank = request.form.get("name")
-#         nameBank = nameBank.lower()
-#         queueId = request.form.get("queueId")
+    try:
+        nameBank = request.form.get("bank")
+        nameBank = nameBank.lower().split("|")[0].replace(" ", "")
+        queueId = request.form.get("queueId")
 
-#         dfEdited = banks[nameBank].run(queueId)
+        dfEdited = factoryBanks[nameBank].run(queueId, nameBank, True)
 
-#         archiveName = f"{nameBank}.xlsx"
+        buffer = BytesIO()
+        dfEdited.to_excel(buffer, index=False, engine='openpyxl')
+        buffer.seek(0)
 
-#         tempDir = os.path.join(os.getcwd(), "temp")
+        file = buffer.read()
+        fileName = f"{nameBank}.xlsx"
 
-#         os.makedirs(tempDir, exist_ok=True)
+        print("Enviando Email...")
+        sendMail(nameBank, fileName, file)
 
-#         path = os.path.join(tempDir, archiveName)
+        return {"message": "Processo concluído com sucesso!"}, 200
+    except Exception as e:
+        print("Error")
+        return jsonify({
+            "error": "Erro interno ao processar e gerar o arquivo Excel.",
+            "details": str(e)
+        }), 500
 
-#         dfEdited.to_excel(path, index=False)
+@app.route("/pricing", methods=["POST"])
+def pricingValidTables():
+    fileWork = request.files.get("fileWork")
+    fileBank = request.files.get("fileBank")
+    bank = request.form.get("bank")
 
-#         return jsonify({
-#             "message": "Arquivo gerado e salvo com sucesso",
-#             "fileName": archiveName,
-#             "filePath": path
-#         }), 200
+    factoryBanksPricing[bank].run(fileWork, fileBank)
 
-#     except Exception as e:
-#         print("Error")
-#         return jsonify({
-#             "error": "Erro interno ao processar e gerar o arquivo Excel.",
-#             "details": str(e)
-#         }), 500
-
+    return 200
 
 
 if __name__ == "__main__":

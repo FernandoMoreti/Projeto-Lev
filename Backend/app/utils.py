@@ -1,8 +1,11 @@
 import os
-
+import smtplib
+from email.message import EmailMessage
 import pandas as pd
 import requests
 import json
+import io
+from .robot.factory import factoryBanksMapper
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -60,6 +63,83 @@ def getAuthToken():
 
     return token
 
+def getReportByqueueId(queueId):
+    token = getAuthToken()
+
+    header = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/12.2.0"
+    }
+
+    try:
+        print("Buscando o arquivo")
+
+        response = requests.get(
+            f'{os.environ.get("URL_UPLOADER_GET_ARCHIVE")}{queueId}/file',
+            headers=header,
+        )
+
+        responseData = response.json()
+
+        bytesArray = responseData["data"]["file"]["data"]
+        binary = bytes(bytesArray)
+
+        archiveInMemory = io.BytesIO(binary)
+
+        df = pd.read_excel(archiveInMemory)
+
+        print("Arquivo encontrado e lido com sucesso")
+
+        return df
+    except:
+        print(f"Erro ao buscar relaotrio do id: {queueId}")
+
+def inputProposalInEvent(df, queueId, bank):
+    token = getAuthToken()
+
+    header = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+        "User-Agent": "insomnia/12.2.0"
+    }
+
+    mapper = factoryBanksMapper.get(bank)
+
+    print("Inicializando o upload proposta por proposta")
+
+    listNotInEvents = []
+    session = requests.Session()
+    session.headers.update(header)
+
+    for line in df.to_dict(orient="records"):
+
+        payload = mapper.map(line)
+
+        body = {
+            "queueId": queueId,
+            "resourceType": "COMMISSION_RECEIVED",
+            "resourceId": 1,
+            "action": "CREATE",
+            "payload": payload
+        }
+
+        try:
+            response = session.post(
+                os.environ.get("URL_UPLOADER_POST_PROPOSAL"),
+                json=body,
+                timeout=15
+            )
+            if not response.ok:
+                listNotInEvents.append(line.get("Número Proposta"))
+        except:
+            listNotInEvents.append(line.get("Número Proposta"))
+    session.close()
+    if len(listNotInEvents) > 0:
+        print(f"Propostas subiram com sucesso, exceto: {listNotInEvents}")
+    else:
+        print("Propostas subiram com sucesso")
+
 def getAllProposalByQueueId(queueId: int):
 
     token = getAuthToken()
@@ -104,6 +184,31 @@ def getAllProposalByQueueId(queueId: int):
 
     print(f"Busca finalizada! Total de propostas resgatadas: {len(listOfProposal)}")
     return listOfProposal
+
+def sendMail(bank, fileName, attachments=None):
+    email = os.getenv("SENDMAIL_LOGIN_EMAIL")
+    password = os.getenv("SENDMAIL_LOGIN_PASSWORD")
+    recipient = "comissao@levnegocios.com.br"
+
+    msg = EmailMessage()
+    msg['Subject'] = f"Relatorio de comissao do banco: {bank}"
+    msg['From'] = email
+    msg['To'] = recipient
+    msg.set_content("")
+    msg.add_attachment(
+        attachments,
+        maintype='application',
+        subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet', # MIME type do Excel
+        filename=fileName
+    )
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(email, password)
+            smtp.send_message(msg)
+            print("E-mail enviado com sucesso!")
+    except Exception as e:
+        print(f"Erro ao enviar: {e}")
 
 def createDataframe():
     newDataFrame = pd.DataFrame(columns=col_opcoes)

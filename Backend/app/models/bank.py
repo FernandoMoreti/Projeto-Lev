@@ -1,10 +1,5 @@
 from abc import ABC, abstractmethod
 import pandas as pd
-import os
-import requests
-from ..utils import getAuthToken
-import io
-from ..robot.factory import factoryBanksMapper
 
 class Bank(ABC):
 
@@ -18,83 +13,14 @@ class Bank(ABC):
         pass
 
     def getReportByQueueId(self, queueId):
+        from ..utils import getReportByqueueId
 
-        token = getAuthToken()
-
-        header = {
-            "Authorization": token,
-            "Content-Type": "application/json",
-            "User-Agent": "insomnia/12.2.0"
-        }
-
-        try:
-            print("Buscando o arquivo")
-
-            response = requests.get(
-                f'{os.environ.get("URL_UPLOADER_GET_ARCHIVE")}{queueId}/file',
-                headers=header,
-            )
-
-            responseData = response.json()
-
-            bytesArray = responseData["data"]["file"]["data"]
-            binary = bytes(bytesArray)
-
-            archiveInMemory = io.BytesIO(binary)
-
-            df = pd.read_excel(archiveInMemory)
-
-            print("Arquivo encontrado e lido com sucesso")
-
-            return df
-        except:
-            print(f"Erro ao buscar relaotrio do id: {queueId}")
+        return getReportByqueueId(queueId)
 
     def inputProposalsInEvent(self, df, queueId, bank):
+        from ..utils import inputProposalInEvent
 
-        token = getAuthToken()
-
-        header = {
-            "Authorization": token,
-            "Content-Type": "application/json",
-            "User-Agent": "insomnia/12.2.0"
-        }
-
-        mapper = factoryBanksMapper.get(bank)
-
-        print("Inicializando o upload proposta por proposta")
-
-        listNotInEvents = []
-        session = requests.Session()
-        session.headers.update(header)
-
-        for line in df.to_dict(orient="records"):
-
-            payload = mapper.map(line)
-
-            body = {
-                "queueId": queueId,
-                "resourceType": "COMMISSION_RECEIVED",
-                "resourceId": 1,
-                "action": "CREATE",
-                "payload": payload
-            }
-
-            try:
-                response = session.post(
-                    os.environ.get("URL_UPLOADER_POST_PROPOSAL"),
-                    json=body,
-                    timeout=15
-                )
-                if not response.ok:
-                    listNotInEvents.append(line.get("Número Proposta"))
-            except:
-                listNotInEvents.append(line.get("Número Proposta"))
-        session.close()
-        if len(listNotInEvents) > 0:
-            print(f"Propostas subiram com sucesso, exceto: {listNotInEvents}")
-        else:
-            print("Propostas subiram com sucesso")
+        inputProposalInEvent(df, queueId, bank)
 
     def inputAllProposalInListByQueue(self, queueId: int):
         from ..utils import getAllProposalByQueueId

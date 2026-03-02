@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 from ...models.bank import Bank
+from ...mapper import COMISSAO_MAPPER
 
 logger = logging.getLogger("bancos")
 
@@ -19,37 +20,46 @@ class C6_Bank(Bank):
         finally:
             logger.info("Finalizando processo de leitura do arquivo")
 
+    def inputCorrectValues(self, df):
+        for row in df.iterrows():
+            if row[1]["COD_BANCO"] != "LEV":
+                df.at[row[0], "VAL_COMISSAO"] = 0
 
-    def run(self, queueId, nameBank):
+        df["NOM_BANCO"] = df["NOM_BANCO"].str.replace("_", " ")
+        df["TIPO_COMISSAO_BANCO"] = df["DSC_SITUACAO_BANCO"].map(COMISSAO_MAPPER).fillna("OUTROS")
+        df["DSC_TIPO_COMISSAO"] = ""
+        df["DSC_SITUACAO_BANCO"] = ""
+        df["COD_BANCO"] = ""
+        df["DSC_PRODUTO"] = ""
+
+        return df
+
+    def run(self, queueId, nameBank, edit=False):
 
         try:
 
-            print(f"Iniciando a captura do Relatorio com o id: {queueId}")
-            df = self.getReportByQueueId(queueId)
-            print(f"Fianlizando com sucesso, queueId: {queueId}")
+            if edit:
+                print(f"Iniciando a edicao do Relatorio com o id: {queueId}")
+                listOfProposal = self.inputAllProposalInListByQueue(queueId)
 
-            print(f"Iniciando o input da propostas no event com o QueueId: {queueId}")
-            self.inputProposalsInEvent(df, queueId, nameBank)
-            print(f"Finalizando o input das propostas com o QueueId: {queueId}")
+                df = self.joinProposalsInDataframe(listOfProposal)
 
+                if not isinstance(df, pd.DataFrame):
+                    return"Erro: A entrada não é um DataFrame válido."
 
-            # listOfProposal = self.inputAllProposalInListByQueue(queueId)
+                df = self.inputCorrectValues(df)
+                print(f"Finalizado a edicao do Relatorio com sucesso")
+                return df
 
-            # df = self.joinProposalsInDataframe(listOfProposal)
+            else:
+                print(f"Iniciando a captura do Relatorio com o id: {queueId}")
+                df = self.getReportByQueueId(queueId)
+                print(f"Fianlizando com sucesso, queueId: {queueId}")
 
-            # if not isinstance(df, pd.DataFrame):
-            #     return"Erro: A entrada não é um DataFrame válido."
+                print(f"Iniciando o input da propostas no event com o QueueId: {queueId}")
+                self.inputProposalsInEvent(df, queueId, nameBank)
+                print(f"Finalizando o input das propostas com o QueueId: {queueId}")
 
-            # for row in df.iterrows():
-            #     if row[1]["COD_BANCO"] != "LEV":
-            #         df.at[row[0], "VAL_COMISSAO"] = 0
-            # df["NOM_BANCO"] = df["NOM_BANCO"].str.replace("_", " ")
-            # df["TIPO_COMISSAO_BANCO"] = df["DSC_SITUACAO_BANCO"].map(COMISSAO_MAPPER).fillna("OUTROS")
-            # df["DAT_CREDITO"] = pd.to_datetime(df["DAT_CREDITO"], unit="D", origin="1899-12-30")
-            # df["DSC_TIPO_COMISSAO"] = ""
-            # df["DSC_SITUACAO_BANCO"] = ""
-            # df["COD_BANCO"] = ""
-            # df["DSC_PRODUTO"] = ""
 
             logger.info("Processamento do c6bankcomissao finalizado com sucesso")
             return df
