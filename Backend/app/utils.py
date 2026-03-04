@@ -1,5 +1,6 @@
 import os
 import smtplib
+import socket
 from email.message import EmailMessage
 import pandas as pd
 import requests
@@ -203,7 +204,8 @@ def sendMail(bank, fileName, attachments=None):
     )
 
     try:
-        with smtplib.SMTP('smtp.gmail.com', 587, timeout=30) as smtp:
+        smtp_server = socket.gethostbyname('smtp.gmail.com')
+        with smtplib.SMTP(smtp_server, 587, timeout=30) as smtp:
             smtp.ehlo() # da um oi pro servidor antes e depois da criptografia abaixo
             smtp.starttls()
             smtp.ehlo()
