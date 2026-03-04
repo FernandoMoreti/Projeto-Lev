@@ -203,8 +203,10 @@ def sendMail(bank, fileName, attachments=None):
     )
 
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 587, timeout=30) as smtp:
+        with smtplib.SMTP('smtp.gmail.com', 587, timeout=30) as smtp:
+            smtp.ehlo() # da um oi pro servidor antes e depois da criptografia abaixo
             smtp.starttls()
+            smtp.ehlo()
             smtp.login(email, password)
             smtp.send_message(msg)
             print("E-mail enviado com sucesso!")

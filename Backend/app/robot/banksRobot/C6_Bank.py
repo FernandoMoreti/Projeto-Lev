@@ -61,7 +61,7 @@ class C6_Bank(Bank):
                 print(f"Finalizando o input das propostas com o QueueId: {queueId}")
 
 
-            logger.info("Processamento do c6bankcomissao finalizado com sucesso")
+            logger.info("Processamento do c6bank finalizado com sucesso")
             return df
         except Exception:
             logger.exception("Erro ao editar c6bankcomissao")
