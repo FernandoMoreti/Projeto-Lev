@@ -13,6 +13,7 @@ class Bank(ABC):
         pass
 
     def getReportByQueueId(self, queueId):
+        print(f"Obtendo relatório para o QueueId: {queueId}")
         from ..utils import getReportByqueueId
 
         return getReportByqueueId(queueId)

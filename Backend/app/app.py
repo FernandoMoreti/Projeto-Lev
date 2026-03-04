@@ -116,7 +116,9 @@ def editProposals():
         print("Enviando Email...")
         sendMail(nameBank, fileName, file)
 
-        return {"message": "Processo concluído com sucesso!"}, 200
+        return jsonify({
+            "message": "Processo concluído com sucesso!"
+        }), 200
     except Exception as e:
         print("Error")
         return jsonify({
