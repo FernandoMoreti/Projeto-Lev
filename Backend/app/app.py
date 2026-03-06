@@ -2,7 +2,7 @@ from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 from .models import bancos
 from dotenv import load_dotenv
-import os
+from .models.crivo import Crivo
 from .logger import setup_logging, setup_error_logging
 from io import BytesIO
 from datetime import datetime
@@ -136,6 +136,23 @@ def pricingValidTables():
 
     return 200
 
+@app.route("/crivo", methods=["POST"])
+def crivo():
+    try:
+        if 'archive' not in request.files:
+            return jsonify({"error": "Campo 'archive' não encontrado"}), 400
+
+        archive = request.files['archive']
+
+        Crivo().run(archive)
+        return jsonify({
+            "status": "sucesso",
+            "message": "Arquivo processado pelo Crivo com sucesso"
+        }), 200
+
+    except Exception as e:
+        print(f"Erro no processamento: {e}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

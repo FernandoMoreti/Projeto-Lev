@@ -1,6 +1,5 @@
 import os
 import smtplib
-import socket
 from email.message import EmailMessage
 import pandas as pd
 import requests
@@ -61,6 +60,7 @@ def getAuthToken():
     )
 
     token = f'Bearer {getToken.json()["token"]}'
+    print("Toke de autenticação obtido com sucesso")
 
     return token
 
@@ -195,7 +195,7 @@ def sendMail(bank, fileName, attachments=None):
     msg['Subject'] = f"Relatorio de comissao do banco: {bank}"
     msg['From'] = email
     msg['To'] = recipient
-    msg.set_content("")
+    msg.set_content("Relatorio de comissao do banco, pronto para processar")
     msg.add_attachment(
         attachments,
         maintype='application',
@@ -204,11 +204,7 @@ def sendMail(bank, fileName, attachments=None):
     )
 
     try:
-        smtp_server = socket.gethostbyname('smtp.gmail.com')
-        with smtplib.SMTP(smtp_server, 587, timeout=30) as smtp:
-            smtp.ehlo() # da um oi pro servidor antes e depois da criptografia abaixo
-            smtp.starttls()
-            smtp.ehlo()
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(email, password)
             smtp.send_message(msg)
             print("E-mail enviado com sucesso!")
