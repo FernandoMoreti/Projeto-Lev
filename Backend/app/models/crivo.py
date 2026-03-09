@@ -23,17 +23,32 @@ class Crivo():
         listOfCommission = []
         listOfReap = []
         listOfForm = []
+        listOfPricing = []
 
         for index, row in df.iterrows():
             if row["Motivo do Crivo"] == "PENDÊNCIA TED DEVOLVIDA":
-                listOfReap.append(row["Id Proposta"])
+                listOfReap.append({
+                    "proposta": row["Num.Proposta"]
+                })
                 continue
             if row["Motivo do Crivo"] == "COMISSÃO DUPLICADA":
-                listOfForm.append(row["Id Proposta"])
+                listOfForm.append({
+                    "proposta": row["Num.Proposta"],
+                    "agentId": row["Id Agente"],
+                    "status": row["Situação Agente"],
+                })
                 continue
-            listOfCommission.append(row["Id Proposta"])
+            if row["Motivo do Crivo"] == "PENDÊNCIA FALTA TABELA COMISSÃO":
+                listOfPricing.append({
+                    "proposta": row["Num.Proposta"],
+                })
+                continue
+            listOfCommission.append({
+                    "proposta": row["Num.Proposta"],
+                    "motivo": row["Motivo do Crivo"]
+                })
 
-        return listOfCommission, listOfReap, listOfForm
+        return listOfCommission, listOfReap, listOfForm, listOfPricing
 
 
     def run(self, df):
@@ -45,14 +60,10 @@ class Crivo():
             if isinstance(df, str):
                 return df
 
-            listOfCommission, listOfReap, listOfForm = self.agroupCrivo(df)
-
-            print(f"listOfCommission: {listOfCommission}")
-            print(f"listOfForm: {listOfForm}")
-            print(f"listOfReap: {listOfReap}")
+            listOfCommission, listOfReap, listOfForm, listOfPricing = self.agroupCrivo(df)
 
             logger.info("Processamento do C6bankdebitomanual finalizado com sucesso")
-            return df
+            return listOfCommission, listOfForm, listOfReap, listOfPricing
         except Exception:
             logger.exception("Erro ao editar C6bankdebitomanual")
             logger.error("Erro ao editar C6bankdebitomanual")

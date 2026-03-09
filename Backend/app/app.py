@@ -144,10 +144,19 @@ def crivo():
 
         archive = request.files['archive']
 
-        Crivo().run(archive)
+        listOfCommission, listOfForm, listOfReap, listOfPricing = Crivo().run(archive)
+
+        print(listOfPricing)
+
         return jsonify({
             "status": "sucesso",
-            "message": "Arquivo processado pelo Crivo com sucesso"
+            "message": "Arquivo processado pelo Crivo com sucesso",
+            "datas": {
+                "listOfCommission": listOfCommission,
+                "listOfForm": listOfForm,
+                "listOfReap": listOfReap,
+                "listOfPricing": listOfPricing,
+            },
         }), 200
 
     except Exception as e:
