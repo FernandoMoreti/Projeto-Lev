@@ -32,7 +32,7 @@ class Icred(Bank):
                "commission_base":"VAL_BASE_COMISSAO",
                "commission_factor": "PCL_COMISSAO",
                "commission_value":"VAL_COMISSAO",
-               "commission_type":"TIPO_COMISSAO_BANCO"
+
             }
 
             logger.info("Validando DataFrame")
@@ -50,6 +50,18 @@ class Icred(Bank):
             df_novo["TIPO_COMISSAO_BANCO"] = df_novo["TIPO_COMISSAO_BANCO"].replace('Flat', 'DIRETA')
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
+
+            for idx, row in df.iterrows():
+                if row["commission_type"] == "Flat":
+                    if row["commission_value"] < 0:
+                        df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+                    else:
+                        df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+                if row["commission_type"] == "Bônus":
+                    if row["commission_value"] < 0:
+                        df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "BÔNUS ESTORNO"
+                    else:
+                        df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "BÔNUS"
 
             logger.info("Processamento do Icred finalizado com sucesso")
             return df_novo

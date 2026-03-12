@@ -44,7 +44,6 @@ class Presenca(Bank):
             if Error:
                 return Error
 
-
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
