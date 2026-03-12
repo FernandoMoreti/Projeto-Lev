@@ -55,11 +55,13 @@ class Icred(Bank):
                 if row["commission_type"] == "Flat":
                     if row["commission_value"] < 0:
                         df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+                        df_novo.loc[idx, "DSC_OBSERVACAO"] = row["history"]
                     else:
                         df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "DIRETA"
                 if row["commission_type"] == "Bônus":
                     if row["commission_value"] < 0:
                         df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "BÔNUS ESTORNO"
+                        df_novo.loc[idx, "DSC_OBSERVACAO"] = row["history"]
                     else:
                         df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "BÔNUS"
 
