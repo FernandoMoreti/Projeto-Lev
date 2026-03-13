@@ -50,6 +50,7 @@ class Icred(Bank):
             df_novo["TIPO_COMISSAO_BANCO"] = df_novo["TIPO_COMISSAO_BANCO"].replace('Flat', 'DIRETA')
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
+            df_novo["TIPO_COMISSAO_BANCO"] = df["commission_type"]
 
             for idx, row in df.iterrows():
                 if row["commission_type"] == "Flat":
