@@ -2,6 +2,7 @@ from .aki import Aki
 from .amigoz import Amigoz
 from .brb360 import Brb360
 from .brbInconta import Brbinconta
+from .brbred import BrbRed
 from .btw import Btw
 from .bv import Bv
 from .c6auto import C6auto
@@ -50,6 +51,7 @@ bancos = {
     "amigoz": lambda df: Amigoz().run(df),
     "brb360": lambda df: Brb360().run(df),
     "brbinconta": lambda df: Brbinconta().run(df),
+    "brbred": lambda df: BrbRed().run(df),
     "btw": lambda df: Btw().run(df),
     "bv": lambda df: Bv().run(df),
     "c6auto": lambda df: C6auto().run(df),

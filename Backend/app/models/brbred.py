@@ -5,14 +5,14 @@ import logging
 
 logger = logging.getLogger("bancos")
 
-class Brb360(Bank):
+class BrbRed(Bank):
     def __init__(self, name = "BRB", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
         try:
             logger.info("Inicio do processo de leitura do df-BRB360")
-            df = pd.read_excel(df, header=2)
+            df = pd.read_excel(df)
             logger.info("Lido o arquivo do BRB360")
             return df
         except Exception:
@@ -29,11 +29,11 @@ class Brb360(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "PROPOSTA": "NUM_PROPOSTA",
-                "DT PAGTO": "DAT_CREDITO",
-                "VR BASE": "VAL_BASE_COMISSAO",
-                "VR CMS": "VAL_COMISSAO",
-                "TIPO CMS": "TIPO_COMISSAO_BANCO"
+                "num_proposta": "NUM_PROPOSTA",
+                "movdatapagamento": "DAT_CREDITO",
+                "valor_contrato": "VAL_BASE_COMISSAO",
+                "valor_comissao": "VAL_COMISSAO",
+                "emppercent_agenciador": "PCL_COMISSAO"
             }
 
             Error = self.validDataframe(df, infos)
@@ -44,24 +44,22 @@ class Brb360(Bank):
 
             df_novo = self.inputValues(df, df_novo, infos)
 
+            if pd.api.types.is_numeric_dtype(df_novo["DAT_CREDITO"]):
+                df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], unit='D', origin='1899-12-30')
+            else:
+                df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce')
+
+            df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%Y-%m-%d')
+
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-            df_novo["PLC_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-            df_novo["NUM_BANCO"] = 701
-            df_novo["NOM_BANCO"] = 'BRB'
+            df_novo["NUM_BANCO"] = 702
+            df_novo["NOM_BANCO"] = 'BRB - RED'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
-            types = []
-
-            for type in df_novo["TIPO_COMISSAO_BANCO"]:
-                if type == "BONUS_PERFORMANCE":
-                    type = "BONUS EXTRA"
-                types.append(type)
-
-            df_novo["TIPO_COMISSAO_BANCO"] = types
+            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
             return df_novo
         except Exception:

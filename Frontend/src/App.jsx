@@ -73,6 +73,7 @@ function App() {
     "Amigoz",
     "BRB360",
     "BRBInconta Validar",
+    "BRBRed",
     "BTW",
     "Bv",
     "C6Auto",
