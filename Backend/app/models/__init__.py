@@ -34,9 +34,9 @@ from .paranabank import Paranabank
 from .phtech import Phtech
 from .presenca import Presenca
 from .qualibank import Qualibank
-from .queromaiscancelados import Queromaiscancelados
-from .queromaiscomissao import Queromaiscomissao
-from .queromaisseguro import Queromaisseguro
+from .capitalconsigcancelados import CapitalConsigCancelados
+from .capitalconsigcomissao import CapitalConsigComissao
+from .capitalconsigseguro import CapitalConsigSeguro
 from .safracomissaozero import Safracomissaozero
 from .santanderfit import Santanderfit
 from .santanderFve6 import Santanderfvevi
@@ -83,9 +83,9 @@ bancos = {
     "phtech": lambda df: Phtech().run(df),
     "presenca": lambda df: Presenca().run(df),
     "qualibank": lambda df: Qualibank().run(df),
-    "queromaiscancelados": lambda df: Queromaiscancelados().run(df),
-    "queromaiscomissao": lambda df: Queromaiscomissao().run(df),
-    "queromaisseguro": lambda df: Queromaisseguro().run(df),
+    "capitalconsigcancelados": lambda df: CapitalConsigCancelados().run(df),
+    "capitalconsigcomissao": lambda df: CapitalConsigComissao().run(df),
+    "capitalconsigseguro": lambda df: CapitalConsigSeguro().run(df),
     "safracomissaozero": lambda df: Safracomissaozero().run(df),
     "santanderfit": lambda df: Santanderfit().run(df),
     "santanderfvevi": lambda df: Santanderfvevi().run(df),

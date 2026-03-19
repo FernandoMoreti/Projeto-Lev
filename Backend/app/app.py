@@ -7,7 +7,6 @@ from .logger import setup_logging, setup_error_logging
 from io import BytesIO
 from datetime import datetime
 from .robot.factory import factoryBanks
-from .pricing.factory import factoryBanksPricing
 from .utils import sendMail
 
 load_dotenv()
@@ -125,16 +124,6 @@ def editProposals():
             "error": "Erro interno ao processar e gerar o arquivo Excel.",
             "details": str(e)
         }), 500
-
-@app.route("/pricing", methods=["POST"])
-def pricingValidTables():
-    fileWork = request.files.get("fileWork")
-    fileBank = request.files.get("fileBank")
-    bank = request.form.get("bank")
-
-    factoryBanksPricing[bank].run(fileWork, fileBank)
-
-    return 200
 
 @app.route("/crivo", methods=["POST"])
 def crivo():

@@ -25,7 +25,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("https://flask-backend-ipg8.onrender.com/execute", {
+      const response = await fetch("http://127.0.0.1:5000/execute", {
         method: "POST",
         body: formData,
       })
@@ -102,9 +102,9 @@ function App() {
     "PHtech",
     "Presenca",
     "QualiBank",
-    "QueroMaisCancelados",
-    "QueroMaisComissao",
-    "QueroMaisSeguro",
+    "CAPITALCONSIGCancelados",
+    "CAPITALCONSIGComissao",
+    "CAPITALCONSIGSeguro",
     "SafraComissaoZero",
     "SantanderFit",
     "SantanderFVEVI",

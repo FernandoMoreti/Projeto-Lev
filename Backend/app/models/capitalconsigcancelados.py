@@ -7,7 +7,7 @@ from .bank import Bank
 
 logger = logging.getLogger("bancos")
 
-class Queromaiscancelados(Bank):
+class CapitalConsigCancelados(Bank):
     def __init__(self, name = "QUERO MAIS CREDITO", num = 3030, type = "excel"):
         super().__init__(name, num, type)
 

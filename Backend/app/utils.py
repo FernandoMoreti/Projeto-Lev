@@ -110,6 +110,7 @@ def inputProposalInEvent(df, queueId, bank):
     print("Inicializando o upload proposta por proposta")
 
     listNotInEvents = []
+    proposalTotal = 0
     session = requests.Session()
     session.headers.update(header)
 
@@ -129,17 +130,21 @@ def inputProposalInEvent(df, queueId, bank):
             response = session.post(
                 os.environ.get("URL_UPLOADER_POST_PROPOSAL"),
                 json=body,
-                timeout=15
             )
             if not response.ok:
                 listNotInEvents.append(line.get("Número Proposta"))
+            else:
+                proposalTotal += 1
         except:
             listNotInEvents.append(line.get("Número Proposta"))
+
     session.close()
     if len(listNotInEvents) > 0:
-        print(f"Propostas subiram com sucesso, exceto: {listNotInEvents}")
+        print(f"Propostas subiram com sucesso, exceto: {len(listNotInEvents)} --> {listNotInEvents}")
+        print(f"Total de propsotas: {proposalTotal}")
     else:
         print("Propostas subiram com sucesso")
+        print(f"Total de propsotas: {proposalTotal}")
 
 def getAllProposalByQueueId(queueId: int):
 
@@ -199,7 +204,7 @@ def sendMail(bank, fileName, attachments=None):
     msg.add_attachment(
         attachments,
         maintype='application',
-        subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet', # MIME type do Excel
+        subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         filename=fileName
     )
 
