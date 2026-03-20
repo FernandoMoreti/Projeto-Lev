@@ -31,7 +31,8 @@ class Novosaquecartao(Bank):
                 "Valor Bruto": "VAL_BASE_COMISSAO",
                 "Comissão Total": "VAL_COMISSAO",
                 "Pgto. Comissão": "DAT_CREDITO",
-                "% Comissão Total": "PCL_COMISSAO"
+                "% Comissão Total": "PCL_COMISSAO",
+                "Taxa de Juros": "PCL_TAXA_EMPRESTIMO"
             }
 
             logger.info("Validando DataFrame")

@@ -42,6 +42,10 @@ class Paranabank(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
+            for index, row in df.iterrow():
+                if (row["Auto Regulação"] == "Verdadeiro"):
+                    df_novo["DSC_OBSERVACAO"] = row["Observação"]
+
             df_novo["NUM_BANCO"] = 254
             df_novo["NOM_BANCO"] = "PARANÁ BANCO S.A."
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]

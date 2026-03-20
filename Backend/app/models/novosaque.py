@@ -30,7 +30,8 @@ class Novosaque(Bank):
                 "N de Contrato": "NUM_PROPOSTA",
                 "R$ Liberado": "VAL_BASE_COMISSAO",
                 "R$ Corban": "VAL_COMISSAO",
-                "Pgto. Comissão": "DAT_CREDITO"
+                "Pgto. Comissão": "DAT_CREDITO",
+                "Taxa de Juros": "PCL_TAXA_EMPRESTIMO"
             }
 
             logger.info("Validando DataFrame")
