@@ -1,5 +1,6 @@
 import pandas as pd
 import logging
+from datetime import datetime
 from .bank import Bank
 
 logger = logging.getLogger("bancos")
@@ -41,11 +42,14 @@ class Caixa(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
+            date = datetime.now()
+
             df_novo["NOM_BANCO"] = "CAIXA"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["NUM_BANCO"] = 104
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            df_novo["DAT_CREDITO"] = date
 
             logger.info("Processamento do Caixa finalizado com sucesso")
             return df_novo
