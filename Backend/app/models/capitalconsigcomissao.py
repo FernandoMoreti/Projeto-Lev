@@ -44,8 +44,8 @@ class CapitalConsigComissao(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
-            df_novo["NUM_BANCO"] = 3030
-            df_novo["NOM_BANCO"] = 'QUERO MAIS CREDITO'
+            df_novo["NUM_BANCO"] = 12222222
+            df_novo["NOM_BANCO"] = 'CAPITAL CONSIG'
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]

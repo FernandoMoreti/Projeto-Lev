@@ -49,8 +49,8 @@ class CapitalConsigSeguro(Bank):
                 else:
                     df_novo.at[row.Index, "TIPO_COMISSAO_BANCO"] = 'ESTORNO SEGURO'
 
-            df_novo["NUM_BANCO"] = 3030
-            df_novo["NOM_BANCO"] = 'QUERO MAIS CREDITO'
+            df_novo["NUM_BANCO"] = 12222222
+            df_novo["NOM_BANCO"] = 'CAPITAL CONSIG'
             df_novo["DAT_CREDITO"] = datetime.now().date()
             df_novo["PCL_COMISSAO"] = 30
             df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] * 0.3

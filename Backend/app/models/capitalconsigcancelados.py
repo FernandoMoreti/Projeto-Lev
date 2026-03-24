@@ -55,8 +55,8 @@ class CapitalConsigCancelados(Bank):
 
             df_novo["VAL_BRUTO"] = convertValues(df_novo, "VAL_BRUTO")
 
-            df_novo["NUM_BANCO"] = 3030
-            df_novo["NOM_BANCO"] = 'QUERO MAIS CREDITO'
+            df_novo["NUM_BANCO"] = 12222222
+            df_novo["NOM_BANCO"] = 'CAPITAL CONSIG'
             df_novo["DAT_CREDITO"] = datetime.now().date()
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BRUTO"]
             df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BRUTO"]
