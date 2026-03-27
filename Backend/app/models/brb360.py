@@ -33,7 +33,8 @@ class Brb360(Bank):
                 "DT PAGTO": "DAT_CREDITO",
                 "VR BASE": "VAL_BASE_COMISSAO",
                 "VR CMS": "VAL_COMISSAO",
-                "TIPO CMS": "TIPO_COMISSAO_BANCO"
+                "TIPO CMS": "TIPO_COMISSAO_BANCO",
+                "% CMS": "PCL_COMISSAO"
             }
 
             Error = self.validDataframe(df, infos)
@@ -47,7 +48,6 @@ class Brb360(Bank):
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["NUM_BANCO"] = 701

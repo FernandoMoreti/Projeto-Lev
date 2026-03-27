@@ -135,8 +135,6 @@ def crivo():
 
         listOfCommission, listOfForm, listOfReap, listOfPricing = Crivo().run(archive)
 
-        print(listOfPricing)
-
         return jsonify({
             "status": "sucesso",
             "message": "Arquivo processado pelo Crivo com sucesso",
