@@ -28,7 +28,7 @@ class C6equity(Bank):
 
             infos = {
                 "CD CONTRATO": "NUM_PROPOSTA",
-                "DT PRODUÇÃO": "DAT_CREDITO",
+                "DT PROPOSTA": "DAT_CREDITO",
                 "VL PRINCIPAL": "VAL_BASE_COMISSAO",
                 "PC COMISSAO FLAT": "PCL_COMISSAO",
                 "VALOR COMISSAO": "VAL_COMISSAO"
