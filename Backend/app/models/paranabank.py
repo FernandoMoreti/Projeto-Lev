@@ -42,7 +42,7 @@ class Paranabank(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
-            for index, row in df.iterrow():
+            for index, row in df.iterrows():
                 if (row["Auto Regulação"] == "Verdadeiro"):
                     df_novo["DSC_OBSERVACAO"] = row["Observação"]
 
