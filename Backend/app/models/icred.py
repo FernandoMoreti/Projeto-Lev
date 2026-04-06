@@ -1,7 +1,7 @@
 import pandas as pd
-from ..utils import createDataframe, inputValueColumns, validDf
 import logging
 from .bank import Bank
+import numpy as np
 
 logger = logging.getLogger("bancos")
 
@@ -53,6 +53,10 @@ class Icred(Bank):
             df_novo["TIPO_COMISSAO_BANCO"] = df["commission_type"]
 
             for idx, row in df.iterrows():
+                if row["history"] == '"Diferença ajustada automaticamente."':
+                    df_novo.loc[idx, "DSC_OBSERVACAO"] = row["history"]
+                    df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO AJUSTE CMS"
+                    continue
                 if row["commission_type"] == "Flat":
                     if row["commission_value"] < 0:
                         df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
