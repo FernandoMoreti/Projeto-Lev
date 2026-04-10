@@ -243,15 +243,16 @@ def convertValues(df_novo, columns):
     for valor in df_novo[columns]:
         valor_str = valor
 
-        if type(valor) == str :
-
+        try:
             valor_str = str(valor)
             valor_teste = valor_str.replace("R$", "")
             valor_teste = valor_teste.replace(".", "")
             valor_teste = valor_teste.replace(",", ".")
             valor_str = float(valor_teste)
 
-        valores_tratados.append(valor_str)
+            valores_tratados.append(valor_str)
+        except (ValueError, TypeError):
+            valores_tratados.append(0.0)
 
     return valores_tratados
 

@@ -125,6 +125,8 @@ class Brbinconta(Bank):
 
             for valor in df_novo["DSC_OBSERVACAO"]:
 
+                print(valor)
+
                 valor_str = valor
 
                 if type(valor) == str :
@@ -140,6 +142,9 @@ class Brbinconta(Bank):
                     valor_teste = valor_teste.replace(",", ".")
                     if valor_teste == "SAQUE":
                         valor_teste = "0"
+                    if valor == "CONTA":
+                        valores_tratados.append(0.0)
+                        continue
                     valor_str = float(valor_teste)
 
                 valores_tratados.append(valor_str)
@@ -148,8 +153,10 @@ class Brbinconta(Bank):
 
             logger.info("Iniciando processo de edicao do BTW")
 
-            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float)
-            df_novo["NUM_PROPOSTA"] = df_novo["NUM_PROPOSTA"].fillna("0").replace("", "0").astype(int)
+            print(df_novo["PCL_COMISSAO"])
+
+            df_novo["PCL_COMISSAO"] = pd.to_numeric(df_novo["PCL_COMISSAO"].astype(str).str.replace(",", "."), errors='coerce').fillna(0)
+            df_novo["NUM_PROPOSTA"] = pd.to_numeric(df_novo["NUM_PROPOSTA"], errors='coerce').fillna(0).astype('int64')
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["NUM_BANCO"] = 70
             df_novo["NOM_BANCO"] = 'BRB - BANCO DE BRASÍLIA'
