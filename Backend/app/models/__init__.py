@@ -1,5 +1,6 @@
 from .aki import Aki
 from .amigoz import Amigoz
+from .bmgCLT import BmgCLT
 from .brb360 import Brb360
 from .brbInconta import Brbinconta
 from .brbred import BrbRed
@@ -50,6 +51,7 @@ from .webcash import Webcash
 bancos = {
     "aki": lambda df: Aki().run(df),
     "amigoz": lambda df: Amigoz().run(df),
+    "bmgclt": lambda df: BmgCLT().run(df),
     "brb360": lambda df: Brb360().run(df),
     "brbinconta": lambda df: Brbinconta().run(df),
     "brbred": lambda df: BrbRed().run(df),
