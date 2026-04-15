@@ -10,8 +10,8 @@ class Nyc(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df, header=1)
-            df = df.iloc[:-2]
+            df = pd.read_excel(df)
+            df = df.iloc[:-3]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -28,10 +28,10 @@ class Nyc(Bank):
 
             infos ={
                "Id":"NUM_PROPOSTA",
-               "DataFinalização":"DAT_CREDITO",
-               "ValorLiquido":"VAL_BASE_COMISSAO",
-               "Valor Comissão Líquida":"VAL_COMISSAO",
-               "% Comissão Líquida":"PCL_COMISSAO"
+               "Data de Finalização":"DAT_CREDITO",
+               "Valor Líquido":"VAL_BASE_COMISSAO",
+               "$ Comissão Promotora":"VAL_COMISSAO",
+               "% Comissão Promotora":"PCL_COMISSAO"
             }
 
             logger.info("Validando DataFrame")
