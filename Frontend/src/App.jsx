@@ -112,6 +112,7 @@ function App() {
     "TotalCash",
     "V8",
     "VCtex",
+    "Viacerta",
     "WebCash"
    ]
 

@@ -44,6 +44,7 @@ from .OLE_FVE import OLE_FVE
 from .totalcash import Totalcash
 from .v8 import V8
 from .vctex import Vctex
+from .viacerta import Viacerta
 from .webcash import Webcash
 
 bancos = {
@@ -93,5 +94,6 @@ bancos = {
     "totalcash": lambda df: Totalcash().run(df),
     "v8": lambda df: V8().run(df),
     "vctex": lambda df: Vctex().run(df),
+    "viacerta": lambda df: Viacerta().run(df),
     "webcash": lambda df: Webcash().run(df)
 }
