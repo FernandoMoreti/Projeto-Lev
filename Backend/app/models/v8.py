@@ -37,7 +37,8 @@ class V8(Bank):
                 "PERCENTUAL_REPASSE_TOTAL":"PCL_COMISSAO",
                 "NUM_CONTRATO": "NUM_CONTRATO",
                 "COD_PRODUTO" : "COD_PRODUTO",
-                "DSC_PRODUTO" : "DSC_PRODUTO"
+                "DSC_PRODUTO" : "DSC_PRODUTO",
+                "DSC_TIPO_PROPOSTA_EMPRESTIMO": "COD_TIPO_PROPOSTA_EMPRESTIMO"
             }
 
             logger.info("Validando DataFrame")

@@ -29,7 +29,7 @@ class CapitalConsigComissao(Bank):
 
             infos = {
                "NR.PROP.":"NUM_PROPOSTA",
-               "VLR TOTAL PRODUCUÇÃO (VLR LIQUIDO + SEGURO)":"VAL_BASE_COMISSAO",
+               "VLR TOTAL PRODUÇÃO (VLR LIQUIDO + SEGURO)":"VAL_BASE_COMISSAO",
                "Valor Prêmio":"VAL_COMISSAO",
                "% Prêmio":"PCL_COMISSAO",
                "Dt Pag Prêmio": "DAT_CREDITO"
