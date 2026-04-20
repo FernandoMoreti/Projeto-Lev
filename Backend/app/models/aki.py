@@ -35,7 +35,7 @@ class Aki(Bank):
             infos = {
                 "Nº Contrato": "NUM_PROPOSTA",
                 "Valor Total": "VAL_BASE_COMISSAO",
-                "% Comissão": "PCL_COMISSAO",
+                "% Prêmio": "PCL_COMISSAO",
                 "Valor Comissão": "VAL_COMISSAO",
             }
             logger.info("Validando DataFrame")
