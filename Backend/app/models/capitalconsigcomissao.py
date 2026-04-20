@@ -31,7 +31,7 @@ class CapitalConsigComissao(Bank):
                "NR.PROP.":"NUM_PROPOSTA",
                "VLR TOTAL PRODUCUÇÃO (VLR LIQUIDO + SEGURO)":"VAL_BASE_COMISSAO",
                "Valor Comissão":"VAL_COMISSAO",
-               "% Comissão":"PCL_COMISSAO",
+               "% Prêmio":"PCL_COMISSAO",
                "Dt Pag Comissão": "DAT_CREDITO"
             }
 
