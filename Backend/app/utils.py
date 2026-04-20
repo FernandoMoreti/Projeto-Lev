@@ -244,11 +244,12 @@ def convertValues(df_novo, columns):
         valor_str = valor
 
         try:
-            valor_str = str(valor)
-            valor_teste = valor_str.replace("R$", "")
-            valor_teste = valor_teste.replace(".", "")
-            valor_teste = valor_teste.replace(",", ".")
-            valor_str = float(valor_teste)
+            v = str(valor).replace("R$", "").strip()
+            if "," in v and "." in v:
+                v = v.replace(".", "").replace(",", ".")
+            elif "," in v:
+                v = v.replace(",", ".")
+            valor_str = float(v)
 
             valores_tratados.append(valor_str)
         except (ValueError, TypeError):
