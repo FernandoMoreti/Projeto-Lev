@@ -36,7 +36,7 @@ class Aki(Bank):
                 "Nº Contrato": "NUM_PROPOSTA",
                 "Valor Total": "VAL_BASE_COMISSAO",
                 "% Prêmio": "PCL_COMISSAO",
-                "Valor Comissão": "VAL_COMISSAO",
+                "Valor Prêmio": "VAL_COMISSAO",
             }
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df, infos)
