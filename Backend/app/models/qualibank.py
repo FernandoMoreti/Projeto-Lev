@@ -42,12 +42,16 @@ class Qualibank(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
+            if df["DESCRICAO"] == "BONUS CAMPANHA":
+                df_novo["TIPO_COMISSAO_BANCO"] = "BONUS EXTRA"
+            else:
+                df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+
             df_novo["NUM_BANCO"] = 2222222
             df_novo["NOM_BANCO"] = "QUALI BANK"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
             logger.info("Processamento do Qualibank finalizado com sucesso")
             return df_novo
