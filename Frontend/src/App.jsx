@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
 import './App.css'
 import logo from "../public/logo.jpg"
+import Lottie from "lottie-react";
+import pigeonAnimation from "./pigeon.json";
+
+function Pombo() {
+  return (
+    <div className="flex justify-center w-100 h-100 absolute">
+      <Lottie animationData={pigeonAnimation} loop={true} />
+    </div>
+  );
+}
 
 function App() {
 
@@ -93,7 +103,7 @@ function App() {
     "Facta",
     "Grandino",
     "Happy",
-    // "Hope",
+    "Hope",
     "Icred",
     "Jbcred",
     "Kardbank",
@@ -121,7 +131,7 @@ function App() {
     <>
       <div>
         <section className='flex flex-col h-screen'>
-          <p className={`absolute p-5 w-full text-white transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : mensagem ? "Faltando credenciais" : "Não foi possivel editar"}</p>
+          <p className={`absolute p-5 w-full text-white transition-opacity duration-500 rounded-b-2xl ${mostrar ? ' opacity-100 ' : ' opacity-0 '}${validar ? 'bg-green-600' : 'bg-red-600'}`}>{validar ? "Editado com sucesso" : mensagem ? "Faltando credenciais" : "Não foi possivel editar"}<Pombo /></p>
           <div className='flex-1 flex justify-center items-center bg-black/10'>
             <div className='flex flex-col p-10 h-120 w-120 shadow-2xl bg-white shadow-gray-700 rounded-l-4xl'>
               <h1 className='flex justify-center text-[22px] font-bold'>Bem vindo ao Conversor WORKBANK</h1>

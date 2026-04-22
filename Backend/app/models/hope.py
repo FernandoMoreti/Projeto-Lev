@@ -48,12 +48,23 @@ class Hope(Bank):
             df_novo = df_novo.drop(df_novo.index[tamanho-2])
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
             df_novo["NOM_BANCO"] = "HOPE"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] / 100 * df_novo["PCL_COMISSAO"]
+            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"] / 100
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NUM_BANCO"] = 1597
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+
+            for index, row in df_novo.iterrows():
+                v_base = row["VAL_BASE_COMISSAO"]
+                v_comis = row["VAL_COMISSAO"]
+
+                if v_base % 1 == 0 or v_comis % 1 == 0:
+                    df_novo.at[index, "VAL_BASE_COMISSAO"] = 0
+                    df_novo.at[index, "VAL_COMISSAO"] = 0
+                    df_novo.at[index, "PCL_COMISSAO"] = 0
 
             logger.info("Processamento do Hope finalizado com sucesso")
             return df_novo
