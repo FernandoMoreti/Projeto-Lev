@@ -32,6 +32,7 @@ from .novosaque import Novosaque
 from .novosaquecartao import Novosaquecartao
 from .nyc import Nyc
 from .paranabank import Paranabank
+from .panLafy import PanLafy
 from .phtech import Phtech
 from .presenca import Presenca
 from .qualibank import Qualibank
@@ -83,6 +84,7 @@ bancos = {
     "novosaquecartao": lambda df: Novosaquecartao().run(df),
     "nyc": lambda df: Nyc().run(df),
     "paranabank": lambda df: Paranabank().run(df),
+    "panlafy": lambda df: PanLafy().run(df),
     "phtech": lambda df: Phtech().run(df),
     "presenca": lambda df: Presenca().run(df),
     "qualibank": lambda df: Qualibank().run(df),
