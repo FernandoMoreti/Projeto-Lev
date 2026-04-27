@@ -113,6 +113,7 @@ function App() {
     "NovoSaqueCartao",
     "NYC",
     "ParanaBank",
+    "PANLAFY",
     "PHtech",
     "Presenca",
     "QualiBank",
