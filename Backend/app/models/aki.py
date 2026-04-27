@@ -15,7 +15,7 @@ class Aki(Bank):
             logger.info("Inicio do processo de leitura do df-Aki")
 
             data = df.filename.split("_")[0]
-            diaMesAno = f"{data[:2]}/{data[3:5]}/{data[6:]}"
+            diaMesAno = f"{data[:2]}/{data[3:5]}/{data[6:10]}"
 
             df = pd.read_excel(df)
 
