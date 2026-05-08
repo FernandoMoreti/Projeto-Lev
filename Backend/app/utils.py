@@ -249,6 +249,11 @@ def convertValues(df_novo, columns):
                 v = v.replace(".", "").replace(",", ".")
             elif "," in v:
                 v = v.replace(",", ".")
+
+            if "-" in v:
+                v = v.replace("-", "").strip()
+                v = "-" + v
+
             valor_str = float(v)
 
             valores_tratados.append(valor_str)

@@ -129,9 +129,8 @@ class Btw(Bank):
                         "Proposta": "NUM_PROPOSTA",
                         "DT_Pagamento": "DAT_CREDITO",
                         "Valor_Liberado": "VAL_BASE_COMISSAO",
-                        "Total_Bruto": "VAL_COMISSAO",
-                        "Tx_Serviço": "PCL_COMISSAO",
-                        "tipo": "TIPO_COMISSAO_BANCO",
+                        "Vr_Comissao_Bruto": "VAL_COMISSAO",
+                        "Tx_Comissao": "PCL_COMISSAO",
                     }
                 else:
                     infos = {
@@ -152,8 +151,8 @@ class Btw(Bank):
                     "Proposta": "NUM_PROPOSTA",
                     "DT_Pagamento": "DAT_CREDITO",
                     "Valor_Liberado": "VAL_BASE_COMISSAO",
-                    "Vr_Comissao_Flat_Bruto": "VAL_COMISSAO",
-                    "Tx_Comissao_Flat": "PCL_COMISSAO",
+                    "Vr_Comissao_Bruto": "VAL_COMISSAO",
+                    "Tx_Comissao": "PCL_COMISSAO",
                 }
 
             logger.info("Validando DataFrame")

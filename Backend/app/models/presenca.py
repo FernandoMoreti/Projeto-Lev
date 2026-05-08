@@ -12,7 +12,8 @@ class Presenca(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df, header=2)
+            df = pd.read_excel(df)
+            print(df["% Pagamento"])
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -28,16 +29,11 @@ class Presenca(Bank):
             df = self.readArchive(df)
 
             infos ={
-               "PROPOSTA":"NUM_PROPOSTA",
-               "DT PAGTO":"DAT_CREDITO",
-               "VR BASE":"VAL_BASE_COMISSAO",
-               "VR CMS":"VAL_COMISSAO",
-               "% CMS":"PCL_COMISSAO",
+               "ID Proposta":"NUM_PROPOSTA",
+               "Data Pagamento":"DAT_CREDITO",
+               "Valor Bruto":"VAL_BASE_COMISSAO",
+               "Valor Repasse":"VAL_COMISSAO",
             }
-
-            length = len(df["PROPOSTA"])
-
-            df = df.drop(index=[length -1])
 
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df, infos)
@@ -51,6 +47,7 @@ class Presenca(Bank):
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
+            df_novo["PCL_COMISSAO"] = round((df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100, 2)
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["NUM_BANCO"] = 482
