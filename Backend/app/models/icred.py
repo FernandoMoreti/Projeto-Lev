@@ -69,6 +69,12 @@ class Icred(Bank):
                         df_novo.loc[idx, "DSC_OBSERVACAO"] = row["history"]
                     else:
                         df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "BÔNUS"
+                if row["commission_type"] == "Desafio" or row["commission_type"] == "Campanha":
+                    if row["commission_value"] < 0:
+                        df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = "ESTORNO ICRED C. MENSAL"
+                        df_novo.loc[idx, "DSC_OBSERVACAO"] = row["history"]
+                    else:
+                        df_novo.loc[idx, "TIPO_COMISSAO_BANCO"] = row["commission_type"]
 
             logger.info("Processamento do Icred finalizado com sucesso")
             return df_novo
