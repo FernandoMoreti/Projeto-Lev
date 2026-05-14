@@ -27,7 +27,7 @@ class Evol(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Id_Operation":"NUM_PROPOSTA",
+                "Id_Titulo":"NUM_PROPOSTA",
                 "Taxa":"PCL_TAXA_EMPRESTIMO",
                 "Valor_Liberado":"VAL_LIQUIDO",
                 "Valor_Saldo":"VAL_COMISSAO",
