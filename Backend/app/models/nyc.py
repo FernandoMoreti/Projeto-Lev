@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 from .bank import Bank
+from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
@@ -28,10 +29,9 @@ class Nyc(Bank):
 
             infos ={
                "Id":"NUM_PROPOSTA",
-               "Data de Finalização":"DAT_CREDITO",
+               "Data de Pagamento Comissão":"DAT_CREDITO",
                "Valor Líquido":"VAL_BASE_COMISSAO",
                "$ Comissão Promotora":"VAL_COMISSAO",
-               "% Comissão Promotora":"PCL_COMISSAO"
             }
 
             logger.info("Validando DataFrame")
@@ -43,9 +43,12 @@ class Nyc(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+
             df_novo["NUM_BANCO"] = '1728'
             df_novo["NOM_BANCO"] = 'NYC BANK'
-            df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"])
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
             if"PCL_COMISSAO"in df_novo.columns:
