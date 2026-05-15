@@ -54,6 +54,12 @@ class Nyc(Bank):
             if"PCL_COMISSAO"in df_novo.columns:
                 df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
 
+            for index, row in df_novo.iterrows():
+                if row["VAL_COMISSAO"] < 0:
+                    df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
+                else:
+                    df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "DIRETA"
+
             logger.info("Processamento do Nyc finalizado com sucesso")
             return df_novo
         except Exception:

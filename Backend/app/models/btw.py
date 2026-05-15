@@ -30,9 +30,9 @@ class Btw(Bank):
             ano = (df.filename.split('_')[2].split('-')[0][0:4])
 
             if df.filename.split('_')[1] == "BTW":
-                name = "LECCA"
-            else:
                 name = "BTW"
+            else:
+                name = "LECCA"
 
             data = f"{name}_{df.filename.split('_')[2]}"
 
@@ -147,13 +147,21 @@ class Btw(Bank):
                 df_final = df_main
                 unique = True
 
-                infos = {
-                    "Proposta": "NUM_PROPOSTA",
-                    "DT_Pagamento": "DAT_CREDITO",
-                    "Valor_Liberado": "VAL_BASE_COMISSAO",
-                    "Vr_Comissao_Bruto": "VAL_COMISSAO",
-                    "Tx_Comissao": "PCL_COMISSAO",
-                }
+                if related_name == "LECCA":
+                    infos = {
+                        "Proposta": "NUM_PROPOSTA",
+                        "DT_Pagamento": "DAT_CREDITO",
+                        "Valor_Liberado": "VAL_BASE_COMISSAO",
+                        "Vr_Comissao_Bruto": "VAL_COMISSAO",
+                        "Tx_Comissao": "PCL_COMISSAO",
+                    }
+                else:
+                    infos = {
+                        "Proposta": "NUM_PROPOSTA",
+                        "DT_Pagamento": "DAT_CREDITO",
+                        "Valor_Liberado": "VAL_BASE_COMISSAO",
+                        "Total_Bruto": "VAL_COMISSAO",
+                    }
 
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df_final, infos)
@@ -165,13 +173,16 @@ class Btw(Bank):
             df_novo = self.inputValues(df_final, df_novo, infos)
 
             if unique:
-                print("ok")
                 df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
 
             df_novo["NUM_BANCO"] = 10501
             df_novo["NOM_BANCO"] = "BTW BANK"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            if related_name == "LECCA":
+                df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            else:
+                df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+
 
             logger.info("Processamento do BTW finalizado com sucesso")
             return df_novo
