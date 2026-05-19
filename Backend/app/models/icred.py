@@ -27,12 +27,11 @@ class Icred(Bank):
             df = self.readArchive(df)
 
             infos ={
-               "Number":"NUM_PROPOSTA",
+               "number":"NUM_PROPOSTA",
                "Data":"DAT_CREDITO",
                "commission_base":"VAL_BASE_COMISSAO",
                "commission_factor": "PCL_COMISSAO",
                "commission_value":"VAL_COMISSAO",
-
             }
 
             logger.info("Validando DataFrame")

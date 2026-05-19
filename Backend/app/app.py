@@ -17,7 +17,7 @@ setup_error_logging()
 
 
 app = Flask(__name__) #cria o app, inicializa a aplicação flask
-CORS(app, origins=["https://projeto-lev.vercel.app", "http://localhost:5173", "http://localhost:3000", "http://192.168.1.90:30001"], expose_headers=["Content-Disposition"])
+CORS(app, origins=["https://projeto-lev.vercel.app", "http://localhost:5173", "http://localhost:3001", "http://192.168.1.90:30001"], expose_headers=["Content-Disposition"])
 
 @app.route("/execute", methods=["POST"])
 def execute():
