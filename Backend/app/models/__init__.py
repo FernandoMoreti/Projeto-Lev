@@ -29,6 +29,7 @@ from .kardbank import Kardbank
 from .nbc import Nbc
 from .neo import Neo
 from .novosaque import Novosaque
+from .novosaquecf import NovosaqueCF
 from .novosaquecartao import Novosaquecartao
 from .nyc import Nyc
 from .paranabank import Paranabank
@@ -81,6 +82,7 @@ bancos = {
     "nbc": lambda df: Nbc().run(df),
     "neo": lambda df: Neo().run(df),
     "novosaque": lambda df: Novosaque().run(df),
+    "novosaquecf": lambda df: NovosaqueCF().run(df),
     "novosaquecartao": lambda df: Novosaquecartao().run(df),
     "nyc": lambda df: Nyc().run(df),
     "paranabank": lambda df: Paranabank().run(df),
