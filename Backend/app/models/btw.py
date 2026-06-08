@@ -2,6 +2,7 @@ import pandas as pd
 import os
 from .bank import Bank
 import logging
+import numpy as np
 
 logger = logging.getLogger("bancos")
 class Btw(Bank):
@@ -173,7 +174,11 @@ class Btw(Bank):
             df_novo = self.inputValues(df_final, df_novo, infos)
 
             if unique:
-                df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+                df_novo["TIPO_COMISSAO_BANCO"] = np.where(
+                    df_novo["VAL_COMISSAO"] < 0, 
+                    "ESTORNO", 
+                    "DIRETA"
+                )
 
             df_novo["NUM_BANCO"] = 10501
             df_novo["NOM_BANCO"] = "BTW BANK"
