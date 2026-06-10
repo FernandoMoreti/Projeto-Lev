@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 from .bank import Bank
+import numpy as np
 
 logger = logging.getLogger("bancos")
 
@@ -42,10 +43,7 @@ class Qualibank(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
-            if df["DESCRICAO"] == "BONUS CAMPANHA":
-                df_novo["TIPO_COMISSAO_BANCO"] = "BONUS EXTRA"
-            else:
-                df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["TIPO_COMISSAO_BANCO"] = np.where(df["DESCRICAO"] == "BONUS CAMPANHA", "BONUS EXTRA", "DIRETA")
 
             df_novo["NUM_BANCO"] = 2222222
             df_novo["NOM_BANCO"] = "QUALI BANK"
