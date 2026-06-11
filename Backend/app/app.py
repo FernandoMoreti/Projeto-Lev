@@ -8,6 +8,7 @@ from io import BytesIO
 from datetime import datetime
 from .robot.factory import factoryBanks
 from .utils import sendMail
+import os
 
 load_dotenv()
 
@@ -30,6 +31,7 @@ def execute():
         arquivo = request.files.get("arquivo")
         nome_banco = nome_banco.split(" ")[0].lower()
         nome_original = (arquivo.filename).replace(".xlsx", "")
+        nome_base, extensao = os.path.splitext(nome_original)
 
         if not nome_banco:
             infos_logger.warning("Nao foi recebido nenhum Banco")
@@ -62,7 +64,7 @@ def execute():
 
         # Criar nome do arquivo
         data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-        nome_arquivo = f"{nome_original} - EDITADO.xlsx"
+        nome_arquivo = f"{nome_base} - EDITADO.xlsx"
 
         # Enviar para download
         return send_file(
