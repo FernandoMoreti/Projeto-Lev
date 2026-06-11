@@ -29,6 +29,7 @@ def execute():
         nome_banco = request.form.get("banco")
         arquivo = request.files.get("arquivo")
         nome_banco = nome_banco.split(" ")[0].lower()
+        nome_original = arquivo.filename
 
         if not nome_banco:
             infos_logger.warning("Nao foi recebido nenhum Banco")
@@ -61,7 +62,7 @@ def execute():
 
         # Criar nome do arquivo
         data_arquivo = datetime.now().strftime("%d-%m %H%M%S")
-        nome_arquivo = f"{nome_banco} - {data_arquivo}.xlsx"
+        nome_arquivo = f"{nome_original} - EDITADO.xlsx"
 
         # Enviar para download
         return send_file(
