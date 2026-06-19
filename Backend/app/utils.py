@@ -266,3 +266,22 @@ def paintLine(row):
     if row["NUM_PROPOSTA"] == 0:
         return ["background-color: #ffcccc"] * len(row)
     return [""] * len(row)
+
+def createListByLine(df):
+    listOfProposal = []
+
+    for index, row in df.iterrows():
+        data = {
+            "bank": row["NOM_BANCO"],
+            "proposal": row["NUM_PROPOSTA"],
+            "date": row["DAT_CREDITO"],
+            "valBase": round(row["VAL_BASE_COMISSAO"], 2),
+            "valCommission": round(row["VAL_COMISSAO"], 2),
+            "pclCommission": round(row["PCL_COMISSAO"], 2),
+            "typeCommission": row["TIPO_COMISSAO_BANCO"],
+        }
+
+        listOfProposal.append(data)
+
+    print(listOfProposal)
+    return listOfProposal
