@@ -30,8 +30,8 @@ class Empresteicred(Bank):
             infos = {
                 "Op": "NUM_PROPOSTA",
                 "Líquido": "VAL_BASE_COMISSAO",
-                "% Comissão": "PCL_COMISSAO",
-                "Comissão": "VAL_COMISSAO",
+                "%": "PCL_COMISSAO",
+                "Valor": "VAL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
