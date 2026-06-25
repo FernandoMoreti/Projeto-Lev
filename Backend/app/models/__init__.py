@@ -40,6 +40,7 @@ from .qualibank import Qualibank
 from .capitalconsigcancelados import CapitalConsigCancelados
 from .capitalconsigcomissao import CapitalConsigComissao
 from .capitalconsigseguro import CapitalConsigSeguro
+from .sabemi import Sabemi
 from .safracomissaozero import Safracomissaozero
 from .santanderfit import Santanderfit
 from .santanderFve6 import Santanderfvevi
@@ -93,6 +94,7 @@ bancos = {
     "capitalconsigcancelados": lambda df: CapitalConsigCancelados().run(df),
     "capitalconsigcomissao": lambda df: CapitalConsigComissao().run(df),
     "capitalconsigseguro": lambda df: CapitalConsigSeguro().run(df),
+    "sabemi": lambda df: Sabemi().run(df),
     "safracomissaozerocbu": lambda df: Safracomissaozero().run(df),
     "safracomissaozerocbsu": lambda df: Safracomissaozero().run(df),
     "santanderfit": lambda df: Santanderfit().run(df),
