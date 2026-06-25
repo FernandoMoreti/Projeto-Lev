@@ -2,6 +2,7 @@ import pandas as pd
 from ..utils import convertValues
 from .bank import Bank
 import logging
+import requests
 
 logger = logging.getLogger("bancos")
 
@@ -29,11 +30,10 @@ class BrbRed(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "num_proposta": "NUM_PROPOSTA",
-                "movdatapagamento": "DAT_CREDITO",
-                "valor_contrato": "VAL_BASE_COMISSAO",
-                "valor_comissao": "VAL_COMISSAO",
-                "emppercent_agenciador": "PCL_COMISSAO"
+                "Proposta": "NUM_PROPOSTA",
+                "Data Pagamento": "DAT_CREDITO",
+                "Valor Comissão (R$)": "VAL_COMISSAO",
+                "(%) Comissão": "PCL_COMISSAO"
             }
 
             Error = self.validDataframe(df, infos)
@@ -50,7 +50,32 @@ class BrbRed(Bank):
                 df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce')
 
             df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%Y-%m-%d')
+            list_props = []
+            bruto_por_proposta = {}
+            session = requests.Session()
 
+            for idx, row in df.iterrows():
+                proposta = row["Proposta"]
+
+                try:
+                    response = session.get(
+                        f"http://192.168.1.252:3004/v1/wb-api/proposta/?proposal={proposta}",
+                        timeout=10
+                    )
+                    data = response.json()
+
+                    if data[0]["tipo"] == "PORTAB/REFIN":
+                        list_props.append(row["Valor bruto (R$)"])
+                    elif data[0]["tipo"] == "PORTABILIDADE":
+                        list_props.append(row["Valor bruto (R$)"])
+                    else:
+                        list_props.append(row["Valor líquido (R$)"])
+
+                except Exception as e:
+                    logger.error(f"Erro proposta {proposta}: {e}")
+                    list_props.append(row["Valor líquido (R$)"])
+
+            df_novo["VAL_BASE_COMISSAO"] = list_props
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
