@@ -33,6 +33,7 @@ from .novosaquecf import NovosaqueCF
 from .novosaquecartao import Novosaquecartao
 from .nyc import Nyc
 from .paranabank import Paranabank
+from .panwlcartao import PanWlCartao
 from .panwlconsig import PanWlConsig
 from .panLafy import PanLafy
 from .phtech import Phtech
@@ -88,6 +89,7 @@ bancos = {
     "novosaquecartao": lambda df: Novosaquecartao().run(df),
     "nyc": lambda df: Nyc().run(df),
     "paranabank": lambda df: Paranabank().run(df),
+    "panwlcartao": lambda df: PanWlCartao().run(df),
     "panwlconsig": lambda df: PanWlConsig().run(df),
     "panlafy": lambda df: PanLafy().run(df),
     "phtech": lambda df: Phtech().run(df),
