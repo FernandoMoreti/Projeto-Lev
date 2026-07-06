@@ -52,6 +52,8 @@ class Safracomissaozero(Bank):
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["NOM_BANCO"] = "Safra"
             df_novo["NUM_BANCO"] = 42
+            df_novo["VAL_COMISSAO"] = 0
+            df_novo["PCL_COMISSAO"] = 0
             df_novo["TIPO_COMISSAO_BANCO"] = "AUTORREGULAÇAO"
 
             logger.info("Processamento do Safracomissaozero finalizado com sucesso")
