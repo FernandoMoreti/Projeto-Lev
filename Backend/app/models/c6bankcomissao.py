@@ -45,6 +45,9 @@ class C6bankcomissao(Bank):
                 if row[1]["Nome Comissionado"] != "LEV":
                     df.at[row[0], "Valor Bruto"] = 0
 
+            df["Data Pagamento"] = df["Data Pagamento"].dt.strftime("%Y-%m-%d")
+            df["Data Oper/ Data Inclusão"] = df["Data Oper/ Data Inclusão"].dt.strftime("%Y-%m-%d")
+
             logger.info("Processamento do c6bankcomissao finalizado com sucesso")
             return df
         except Exception:

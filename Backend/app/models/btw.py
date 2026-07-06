@@ -175,8 +175,8 @@ class Btw(Bank):
 
             if unique:
                 df_novo["TIPO_COMISSAO_BANCO"] = np.where(
-                    df_novo["VAL_COMISSAO"] < 0, 
-                    "ESTORNO", 
+                    df_novo["VAL_COMISSAO"] < 0,
+                    "ESTORNO",
                     "DIRETA"
                 )
 

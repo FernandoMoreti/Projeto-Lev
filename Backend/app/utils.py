@@ -283,5 +283,4 @@ def createListByLine(df):
 
         listOfProposal.append(data)
 
-    print(listOfProposal)
     return listOfProposal
