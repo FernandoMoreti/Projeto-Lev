@@ -12,7 +12,7 @@ class PanLafy(Bank):
     def readArchive(self, df):
         try:
             logger.info("Inicio do processo de leitura do df-PANLAFY")
-            df = pd.read_excel(df, header=2)
+            df = pd.read_excel(df, header=1)
             logger.info("Lido o arquivo do PANLAFY")
             return df
         except Exception:

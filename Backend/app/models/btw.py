@@ -188,7 +188,6 @@ class Btw(Bank):
             else:
                 df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
 
-
             logger.info("Processamento do BTW finalizado com sucesso")
             return df_novo
 
