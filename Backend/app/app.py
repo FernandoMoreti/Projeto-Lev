@@ -56,6 +56,8 @@ def execute():
         listOfProposal = createListByLine(resultado)
         infos_logger.info("Recebemos um retorno valido e OK da funcao")
 
+        print(listOfProposal)
+
         output = BytesIO()
         resultado.to_excel(output, index=False)
         output.seek(0)

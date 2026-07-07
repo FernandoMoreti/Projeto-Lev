@@ -44,6 +44,7 @@ from .capitalconsigcomissao import CapitalConsigComissao
 from .capitalconsigseguro import CapitalConsigSeguro
 from .sabemi import Sabemi
 from .safracomissaozero import Safracomissaozero
+from .safradebitos import SafraDebitos
 from .santanderfit import Santanderfit
 from .santanderFve6 import Santanderfvevi
 from .OLE_FVE import OLE_FVE
@@ -101,6 +102,7 @@ bancos = {
     "sabemi": lambda df: Sabemi().run(df),
     "safracomissaozerocbu": lambda df: Safracomissaozero().run(df),
     "safracomissaozerocbsu": lambda df: Safracomissaozero().run(df),
+    "safradebitos": lambda df: SafraDebitos().run(df),
     "santanderfit": lambda df: Santanderfit().run(df),
     "santanderfvevi": lambda df: Santanderfvevi().run(df),
     "ole_fve": lambda df: OLE_FVE().run(df),
