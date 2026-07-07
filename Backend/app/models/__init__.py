@@ -14,6 +14,7 @@ from .c6kgiro import C6kgiro
 from .c6equity import C6equity
 from .caixa import Caixa
 from .comissaozerada import ComissaoZerada
+from .crefaz import Crefaz
 from .crefisa import Crefisa
 from .digio import Digio
 from .empresteicred import Empresteicred
@@ -71,6 +72,8 @@ bancos = {
     "c6equity": lambda df: C6equity().run(df),
     "caixa": lambda df: Caixa().run(df),
     "comissaozerada": lambda df: ComissaoZerada().run(df),
+    "crefaz": lambda df: Crefaz().run(df),
+    "crefazclt": lambda df: Crefaz().run(df),
     "crefisa": lambda df: Crefisa().run(df),
     "digio": lambda df: Digio().run(df),
     "empresteicred": lambda df: Empresteicred().run(df),
