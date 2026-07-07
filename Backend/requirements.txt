@@ -9,3 +9,5 @@ PyPDF2
 numpy
 gunicorn
 opencv-python-headless
+xlrd
+lxml
