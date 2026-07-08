@@ -12,8 +12,12 @@ class DaycovalConsig(Bank):
     def readArchive(self, df):
         try:
             logger.info("Inicio do processo de leitura do df-Daycoval Cartao")
-            df = pd.read_html(df, header=2)[0]
-            df = df.iloc[:-3]
+            df = pd.read_excel(df, header=11)
+            df = df[pd.notna(df["Nr. Proposta"])]
+            df = df[pd.notna(df["Base de Cálculo"])]
+            df = df[pd.notna(df["Tp.Cálculo"])]
+            df = df[pd.notna(df["Valor da Comissão"])]
+            df = df[pd.notna(df["% Regra"])]
             logger.info("Lido o arquivo do Daycoval Cartao")
             return df
         except Exception:
@@ -30,11 +34,11 @@ class DaycovalConsig(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Nº Proposta": "NUM_PROPOSTA",
+                "Nr. Proposta": "NUM_PROPOSTA",
                 "Data Base": "DAT_CREDITO",
                 "Base de Cálculo": "VAL_BASE_COMISSAO",
-                "Valor Comissão": "VAL_COMISSAO",
-                "Tp. Oper.": "TIPO_COMISSAO_BANCO",
+                "Valor da Comissão": "VAL_COMISSAO",
+                "Tp.Cálculo": "TIPO_COMISSAO_BANCO",
             }
 
             Error = self.validDataframe(df, infos)
@@ -46,9 +50,9 @@ class DaycovalConsig(Bank):
             df_novo = self.inputValues(df, df_novo, infos)
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
-            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] / 10000
+            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"] / 100
+            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"]
 
             listOfPorcent = []
 
@@ -67,13 +71,17 @@ class DaycovalConsig(Bank):
 
             types = []
 
-            for type in df_novo["TIPO_COMISSAO_BANCO"]:
-                if type == "Saque Complementar":
-                    type = "DIRETA"
-                if type == "Venda":
-                    type = "PRÉ-ADESÃO"
-                if type == "Ativação Imediata":
-                    type = "ATIVAÇÃO IMEDIATA"
+            for index, row in df_novo.iterrows():
+                if row["TIPO_COMISSAO_BANCO"] == "FLAT":
+                    if row["VAL_COMISSAO"] < 0:
+                        type = "ESTORNO DIRETA"
+                    else:
+                        type = "DIRETA"
+                if row["TIPO_COMISSAO_BANCO"] == "PMT":
+                    if row["VAL_COMISSAO"] < 0:
+                        type = "ESTORNO DIFERIDO"
+                    else:
+                        type = "DIFERIDO"
                 types.append(type)
 
             df_novo["TIPO_COMISSAO_BANCO"] = types

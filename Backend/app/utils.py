@@ -7,6 +7,8 @@ import json
 import io
 from .robot.factory import factoryBanksMapper
 from dotenv import load_dotenv
+from datetime import datetime
+
 load_dotenv()
 
 col_opcoes = [
@@ -274,6 +276,9 @@ def createListByLine(df):
 
         if pd.isna(row["NUM_PROPOSTA"]) or pd.isna(row["VAL_COMISSAO"]):
             return "Propostas sem valor de numero de proposta ou valor de comissao"
+
+        if pd.isna(row["DAT_CREDITO"]):
+            row["DAT_CREDITO"] = datetime.now().strftime("%d/%m/%Y")
 
         data = {
             "bank": row["NOM_BANCO"],
