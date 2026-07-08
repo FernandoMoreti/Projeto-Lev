@@ -16,6 +16,8 @@ from .caixa import Caixa
 from .comissaozerada import ComissaoZerada
 from .crefaz import Crefaz
 from .crefisa import Crefisa
+from .daycovalCartao import DaycovalCartao
+from .daycovalConsig import DaycovalConsig
 from .digio import Digio
 from .empresteicred import Empresteicred
 from .euro import Euro
@@ -74,7 +76,12 @@ bancos = {
     "comissaozerada": lambda df: ComissaoZerada().run(df),
     "crefaz": lambda df: Crefaz().run(df),
     "crefazclt": lambda df: Crefaz().run(df),
-    "crefisa": lambda df: Crefisa().run(df),
+    "crefisajn": lambda df: Crefisa().run(df),
+    "crefisawl": lambda df: Crefisa().run(df),
+    "daycovalcartao": lambda df: DaycovalCartao().run(df),
+    "daycovalcartaoex": lambda df: DaycovalCartao().run(df),
+    "daycovalconsig": lambda df: DaycovalConsig().run(df),
+    "daycovalconsigex": lambda df: DaycovalConsig().run(df),
     "digio": lambda df: Digio().run(df),
     "empresteicred": lambda df: Empresteicred().run(df),
     "euro": lambda df: Euro().run(df),

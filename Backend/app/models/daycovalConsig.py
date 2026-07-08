@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger("bancos")
 
-class DaycovalCartao(Bank):
+class DaycovalConsig(Bank):
     def __init__(self, name = "BANCO DAYCOVAL S.A.", num = 707, type = "excel"):
         super().__init__(name, num, type)
 

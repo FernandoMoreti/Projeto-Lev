@@ -30,7 +30,7 @@ def execute():
 
         nome_banco = request.form.get("banco")
         arquivo = request.files.get("arquivo")
-        nome_banco = nome_banco.split(" ")[0].lower()
+        nome_banco = nome_banco.replace(" ", "").lower()
         nome_original = (arquivo.filename).replace(".xlsx", "")
         nome_base, extensao = os.path.splitext(nome_original)
 
@@ -54,9 +54,11 @@ def execute():
             return jsonify({"erro": resultado}), 400
 
         listOfProposal = createListByLine(resultado)
-        infos_logger.info("Recebemos um retorno valido e OK da funcao")
 
-        print(listOfProposal)
+        if type(listOfProposal) == str:
+            return jsonify({"erro": listOfProposal}), 400
+
+        infos_logger.info("Recebemos um retorno valido e OK da funcao")
 
         output = BytesIO()
         resultado.to_excel(output, index=False)

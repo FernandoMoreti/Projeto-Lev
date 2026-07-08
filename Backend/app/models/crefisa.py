@@ -1,6 +1,6 @@
 import pandas as pd
-from datetime import datetime, timedelta
-from ..utils import createDataframe, inputValueColumns, validDf
+from datetime import timedelta
+from ..utils import convertValues
 import logging
 from .bank import Bank
 
@@ -49,10 +49,16 @@ class Crefisa(Bank):
                 if row["TIPO_COMISSAO_BANCO"] == "À Vista":
                     df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "DIRETA"
 
-            df_novo["NUM_BANCO"] = '69'
+            print(df_novo["VAL_COMISSAO"])
+            print(df_novo["VAL_BASE_COMISSAO"])
+
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+
+            df_novo["NUM_BANCO"] = 69
             df_novo["NOM_BANCO"] = 'BANCO CREFISA S.A.'
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"].astype(float) / 100
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
 
             logger.info("Processamento do Crefisa finalizado com sucesso")
             return df_novo

@@ -30,7 +30,7 @@ class Crefaz(Bank):
             df = self.readArchive(df)
 
             infos = {
-               "Operação": "NUM_PROPOSTA",
+               "Código Proposta": "NUM_PROPOSTA",
                "Vlr. Operação": "VAL_BASE_COMISSAO",
                "R$ Comissão": "VAL_COMISSAO",
                "DT Aceite": "DAT_CREDITO"
