@@ -55,8 +55,6 @@ def execute():
 
         listOfProposal = createListByLine(resultado)
 
-        print(listOfProposal)
-
         if type(listOfProposal) == str:
             infos_logger.error("Recebemos um retorno inesperado da funcao de criar lista por linha")
             return jsonify({"erro": listOfProposal}), 400

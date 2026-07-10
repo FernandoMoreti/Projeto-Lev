@@ -3,7 +3,7 @@ from .amigoz import Amigoz
 from .bmgBonus import BmgBonus
 from .bmgCartaoBeneficio import BmgCartaoBeneficio
 from .bmgSaldoNaoPago import BmgSaldoNaoPago
-from .bmgSeguro import BmgSeguro
+from .bmgseguro import BmgSeguro
 from .brb360 import Brb360
 from .brbInconta import Brbinconta
 from .brbred import BrbRed
