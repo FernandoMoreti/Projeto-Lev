@@ -45,6 +45,7 @@ from .panLafy import PanLafy
 from .phtech import Phtech
 from .presenca import Presenca
 from .qualibank import Qualibank
+from .queroMaisCartao import QueroMaisCartao
 from .capitalconsigcancelados import CapitalConsigCancelados
 from .capitalconsigcomissao import CapitalConsigComissao
 from .capitalconsigseguro import CapitalConsigSeguro
@@ -116,6 +117,7 @@ bancos = {
     "phtech": lambda df: Phtech().run(df),
     "presenca": lambda df: Presenca().run(df),
     "qualibank": lambda df: Qualibank().run(df),
+    "queromaiscartao": lambda df: QueroMaisCartao().run(df),
     "capitalconsigcancelados": lambda df: CapitalConsigCancelados().run(df),
     "capitalconsigcomissao": lambda df: CapitalConsigComissao().run(df),
     "capitalconsigseguro": lambda df: CapitalConsigSeguro().run(df),
