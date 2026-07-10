@@ -12,7 +12,8 @@ class BmgSaldoNaoPago(Bank):
     def readArchive(self, df):
         try:
             logger.info("Inicio do processo de leitura do df-BMG Cartao Beneficio")
-            df = pd.read_csv(df, sep=';')
+            df = pd.read_csv(df, sep=';', encoding='latin-1')
+            df = df[pd.notna(df["Percentual"])]
             logger.info("Lido o arquivo do BMG Cartao Beneficio")
             return df
         except Exception:
@@ -27,10 +28,10 @@ class BmgSaldoNaoPago(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Contrato/Apolice":"NUM_PROPOSTA",
+                "Contrato":"NUM_PROPOSTA",
                 "Valor Base": "VAL_BASE_COMISSAO",
                 "Valor Bruto": "VAL_COMISSAO",
-                "Data Pagamento": "DAT_CREDITO",
+                "Data de Pagamento": "DAT_CREDITO",
             }
 
             logger.info("Validando DataFrame")
