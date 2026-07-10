@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger("bancos")
 
-class BmgSeguro(Bank):
+class BmgSaldoNaoPago(Bank):
     def __init__(self, name = "BMG", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
@@ -17,7 +17,7 @@ class BmgSeguro(Bank):
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
-            logger.erro("Erro ao ler arquivo")
+            logger.error("Erro ao ler arquivo")
             return "Erro ao ler arquivo"
         finally:
            logger.info("Finalizando processo de leitura do arquivo")

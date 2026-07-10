@@ -12,6 +12,8 @@ class Hope(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_html(df, header=0)[0]
+            df = df[pd.notna(df["Valor Base do Contrato"])]
+            df = df.iloc[:-1]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -44,27 +46,28 @@ class Hope(Bank):
             df_novo = self.inputValues(df, df_novo, infos)
 
             tamanho = len(df_novo["NUM_PROPOSTA"])
-            df_novo = df_novo.drop(df_novo.index[tamanho-1])
-            df_novo = df_novo.drop(df_novo.index[tamanho-2])
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
             df_novo["NOM_BANCO"] = "HOPE"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"] / 100
-            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NUM_BANCO"] = 1597
-            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+
+            listOfTypes = []
+            listOfVal = []
 
             for index, row in df_novo.iterrows():
-                v_base = row["VAL_BASE_COMISSAO"]
-                v_comis = row["VAL_COMISSAO"]
+                if row["VAL_COMISSAO"] < 0:
+                    listOfTypes.append("ESTORNO")
+                    listOfVal.append(row["VAL_COMISSAO"])
+                else:
+                    listOfTypes.append("DIRETA")
+                    listOfVal.append(row["VAL_COMISSAO"] / 100)
 
-                if v_base % 1 == 0 or v_comis % 1 == 0:
-                    df_novo.at[index, "VAL_BASE_COMISSAO"] = 0
-                    df_novo.at[index, "VAL_COMISSAO"] = 0
-                    df_novo.at[index, "PCL_COMISSAO"] = 0
+            df_novo["VAL_COMISSAO"] = listOfVal
+            df_novo["TIPO_COMISSAO_BANCO"] = listOfTypes
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
 
             logger.info("Processamento do Hope finalizado com sucesso")
             return df_novo

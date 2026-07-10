@@ -13,6 +13,7 @@ class Empresteicred(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_excel(df)
+            df = df.iloc[:-1]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -28,10 +29,10 @@ class Empresteicred(Bank):
             df = self.readArchive(df)
 
             infos = {
-                "Op": "NUM_PROPOSTA",
+                "Operação ": "NUM_PROPOSTA",
                 "Líquido": "VAL_BASE_COMISSAO",
-                "%": "PCL_COMISSAO",
-                "Valor": "VAL_COMISSAO",
+                "comissão": "PCL_COMISSAO",
+                "valor": "VAL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")

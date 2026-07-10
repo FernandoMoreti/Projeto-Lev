@@ -5,15 +5,15 @@ import logging
 
 logger = logging.getLogger("bancos")
 
-class BmgCLT(Bank):
+class BmgBonus(Bank):
     def __init__(self, name = "BMG", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
         try:
-            logger.info("Inicio do processo de leitura do df-BRB360")
+            logger.info("Inicio do processo de leitura do df-BMG BONUS")
             df = pd.read_csv(df, sep=';')
-            logger.info("Lido o arquivo do BRB360")
+            logger.info("Lido o arquivo do BMG BONUS")
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -26,15 +26,27 @@ class BmgCLT(Bank):
         try:
             df = self.readArchive(df)
 
-            bruto = df["Valor Bruto"].astype(str).str.replace(",", ".").replace("nan", "0").astype(float)
-            base = df["Valor Base"].astype(str).str.replace(",", ".").replace("nan", "0").astype(float)
+            infos ={
+                "Contrato/Apolice":"NUM_PROPOSTA",
+                "Valor Base": "VAL_BASE_COMISSAO",
+            }
 
-            for index, row in df.iterrows():
-                if row["Observacao"] != "":
-                    row["% de Comissao"] = (bruto / base) * 100
-                    row["Tipo de Comissao"] = "0 - OPERAÇÕES NORMAIS - USO DE FORMULÁRIOS"
+            logger.info("Validando DataFrame")
+            Error = self.validDataframe(df, infos)
+            if Error:
+                return Error
 
-            return df
+            logger.info("Criando novo DataFrame")
+            df_novo = self.createDataframe()
+
+            df_novo = self.inputValues(df, df_novo, infos)
+
+            df_novo["TIPO_COMISSAO_BANCO"] = "BÔNUS"
+            df_novo["NUM_BANCO"] = 0
+            df_novo["NOM_BANCO"] = 'BMG'
+            df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+            return df_novo
         except Exception:
             logger.exception("Erro ao editar Bmg")
             logger.error("Erro ao editar Bmg")

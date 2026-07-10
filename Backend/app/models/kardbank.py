@@ -12,6 +12,7 @@ class Kardbank(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_html(df, header=0)[0]
+            df = df.iloc[:-1]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
