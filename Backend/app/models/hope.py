@@ -11,7 +11,7 @@ class Hope(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_html(df, header=0)[0]
+            df = pd.read_excel(df, header=0)
             df = df[pd.notna(df["Valor Base do Contrato"])]
             df = df.iloc[:-1]
             return df
@@ -63,7 +63,7 @@ class Hope(Bank):
                     listOfVal.append(row["VAL_COMISSAO"])
                 else:
                     listOfTypes.append("DIRETA")
-                    listOfVal.append(row["VAL_COMISSAO"] / 100)
+                    listOfVal.append(row["VAL_COMISSAO"])
 
             df_novo["VAL_COMISSAO"] = listOfVal
             df_novo["TIPO_COMISSAO_BANCO"] = listOfTypes
