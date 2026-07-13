@@ -50,7 +50,7 @@ class Crefaz(Bank):
 
             df_novo["NUM_BANCO"] = 1964
             df_novo["NOM_BANCO"] = 'CREFAZ'
-            df_novo["PCL_COMISSAO"] = (df_novo["VAL_BASE_COMISSAO"] / df_novo["VAL_COMISSAO"])
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
 
