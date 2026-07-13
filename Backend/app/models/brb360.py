@@ -13,6 +13,7 @@ class Brb360(Bank):
         try:
             logger.info("Inicio do processo de leitura do df-BRB360")
             df = pd.read_excel(df, header=2)
+            df = df.iloc[:-1]
             logger.info("Lido o arquivo do BRB360")
             return df
         except Exception:
