@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 from .bank import Bank
+from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
@@ -45,6 +46,10 @@ class Paranabank(Bank):
             for index, row in df.iterrows():
                 if (row["Auto Regulação"] == "Verdadeiro"):
                     df_novo["DSC_OBSERVACAO"] = row["Observação"]
+
+            df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
+            df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["PCL_COMISSAO"] = convertValues(df_novo, "PCL_COMISSAO")
 
             df_novo["NUM_BANCO"] = 254
             df_novo["NOM_BANCO"] = "PARANÁ BANCO S.A."
