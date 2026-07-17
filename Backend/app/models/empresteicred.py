@@ -28,11 +28,13 @@ class Empresteicred(Bank):
 
             df = self.readArchive(df)
 
+            print(df.columns)
+
             infos = {
                 "Operação ": "NUM_PROPOSTA",
                 "Líquido": "VAL_BASE_COMISSAO",
                 "comissão": "PCL_COMISSAO",
-                "valor": "VAL_COMISSAO",
+                "Valor ": "VAL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
@@ -55,6 +57,7 @@ class Empresteicred(Bank):
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
 
             logger.info("Processamento do Empresteicred finalizado com sucesso")
+            df_novo = df_novo[pd.notna(df_novo["NUM_PROPOSTA"])]
             return df_novo
         except Exception:
             logger.exception("Erro ao editar Empresteicred")
