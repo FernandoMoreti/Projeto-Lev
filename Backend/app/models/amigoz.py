@@ -146,6 +146,9 @@ class Amigoz(Bank):
 
             df_novo = df_novo[df_novo["TIPO_COMISSAO_BANCO"].notna()]
             df_novo = df_novo[df_novo["VAL_COMISSAO"].notna()]
+
+            df_novo = df_novo[pd.notna(df_novo["VAL_BASE_COMISSAO"])]
+            df_novo = df_novo[df_novo["VAL_BASE_COMISSAO"] !=  0]
             return df_novo
         except:
             logger.exception("Erro ao editar Amigoz")
