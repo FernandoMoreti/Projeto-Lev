@@ -32,24 +32,42 @@ class Btw(Bank):
             if isinstance(df, str):
                 return df
 
+            listOfLines = []
             type = ""
 
             if filename.split("_")[1] == "BTW":
+
+                for index, row in df.iterrows():
+                    if row["Vr_Seguro_Bruto"] > 0:
+                        rowSeguro = row.copy()
+                        rowSeguro["Vr_Serviço_Bruto"] = rowSeguro["Vr_Seguro_Bruto"]
+                        rowSeguro["type"] = "SEGURO"
+                        listOfLines.append(rowSeguro)
+
+                    row["type"] = "BÔNUS"
+                    listOfLines.append(row)
+
+                df = pd.DataFrame(listOfLines)
+
                 infos = {
                     "Proposta": "NUM_PROPOSTA",
                     "DT_Pagamento": "DAT_CREDITO",
                     "Valor_Liberado": "VAL_BASE_COMISSAO",
-                    "Total_Bruto": "VAL_COMISSAO",
+                    "Vr_Serviço_Bruto": "VAL_COMISSAO",
+                    "type": "TIPO_COMISSAO_BANCO",
                 }
-                type = "BÔNUS"
+
             elif filename.split("_")[1] == "LECCA":
+
+                df["type"] = "DIRETA"
+
                 infos = {
                     "Proposta": "NUM_PROPOSTA",
                     "DT_Pagamento": "DAT_CREDITO",
-                    "Valor_Liberado": "VAL_BASE_COMISSAO",
+                    "Valor_Operacao": "VAL_BASE_COMISSAO",
                     "Vr_Comissao_Bruto": "VAL_COMISSAO",
+                    "type": "TIPO_COMISSAO_BANCO",
                 }
-                type = "DIRETA"
             else:
                 return "Erro: Arquivo não reconhecido"
 
@@ -65,8 +83,6 @@ class Btw(Bank):
             for index, row in df_novo.iterrows():
                 if row["VAL_COMISSAO"] < 0:
                     df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "ESTORNO"
-                else:
-                    df_novo.at[index, "TIPO_COMISSAO_BANCO"] = type
 
             df_novo["NUM_BANCO"] = 10501
             df_novo["NOM_BANCO"] = "BTW BANK"
