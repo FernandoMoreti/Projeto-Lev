@@ -30,10 +30,9 @@ class Evol(Bank):
                 "Id_Operation":"NUM_PROPOSTA",
                 "Taxa":"PCL_TAXA_EMPRESTIMO",
                 "Valor_Liberado":"VAL_LIQUIDO",
-                "Valor_Saldo":"VAL_COMISSAO",
+                "Valor_Titulo":"VAL_COMISSAO",
                 "Valor_Bruto":"VAL_BRUTO",
                 "Data_Lancto":"DAT_CREDITO",
-                "Percentual_Comissao":"PCL_COMISSAO",
                 "Descricao_Tipo_Operacao" :"DSC_TIPO_PROPOSTA_EMPRESTIMO"
             }
 
