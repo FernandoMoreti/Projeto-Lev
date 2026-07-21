@@ -6,8 +6,8 @@ from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
-class Crefaz(Bank):
-    def __init__(self, name = "CREFAZ CLT", num = 1964, type = "excel"):
+class CrefazCLT(Bank):
+    def __init__(self, name = "CREFAZ", num = 1964, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):

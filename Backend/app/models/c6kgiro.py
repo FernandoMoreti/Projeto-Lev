@@ -32,7 +32,7 @@ class C6kgiro(Bank):
                 "Data Pagamento Kgiro": "DAT_CREDITO",
                 "Valor Contrato Consignado": "VAL_BASE_COMISSAO",
                 "Valor Kgiro": "VAL_COMISSAO",
-                "Tipo Antecipação Detalhe": "DSC_TIPO_COMISSAO",
+                "Tipo Antecipação Detalhe": "TIPO_COMISSAO_BANCO",
             }
 
             logger.info("Validando DataFrame")
@@ -47,7 +47,7 @@ class C6kgiro(Bank):
             list_types = []
 
             for index, row in df_novo.iterrows():
-                type_row = COMISSAO_MAPPER[row["DSC_TIPO_COMISSAO"].upper()]
+                type_row = COMISSAO_MAPPER[row["TIPO_COMISSAO_BANCO"].upper()]
                 list_types.append(type_row)
 
             df_novo["NUM_BANCO"] = 12222222

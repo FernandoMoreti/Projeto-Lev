@@ -18,6 +18,7 @@ from .c6equity import C6equity
 from .caixa import Caixa
 from .comissaozerada import ComissaoZerada
 from .crefaz import Crefaz
+from .crefazCLT import CrefazCLT
 from .crefisa import Crefisa
 from .daycovalCartao import DaycovalCartao
 from .daycovalConsig import DaycovalConsig
@@ -39,19 +40,21 @@ from .novosaquecf import NovosaqueCF
 from .novosaquecartao import Novosaquecartao
 from .nyc import Nyc
 from .paranabank import Paranabank
-from .panwlcartao import PanWlCartao
-from .panwlconsig import PanWlConsig
+from .panwlcartao import PanCartao
+from .panwlconsig import PanConsig
 from .panLafy import PanLafy
 from .phtech import Phtech
 from .presenca import Presenca
 from .qualibank import Qualibank
 from .queroMaisCartao import QueroMaisCartao
+from .queroMaisConsig import QueroMaisConsig
 from .capitalconsigcancelados import CapitalConsigCancelados
 from .capitalconsigcomissao import CapitalConsigComissao
 from .capitalconsigseguro import CapitalConsigSeguro
 from .sabemi import Sabemi
 from .safracomissaozero import Safracomissaozero
 from .safradebitos import SafraDebitos
+from .safrapagamentonovo import SafraPagamentoNovo
 from .santanderfit import Santanderfit
 from .santanderFve6 import Santanderfvevi
 from .OLE_FVE import OLE_FVE
@@ -86,7 +89,7 @@ bancos = {
     "caixa": lambda df: Caixa().run(df),
     "comissaozerada": lambda df: ComissaoZerada().run(df),
     "crefaz": lambda df: Crefaz().run(df),
-    "crefazclt": lambda df: Crefaz().run(df),
+    "crefazclt": lambda df: CrefazCLT().run(df),
     "crefisajn": lambda df: Crefisa().run(df),
     "crefisawl": lambda df: Crefisa().run(df),
     "daycovalcartao": lambda df: DaycovalCartao().run(df),
@@ -111,20 +114,28 @@ bancos = {
     "novosaquecartao": lambda df: Novosaquecartao().run(df),
     "nyc": lambda df: Nyc().run(df),
     "paranabank": lambda df: Paranabank().run(df),
-    "panwlcartao": lambda df: PanWlCartao().run(df),
-    "panwlconsig": lambda df: PanWlConsig().run(df),
+    "pancartaowl": lambda df: PanCartao().run(df),
+    "pancartaolev": lambda df: PanCartao().run(df),
+    "pancartaoplus": lambda df: PanCartao().run(df),
+    "panconsigwl": lambda df: PanConsig().run(df),
+    "panconsiglev": lambda df: PanConsig().run(df),
+    "panconsigplus": lambda df: PanConsig().run(df),
     "panlafy": lambda df: PanLafy().run(df),
     "phtech": lambda df: Phtech().run(df),
     "presenca": lambda df: Presenca().run(df),
     "qualibank": lambda df: Qualibank().run(df),
     "queromaiscartao": lambda df: QueroMaisCartao().run(df),
+    "queromaisconsig": lambda df: QueroMaisConsig().run(df),
     "capitalconsigcancelados": lambda df: CapitalConsigCancelados().run(df),
     "capitalconsigcomissao": lambda df: CapitalConsigComissao().run(df),
     "capitalconsigseguro": lambda df: CapitalConsigSeguro().run(df),
     "sabemi": lambda df: Sabemi().run(df),
     "safracomissaozerocbu": lambda df: Safracomissaozero().run(df),
     "safracomissaozerocbsu": lambda df: Safracomissaozero().run(df),
-    "safradebitos": lambda df: SafraDebitos().run(df),
+    "safradebitoscbu": lambda df: SafraDebitos().run(df),
+    "safradebitoscbsu": lambda df: SafraDebitos().run(df),
+    "safrapagamentonovocbu": lambda df: SafraPagamentoNovo().run(df),
+    "safrapagamentonovocbsu": lambda df: SafraPagamentoNovo().run(df),
     "santanderfit": lambda df: Santanderfit().run(df),
     "santanderfvevi": lambda df: Santanderfvevi().run(df),
     "ole_fve": lambda df: OLE_FVE().run(df),

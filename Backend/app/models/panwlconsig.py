@@ -2,10 +2,12 @@ import pandas as pd
 from ..utils import convertValues
 from .bank import Bank
 import logging
+import numpy as np
+from datetime import datetime
 
 logger = logging.getLogger("bancos")
 
-class PanWlConsig(Bank):
+class PanConsig(Bank):
     def __init__(self, name = "PANWL", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
@@ -40,14 +42,13 @@ class PanWlConsig(Bank):
 
             df = df[pd.notna(df["Valor base para calculo da comissao"])]
             df = df[df["Proposta"] != "Proposta"]
+            df = df[pd.notna(df["Data Credito Comissao"])]
 
             infos ={
                 "is_estorno": "TIPO_COMISSAO_BANCO",
                 "Proposta": "NUM_PROPOSTA",
-                "Data Credito Comissao": "DAT_CREDITO",
                 "Valor base para calculo da comissao": "VAL_BASE_COMISSAO",
                 "Valor da Comissao": "VAL_COMISSAO",
-                "% Comissao": "PCL_COMISSAO"
             }
 
             Error = self.validDataframe(df, infos)
@@ -65,17 +66,30 @@ class PanWlConsig(Bank):
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["NUM_BANCO"] = 623
             df_novo["NOM_BANCO"] = 'PAN'
+            df_novo["DAT_CREDITO"] = datetime.now().strftime("%Y-%m-%d")
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            base_comissao = df_novo["VAL_BASE_COMISSAO"]
+            pcl_calculada = np.where(
+                (base_comissao == 0) | (base_comissao.isna()), 
+                0,
+                (df_novo["VAL_COMISSAO"] / base_comissao) * 100
+            )
+            df_novo["PCL_COMISSAO"] = np.nan_to_num(pcl_calculada, nan=0.0)
 
+            listOfPCL = []
             list_types = []
 
             for index, row in df_novo.iterrows():
+
                 if row["TIPO_COMISSAO_BANCO"] == False:
                     list_types.append('DIRETA')
                 else:
                     list_types.append('ESTORNO')
 
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
+
+            df_novo = df_novo.replace([np.inf, -np.inf], np.nan)
+            df_novo = df_novo.where(pd.notnull(df_novo), None)
 
             return df_novo
         except Exception:

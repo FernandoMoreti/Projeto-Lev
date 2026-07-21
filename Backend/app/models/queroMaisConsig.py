@@ -6,14 +6,15 @@ from ..utils import convertValues
 
 logger = logging.getLogger("bancos")
 
-class QueroMaisCartao(Bank):
+class QueroMaisConsig(Bank):
     def __init__(self, name = "Quero Mais", num = 2222222, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
         try:
-            df = pd.read_html(df, header=2)[0]
-            df = df.iloc[:-3]
+            df = pd.read_excel(df, header=11)
+            df = df[pd.notna(df["Tp.Cálculo"])]
+            print(df.columns)
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -29,11 +30,11 @@ class QueroMaisCartao(Bank):
             df = self.readArchive(df)
 
             infos ={
-               "Nº Proposta":"NUM_PROPOSTA",
+               "Nr. Proposta":"NUM_PROPOSTA",
                "Data Base":"DAT_CREDITO",
                "Base de Cálculo":"VAL_BASE_COMISSAO",
-               "Valor Comissão":"VAL_COMISSAO",
-               "Tipo de Cálculo":"TIPO_COMISSAO_BANCO",
+               "Valor da Comissão":"VAL_COMISSAO",
+               "Tp.Cálculo":"TIPO_COMISSAO_BANCO",
             }
 
             logger.info("Validando DataFrame")
@@ -51,8 +52,6 @@ class QueroMaisCartao(Bank):
             df_novo["NUM_BANCO"] = 3030
             df_novo["NOM_BANCO"] = "QUERO MAIS CREDITO"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"] / 10000
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"] / 100
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
 
@@ -61,7 +60,7 @@ class QueroMaisCartao(Bank):
 
             for index, row in df_novo.iterrows():
 
-                if row["TIPO_COMISSAO_BANCO"] == "Fixo":
+                if row["TIPO_COMISSAO_BANCO"] == "FIXO":
                     listOftypes.append("PRÉ-ADESÃO")
                 else:
                     listOftypes.append("DIRETA")

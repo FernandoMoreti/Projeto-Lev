@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger("bancos")
 
-class PanWlCartao(Bank):
+class PanCartao(Bank):
     def __init__(self, name = "PANWL", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
@@ -39,7 +39,6 @@ class PanWlCartao(Bank):
                 "Data Credito Comissão": "DAT_CREDITO",
                 "Valor Saque Base de Cálculo": "VAL_BASE_COMISSAO",
                 "Valor Comissao": "VAL_COMISSAO",
-                "% Comissão": "PCL_COMISSAO"
             }
 
             Error = self.validDataframe(df, infos)
@@ -55,6 +54,7 @@ class PanWlCartao(Bank):
 
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NUM_BANCO"] = 623
             df_novo["NOM_BANCO"] = 'PAN'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
@@ -70,6 +70,8 @@ class PanWlCartao(Bank):
                     list_types.append('ESTORNO')
 
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
+
+            df_novo.to_excel("abs.xlsx", index=False)
 
             return df_novo
         except Exception:

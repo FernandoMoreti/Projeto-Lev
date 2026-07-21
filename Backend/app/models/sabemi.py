@@ -32,7 +32,6 @@ class Sabemi(Bank):
                 "Valor AF Bruto": "VAL_BASE_COMISSAO",
                 "Comissão": "VAL_COMISSAO",
                 "Data Liberacao": "DAT_CREDITO",
-                "Percentual Comissão": "PCL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
@@ -49,6 +48,7 @@ class Sabemi(Bank):
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NOM_BANCO"] = "SABEMI"
             df_novo["NUM_BANCO"] = 5
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"

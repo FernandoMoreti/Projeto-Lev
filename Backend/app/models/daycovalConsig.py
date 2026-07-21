@@ -50,9 +50,7 @@ class DaycovalConsig(Bank):
             df_novo = self.inputValues(df, df_novo, infos)
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
-            df_novo["VAL_BASE_COMISSAO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
-            df_novo["VAL_COMISSAO"] = df_novo["VAL_COMISSAO"]
 
             listOfPorcent = []
 
