@@ -2,6 +2,7 @@ import pandas as pd
 from ..utils import convertValues
 from .bank import Bank
 import logging
+from ..mapper import DAYCOVAL
 
 logger = logging.getLogger("bancos")
 
@@ -65,18 +66,13 @@ class DaycovalCartao(Bank):
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = listOfPorcent
 
-            types = []
+            list_types = []
 
-            for type in df_novo["TIPO_COMISSAO_BANCO"]:
-                if type == "Saque Complementar":
-                    type = "DIRETA"
-                if type == "Venda":
-                    type = "PRÉ-ADESÃO"
-                if type == "Ativação Imediata":
-                    type = "ATIVAÇÃO IMEDIATA"
-                types.append(type)
+            for index, row in df_novo.iterrows():
+                type_row = DAYCOVAL[row["TIPO_COMISSAO_BANCO"].upper()]
+                list_types.append(type_row)
 
-            df_novo["TIPO_COMISSAO_BANCO"] = types
+            df_novo["TIPO_COMISSAO_BANCO"] = list_types
 
             return df_novo
         except Exception:
