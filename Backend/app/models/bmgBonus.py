@@ -2,6 +2,7 @@ import pandas as pd
 from ..utils import convertValues
 from .bank import Bank
 import logging
+from ..mapper import BMG
 
 logger = logging.getLogger("bancos")
 
@@ -27,8 +28,9 @@ class BmgBonus(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Contrato/Apolice":"NUM_PROPOSTA",
+                "Adesao":"NUM_PROPOSTA",
                 "Valor Base": "VAL_BASE_COMISSAO",
+                "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
             }
 
             logger.info("Validando DataFrame")
@@ -41,10 +43,17 @@ class BmgBonus(Bank):
 
             df_novo = self.inputValues(df, df_novo, infos)
 
-            df_novo["TIPO_COMISSAO_BANCO"] = "BÔNUS"
-            df_novo["NUM_BANCO"] = 0
-            df_novo["NOM_BANCO"] = 'BMG'
+            df_novo["NUM_BANCO"] = 318
+            df_novo["NOM_BANCO"] = 'BANCO BMG S.A.'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+
+            list_types = []
+
+            for index, row in df_novo.iterrows():
+                type_row = BMG[row["TIPO_COMISSAO_BANCO"].upper()]
+                list_types.append(type_row)
+
+            df_novo["TIPO_COMISSAO_BANCO"] = list_types
 
             return df_novo
         except Exception:

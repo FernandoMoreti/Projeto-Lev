@@ -2,6 +2,7 @@ import pandas as pd
 from ..utils import convertValues
 from .bank import Bank
 import logging
+from ..mapper import BMG
 
 logger = logging.getLogger("bancos")
 
@@ -31,6 +32,7 @@ class BmgSeguro(Bank):
                 "Valor Base": "VAL_BASE_COMISSAO",
                 "Valor Bruto": "VAL_COMISSAO",
                 "Data Pagamento": "DAT_CREDITO",
+                "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
             }
 
             logger.info("Validando DataFrame")
@@ -46,11 +48,20 @@ class BmgSeguro(Bank):
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
-            df_novo["TIPO_COMISSAO_BANCO"] = "DIFERIDO"
-            df_novo["NUM_BANCO"] = 0
-            df_novo["NOM_BANCO"] = 'BMG'
+            df_novo["NUM_BANCO"] = 318
+            df_novo["NOM_BANCO"] = 'BANCO BMG S.A.'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+
+            list_types = []
+
+            for index, row in df_novo.iterrows():
+                type_row = BMG.get(row["TIPO_COMISSAO_BANCO"].upper(), "SEGURO")
+                if type_row == "SEGURO" and row["VAL_COMISSAO"] < 0:
+                    type_row = "ESTORNO SEGURO"
+                list_types.append(type_row)
+
+            df_novo["TIPO_COMISSAO_BANCO"] = list_types
 
             return df_novo
         except Exception:

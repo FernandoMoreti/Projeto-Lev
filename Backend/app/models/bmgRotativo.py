@@ -6,15 +6,15 @@ from ..mapper import BMG
 
 logger = logging.getLogger("bancos")
 
-class BmgCartaoBeneficio(Bank):
+class BmgRotativo(Bank):
     def __init__(self, name = "BMG", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
         try:
-            logger.info("Inicio do processo de leitura do df-BMG Cartao Beneficio")
-            df = pd.read_csv(df, sep=';')
-            logger.info("Lido o arquivo do BMG Cartao Beneficio")
+            logger.info("Inicio do processo de leitura do df-BMG Rotativo")
+            df = pd.read_csv(df, sep=';', encoding='latin-1')
+            logger.info("Lido o arquivo do BMG Rotativo")
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
