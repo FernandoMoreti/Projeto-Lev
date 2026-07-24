@@ -1,7 +1,7 @@
 import pandas as pd
 import camelot
 from PyPDF2 import PdfReader
-from ..utils import convertValues, paintLine
+from ..utils import convertValues
 from .bank import Bank
 import logging
 from datetime import datetime
@@ -94,12 +94,12 @@ class Brbinconta(Bank):
             date = datetime.now().strftime("%d/%m/%Y")
 
             infos = {
-                2 : "NUM_PROPOSTA",
-                3 : "DSC_OBSERVACAO",
-                4 : "QTD_PARCELA",
-                5 : "PCL_COMISSAO",
-                7 : "VAL_BASE_COMISSAO",
-                8 : "VAL_COMISSAO",
+                1 : "NUM_PROPOSTA",
+                2 : "DSC_OBSERVACAO",
+                3 : "QTD_PARCELA",
+                4 : "PCL_COMISSAO",
+                6 : "VAL_BASE_COMISSAO",
+                7 : "VAL_COMISSAO",
             }
 
             logger.info("Iniciando processo de edicao do BTW")
@@ -124,8 +124,6 @@ class Brbinconta(Bank):
             valores_tratados = []
 
             for valor in df_novo["DSC_OBSERVACAO"]:
-
-                print(valor)
 
                 valor_str = valor
 
@@ -153,8 +151,6 @@ class Brbinconta(Bank):
 
             logger.info("Iniciando processo de edicao do BTW")
 
-            print(df_novo["PCL_COMISSAO"])
-
             df_novo["PCL_COMISSAO"] = pd.to_numeric(df_novo["PCL_COMISSAO"].astype(str).str.replace(",", "."), errors='coerce').fillna(0)
             df_novo["NUM_PROPOSTA"] = pd.to_numeric(df_novo["NUM_PROPOSTA"], errors='coerce').fillna(0).astype('int64')
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
@@ -163,8 +159,6 @@ class Brbinconta(Bank):
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["DSC_OBSERVACAO"] = None
             df_novo["DAT_CREDITO"] = date
-
-            df_novo = df_novo.style.apply(paintLine, axis=1)
 
             return df_novo
         except Exception:
