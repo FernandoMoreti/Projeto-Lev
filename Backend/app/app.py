@@ -7,7 +7,7 @@ from .logger import setup_logging, setup_error_logging
 from io import BytesIO
 from datetime import datetime
 from .robot.factory import factoryBanks
-from .utils import sendMail, createListByLine
+from .utils import convertDate, createListByLine
 import os
 import base64
 
@@ -51,6 +51,12 @@ def execute():
 
         if type(resultado) is str:
             infos_logger.error(f"Recebemos um retorno inesperado da funcao: {resultado}")
+            return jsonify({"erro": resultado}), 400
+
+        resultado = convertDate(resultado)
+
+        if type(resultado) == str:
+            infos_logger.error("Recebemos um error ao tentar converter as datas")
             return jsonify({"erro": resultado}), 400
 
         listOfProposal = createListByLine(resultado)

@@ -8,6 +8,7 @@ import io
 from .robot.factory import factoryBanksMapper
 from dotenv import load_dotenv
 from datetime import datetime
+from dateutil import parser
 
 load_dotenv()
 
@@ -268,6 +269,26 @@ def paintLine(row):
     if row["NUM_PROPOSTA"] == 0:
         return ["background-color: #ffcccc"] * len(row)
     return [""] * len(row)
+
+def convertDate(df):
+
+    listOfDates = []
+
+    for index, row in df.iterrows():
+        try:
+            if hasattr(row["DAT_CREDITO"], 'strftime'):
+                listOfDates.append(row["DAT_CREDITO"].strftime('%d/%m/%Y'))
+
+            if isinstance(row["DAT_CREDITO"], str):
+                date_formatted = parser.parse(row["DAT_CREDITO"])
+                listOfDates.append(date_formatted.strftime('%d/%m/%Y'))
+        except Exception as e:
+            print(f'Erro ao converter: {e}')
+            return "Quebrou ao tentar converter datas"
+
+    df["DAT_CREDITO"] = listOfDates
+
+    return df
 
 def createListByLine(df):
     listOfProposal = []

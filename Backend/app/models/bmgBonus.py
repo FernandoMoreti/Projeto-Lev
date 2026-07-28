@@ -28,7 +28,7 @@ class BmgBonus(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Adesao":"NUM_PROPOSTA",
+                "Contrato/Apolice":"NUM_PROPOSTA",
                 "Valor Base": "VAL_BASE_COMISSAO",
                 "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
             }
