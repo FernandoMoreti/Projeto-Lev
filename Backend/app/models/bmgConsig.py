@@ -6,7 +6,7 @@ from ..mapper import BMG
 
 logger = logging.getLogger("bancos")
 
-class BmgSaque(Bank):
+class BmgConsig(Bank):
     def __init__(self, name = "BMG", num = 701, type = "excel"):
         super().__init__(name, num, type)
 

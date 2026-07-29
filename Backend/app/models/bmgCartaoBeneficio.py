@@ -27,13 +27,23 @@ class BmgCartaoBeneficio(Bank):
         try:
             df = self.readArchive(df)
 
-            infos ={
-                "Adesao":"NUM_PROPOSTA",
-                "Valor Base": "VAL_BASE_COMISSAO",
-                "Valor Bruto": "VAL_COMISSAO",
-                "Data Pagamento": "DAT_CREDITO",
-                "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
-            }
+            if "Comissão Ato ou Diferido" in df.columns:
+                infos ={
+                    "Adesao":"NUM_PROPOSTA",
+                    "Valor Base": "VAL_BASE_COMISSAO",
+                    "Valor Bruto": "VAL_COMISSAO",
+                    "Data Pagamento": "DAT_CREDITO",
+                    "Comissão Ato ou Diferido": "TIPO_COMISSAO_BANCO",
+                }
+            else:
+                infos ={
+                    "Adesao":"NUM_PROPOSTA",
+                    "Valor Base": "VAL_BASE_COMISSAO",
+                    "Valor Bruto": "VAL_COMISSAO",
+                    "Data Pagamento": "DAT_CREDITO",
+                    "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
+                    "% de Comissao": "PCL_COMISSAO",
+                }
 
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df, infos)
@@ -55,9 +65,22 @@ class BmgCartaoBeneficio(Bank):
 
             list_types = []
 
-            for index, row in df_novo.iterrows():
-                type_row = BMG[row["TIPO_COMISSAO_BANCO"].upper()]
-                list_types.append(type_row)
+            if "Comissão Ato ou Diferido" in df.columns:
+                for index, row in df_novo.iterrows():
+                    if row["TIPO_COMISSAO_BANCO"] == "Diferido":
+                        list_types.append("DIFERIDA")
+                    else:
+                        list_types.append("DIRETA")
+            else:
+                for index, row in df_novo.iterrows():
+                    type_row = BMG[row["TIPO_COMISSAO_BANCO"].upper()]
+                    if type_row == ["DIRETA", "DIFERIDA"]:
+                        if pd.notna(row["PCL_COMISSAO"]):
+                            list_types.append("DIRETA")
+                        else:
+                            list_types.append("DIFERIDA")
+                    else:
+                        list_types.append(type_row)
 
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
 

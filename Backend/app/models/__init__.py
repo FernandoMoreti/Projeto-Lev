@@ -2,7 +2,8 @@ from .aki import Aki
 from .amigoz import Amigoz
 from .bmgBonus import BmgBonus
 from .bmgCartaoBeneficio import BmgCartaoBeneficio
-# from .bmgSaldoNaoPago import BmgSaldoNaoPago
+from .bmgConsig import BmgConsig
+from .bmgSaldo import BmgSaldo
 from .bmgSaque import BmgSaque
 from .bmgseguro import BmgSeguro
 from .bmgRotativo import BmgRotativo
@@ -71,14 +72,16 @@ bancos = {
     "amigoz": lambda df: Amigoz().run(df),
     "bmgbonus34362": lambda df: BmgBonus().run(df),
     "bmgcartaobeneficio34362": lambda df: BmgCartaoBeneficio().run(df),
+    "bmgconsig34362": lambda df: BmgConsig().run(df),
     "bmgrotativo34362": lambda df: BmgRotativo().run(df),
-    # "bmgsaldo34362": lambda df: BmgSaldoNaoPago().run(df),
+    "bmgsaldo34362": lambda df: BmgSaldo().run(df),
     "bmgsaque34362": lambda df: BmgSaque().run(df),
     "bmgseguro34362": lambda df: BmgSeguro().run(df),
     "bmgbonus53259": lambda df: BmgBonus().run(df),
     "bmgcartaobeneficio53259": lambda df: BmgCartaoBeneficio().run(df),
+    "bmgconsig53259": lambda df: BmgConsig().run(df),
     "bmgrotativo53259": lambda df: BmgRotativo().run(df),
-    # "bmgsaldo53259": lambda df: BmgSaldoNaoPago().run(df),
+    "bmgsaldo53259": lambda df: BmgSaldo().run(df),
     "bmgsaque53259": lambda df: BmgSaque().run(df),
     "bmgseguro53259": lambda df: BmgSeguro().run(df),
     "brb360": lambda df: Brb360().run(df),

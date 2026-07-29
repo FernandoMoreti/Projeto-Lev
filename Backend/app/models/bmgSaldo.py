@@ -6,7 +6,7 @@ from ..mapper import BMG
 
 logger = logging.getLogger("bancos")
 
-class BmgSaldoNaoPago(Bank):
+class BmgSaldo(Bank):
     def __init__(self, name = "BMG", num = 701, type = "excel"):
         super().__init__(name, num, type)
 
@@ -14,6 +14,7 @@ class BmgSaldoNaoPago(Bank):
         try:
             logger.info("Inicio do processo de leitura do df-BMG Cartao Beneficio")
             df = pd.read_csv(df, sep=';', encoding='latin-1')
+            print(df.columns)
             df = df[pd.notna(df["Percentual"])]
             logger.info("Lido o arquivo do BMG Cartao Beneficio")
             return df
@@ -29,11 +30,10 @@ class BmgSaldoNaoPago(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Contrato":"NUM_PROPOSTA",
+                "Adesão":"NUM_PROPOSTA",
                 "Valor Base": "VAL_BASE_COMISSAO",
                 "Valor Bruto": "VAL_COMISSAO",
                 "Data de Pagamento": "DAT_CREDITO",
-                "Tipo de Comissionamento": "TIPO_COMISSAO_BANCO",
             }
 
             logger.info("Validando DataFrame")
@@ -53,14 +53,7 @@ class BmgSaldoNaoPago(Bank):
             df_novo["NOM_BANCO"] = 'BANCO BMG S.A.'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
-
-            list_types = []
-
-            for index, row in df_novo.iterrows():
-                type_row = BMG[row["TIPO_COMISSAO_BANCO"].upper()]
-                list_types.append(type_row)
-
-            df_novo["TIPO_COMISSAO_BANCO"] = list_types
+            df_novo["TIPO_COMISSAO_BANCO"] = "ANTECIPAÇÃO"
 
             return df_novo
         except Exception:

@@ -33,7 +33,9 @@ class BmgSeguro(Bank):
                 "Valor Bruto": "VAL_COMISSAO",
                 "Data Pagamento": "DAT_CREDITO",
                 "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
+                "% de Comissao": "PCL_COMISSAO",
             }
+
 
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df, infos)
