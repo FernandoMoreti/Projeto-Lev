@@ -36,6 +36,7 @@ class DaycovalCartao(Bank):
                 "Base de Cálculo": "VAL_BASE_COMISSAO",
                 "Valor Comissão": "VAL_COMISSAO",
                 "Tp. Oper.": "TIPO_COMISSAO_BANCO",
+                "Descr. Do Convênio": "DSC_PRODUTO",
             }
 
             Error = self.validDataframe(df, infos)

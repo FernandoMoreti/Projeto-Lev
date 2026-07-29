@@ -55,6 +55,7 @@ class Btw(Bank):
                     "Valor_Liberado": "VAL_BASE_COMISSAO",
                     "Vr_Serviço_Bruto": "VAL_COMISSAO",
                     "type": "TIPO_COMISSAO_BANCO",
+                    "Tabela": "DSC_PRODUTO",
                 }
 
             elif filename.split("_")[1] == "LECCA":
@@ -67,6 +68,7 @@ class Btw(Bank):
                     "Valor_Operacao": "VAL_BASE_COMISSAO",
                     "Vr_Comissao_Bruto": "VAL_COMISSAO",
                     "type": "TIPO_COMISSAO_BANCO",
+                    "Tabela": "DSC_PRODUTO",
                 }
             else:
                 return "Erro: Arquivo não reconhecido"
