@@ -58,10 +58,12 @@ class PanLafy(Bank):
             types = []
 
             for type in df_novo["TIPO_COMISSAO_BANCO"]:
-                if type == "BÔNUS_CAMPANHA":
-                    type = "BONUS EXTRA"
-                if type == "AD_DIF":
-                    type = "ANTECIPAÇÃO"
+                if "BÔNUS_CAMPANHA" in type:
+                    type = type.replace("BÔNUS_CAMPANHA", "BONUS EXTRA")
+                if "AD. DIF" in type:
+                    type = type.replace("AD. DIF", "ANTECIPAÇÃO")
+                if "AD_DIF" in type:
+                    type = type.replace("AD_DIF", "ANTECIPAÇÃO")
                 types.append(type)
 
             df_novo["TIPO_COMISSAO_BANCO"] = types
