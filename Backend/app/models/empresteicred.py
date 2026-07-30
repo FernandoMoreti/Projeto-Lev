@@ -33,8 +33,8 @@ class Empresteicred(Bank):
             infos = {
                 "Operação ": "NUM_PROPOSTA",
                 "Líquido": "VAL_BASE_COMISSAO",
-                "comissão": "PCL_COMISSAO",
-                "Valor ": "VAL_COMISSAO",
+                "Data pagamento": "DAT_CREDITO",
+                "valor": "VAL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
@@ -53,8 +53,7 @@ class Empresteicred(Bank):
             df_novo["NOM_BANCO"] = 'EMPRESTEI CARD'
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["DAT_CREDITO"] = datetime.now().date()
-            df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
 
             logger.info("Processamento do Empresteicred finalizado com sucesso")
             df_novo = df_novo[pd.notna(df_novo["NUM_PROPOSTA"])]
