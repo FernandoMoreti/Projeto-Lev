@@ -31,8 +31,7 @@ def execute():
         nome_banco = request.form.get("banco")
         arquivo = request.files.get("arquivo")
         nome_banco = nome_banco.replace(" ", "").lower()
-        nome_original = (arquivo.filename).replace(".xlsx", "")
-        nome_base, extensao = os.path.splitext(nome_original)
+        nome_base, extensao = os.path.splitext(arquivo.filename)
 
         if not nome_banco:
             infos_logger.warning("Nao foi recebido nenhum Banco")
