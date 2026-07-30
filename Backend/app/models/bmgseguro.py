@@ -28,7 +28,7 @@ class BmgSeguro(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "Contrato/Apolice":"NUM_PROPOSTA",
+                "Adesao":"NUM_PROPOSTA",
                 "Valor Base": "VAL_BASE_COMISSAO",
                 "Valor Bruto": "VAL_COMISSAO",
                 "Data Pagamento": "DAT_CREDITO",
