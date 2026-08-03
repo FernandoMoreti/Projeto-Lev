@@ -6,6 +6,7 @@ from .bmgConsig import BmgConsig
 from .bmgSaldo import BmgSaldo
 from .bmgSaque import BmgSaque
 from .bmgseguro import BmgSeguro
+from .bmgReposicaoCartaoBeneficio import BmgReposicaoCartaoBeneficio
 from .bmgRotativo import BmgRotativo
 from .brb360 import Brb360
 from .brbInconta import Brbinconta
@@ -73,6 +74,7 @@ bancos = {
     "bmgbonus34362": lambda df: BmgBonus().run(df),
     "bmgcartaobeneficio34362": lambda df: BmgCartaoBeneficio().run(df),
     "bmgconsig34362": lambda df: BmgConsig().run(df),
+    "bmgreposicaocartao34362": lambda df: BmgReposicaoCartaoBeneficio().run(df),
     "bmgrotativo34362": lambda df: BmgRotativo().run(df),
     "bmgsaldo34362": lambda df: BmgSaldo().run(df),
     "bmgsaque34362": lambda df: BmgSaque().run(df),
@@ -80,6 +82,7 @@ bancos = {
     "bmgbonus53259": lambda df: BmgBonus().run(df),
     "bmgcartaobeneficio53259": lambda df: BmgCartaoBeneficio().run(df),
     "bmgconsig53259": lambda df: BmgConsig().run(df),
+    "bmgreposicaocartao53259": lambda df: BmgReposicaoCartaoBeneficio().run(df),
     "bmgrotativo53259": lambda df: BmgRotativo().run(df),
     "bmgsaldo53259": lambda df: BmgSaldo().run(df),
     "bmgsaque53259": lambda df: BmgSaque().run(df),

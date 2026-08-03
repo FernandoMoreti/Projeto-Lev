@@ -51,7 +51,7 @@ class BrbRed(Bank):
 
             df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].dt.strftime('%Y-%m-%d')
             list_props = []
-            bruto_por_proposta = {}
+
             session = requests.Session()
 
             for idx, row in df.iterrows():
