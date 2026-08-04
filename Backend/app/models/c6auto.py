@@ -13,6 +13,7 @@ class C6auto(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_excel(df)
+            df = df[pd.notna(df['Cd Contrato'])]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")

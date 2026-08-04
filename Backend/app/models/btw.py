@@ -65,7 +65,7 @@ class Btw(Bank):
                 infos = {
                     "Proposta": "NUM_PROPOSTA",
                     "DT_Pagamento": "DAT_CREDITO",
-                    "Valor_Operacao": "VAL_BASE_COMISSAO",
+                    "Valor_Liberado": "VAL_BASE_COMISSAO",
                     "Vr_Comissao_Bruto": "VAL_COMISSAO",
                     "type": "TIPO_COMISSAO_BANCO",
                     "Tabela": "DSC_PRODUTO",
