@@ -50,8 +50,8 @@ class C6kgiro(Bank):
                 type_row = COMISSAO_MAPPER[row["TIPO_COMISSAO_BANCO"].upper()]
                 list_types.append(type_row)
 
-            df_novo["NUM_BANCO"] = 12222222
-            df_novo["NOM_BANCO"] = 'C6 KGIRO'
+            df_novo["NUM_BANCO"] = 336
+            df_novo["NOM_BANCO"] = 'C6 BANK'
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BRUTO"]
             df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
