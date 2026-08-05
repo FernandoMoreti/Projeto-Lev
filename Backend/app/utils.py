@@ -296,8 +296,10 @@ def createListByLine(df):
 
     for index, row in df.iterrows():
 
+        data_credito = datetime.strptime(row["DAT_CREDITO"], "%d/%m/%Y")
         today = datetime.now()
-        dayOfDifference = (row["DAT_CREDITO"] - today).days
+
+        dayOfDifference = (today - data_credito).days
 
         if dayOfDifference > 35:
             return "Existe uma divergencia muito grnade nas datas"
