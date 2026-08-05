@@ -50,6 +50,7 @@ class Icred(Bank):
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"].astype(float) * 100
             df_novo["TIPO_COMISSAO_BANCO"] = df["commission_type"]
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], format='%Y/%m/%d', errors='coerce').dt.strftime('%d/%m/%Y')
 
             for idx, row in df.iterrows():
                 if row["history"] == '"Diferença ajustada automaticamente."':

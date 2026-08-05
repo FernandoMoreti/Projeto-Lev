@@ -302,7 +302,7 @@ def createListByLine(df):
         dayOfDifference = (today - data_credito).days
 
         if dayOfDifference > 35:
-            return "Existe uma divergencia muito grnade nas datas"
+            return "Existe uma divergencia muito grande nas datas"
 
         if pd.isna(row["NUM_PROPOSTA"]) or pd.isna(row["VAL_COMISSAO"]):
             return "Propostas sem valor de numero de proposta ou valor de comissao"
