@@ -292,6 +292,7 @@ def convertDate(df):
 
 def createListByLine(df):
     listOfProposal = []
+    df["DAT_CREDITO"] = pd.to_datetime(df["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
     for index, row in df.iterrows():
 

@@ -1,6 +1,6 @@
 import pandas as pd
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from .bank import Bank
 from ..utils import convertValues
 
@@ -53,6 +53,7 @@ class Crefaz(Bank):
             df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["DAT_CREDITO"] = (datetime.now() - timedelta(days=1)).strftime('%d/%m/%Y')
 
             logger.info("Processamento do Crefaz finalizado com sucesso")
             return df_novo
