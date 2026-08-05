@@ -90,6 +90,8 @@ class Btw(Bank):
             df_novo["NOM_BANCO"] = "BTW BANK"
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+            df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].astype(str).str.replace('-', '/', regex=False)
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], format='%Y/%m/%d', errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do BTW finalizado com sucesso")
             return df_novo

@@ -59,6 +59,7 @@ class Santanderfvevi(Bank):
             df_novo["NUM_BANCO"] = 351
             df_novo["NOM_BANCO"] = "SANTANDER"
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], dayfirst=True, errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do Santanderfvevi finalizado com sucesso")
             return df_novo

@@ -56,6 +56,9 @@ class C6kgiro(Bank):
             df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"] * 100
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
+
+            print(df_novo["DAT_CREDITO"])
 
             logger.info("Processamento do C6KGIRO finalizado com sucesso")
             return df_novo

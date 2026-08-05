@@ -85,6 +85,8 @@ class BrbRed(Bank):
             df_novo["NOM_BANCO"] = 'BRB - RED'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].astype(str).str.replace('-', '/', regex=False)
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], format='%Y/%m/%d', errors='coerce').dt.strftime('%d/%m/%Y')
 
             return df_novo
         except Exception:

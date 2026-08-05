@@ -14,7 +14,6 @@ class BmgSaldo(Bank):
         try:
             logger.info("Inicio do processo de leitura do df-BMG Cartao Beneficio")
             df = pd.read_csv(df, sep=';', encoding='latin-1')
-            print(df.columns)
             df = df[pd.notna(df["Percentual"])]
             logger.info("Lido o arquivo do BMG Cartao Beneficio")
             return df

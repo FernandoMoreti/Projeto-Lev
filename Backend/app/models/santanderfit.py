@@ -2,6 +2,7 @@ import pandas as pd
 import logging
 from .bank import Bank
 from ..utils import convertValues
+from datetime import datetime
 
 logger = logging.getLogger("bancos")
 
@@ -76,6 +77,7 @@ class Santanderfit(Bank):
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["NUM_BANCO"] = 9173
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DAT_CREDITO"] = datetime.now().strftime('%d/%m/%Y')
 
             logger.info("Processamento do Santanderfit finalizado com sucesso")
             return df_novo

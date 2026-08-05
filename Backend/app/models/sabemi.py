@@ -52,6 +52,7 @@ class Sabemi(Bank):
             df_novo["NOM_BANCO"] = "SABEMI"
             df_novo["NUM_BANCO"] = 5
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do Sabemi finalizado com sucesso")
             return df_novo

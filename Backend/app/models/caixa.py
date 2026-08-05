@@ -50,6 +50,7 @@ class Caixa(Bank):
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
             df_novo["DAT_CREDITO"] = date
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do Caixa finalizado com sucesso")
             return df_novo

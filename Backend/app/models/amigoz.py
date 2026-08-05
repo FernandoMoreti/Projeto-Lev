@@ -149,6 +149,10 @@ class Amigoz(Bank):
 
             df_novo = df_novo[pd.notna(df_novo["VAL_BASE_COMISSAO"])]
             df_novo = df_novo[df_novo["VAL_BASE_COMISSAO"] !=  0]
+
+            df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].astype(str).str.replace('-', '/', regex=False)
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], format='%Y/%m/%d', errors='coerce').dt.strftime('%d/%m/%Y')
+
             return df_novo
         except:
             logger.exception("Erro ao editar Amigoz")

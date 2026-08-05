@@ -51,6 +51,7 @@ class Digio(Bank):
             df_novo["NUM_BANCO"] = 335
             df_novo["NOM_BANCO"] = "BANCO DIGIO"
             df_novo["PCL_COMISSAO"] = (df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float) * 100)
+
             logger.info("Processamento do Digio finalizado com sucesso")
             return df_novo
         except Exception:

@@ -270,32 +270,8 @@ def paintLine(row):
         return ["background-color: #ffcccc"] * len(row)
     return [""] * len(row)
 
-# def convertDate(df):
-
-#     listOfDates = []
-
-#     for index, row in df.iterrows():
-
-#         print(row["DAT_CREDITO"])
-#         try:
-#             if hasattr(row["DAT_CREDITO"], 'strftime'):
-#                 listOfDates.append(row["DAT_CREDITO"].strftime('%d/%m/%Y'))
-
-#             if isinstance(row["DAT_CREDITO"], str):
-#                 date_formatted = parser.parse(row["DAT_CREDITO"])
-#                 listOfDates.append(date_formatted.strftime('%d/%m/%Y'))
-#         except Exception as e:
-#             print(f'Erro ao converter: {e}')
-#             return "Quebrou ao tentar converter datas"
-
-#     print(listOfDates)
-#     df["DAT_CREDITO"] = listOfDates
-
-    # return df
-
 def createListByLine(df):
     listOfProposal = []
-    df["DAT_CREDITO"] = pd.to_datetime(df["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
     for index, row in df.iterrows():
 

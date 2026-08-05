@@ -90,6 +90,7 @@ class PanConsig(Bank):
 
             df_novo = df_novo.replace([np.inf, -np.inf], np.nan)
             df_novo = df_novo.where(pd.notnull(df_novo), None)
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
             return df_novo
         except Exception:

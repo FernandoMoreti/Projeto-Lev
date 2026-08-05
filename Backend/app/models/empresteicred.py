@@ -54,6 +54,7 @@ class Empresteicred(Bank):
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do Empresteicred finalizado com sucesso")
             df_novo = df_novo[pd.notna(df_novo["NUM_PROPOSTA"])]

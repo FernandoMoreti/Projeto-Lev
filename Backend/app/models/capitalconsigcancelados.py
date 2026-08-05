@@ -63,6 +63,7 @@ class CapitalConsigCancelados(Bank):
             df_novo["PCL_COMISSAO"] = df_novo["VAL_COMISSAO"] / df_novo["VAL_BRUTO"] * 100
             df_novo["TIPO_COMISSAO_BANCO"] = 'ESTORNO'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            print(df_novo["DAT_CREDITO"])
 
             logger.info("Processamento do Queromaiscancelados finalizado com sucesso")
             return df_novo

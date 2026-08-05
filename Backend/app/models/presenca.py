@@ -13,7 +13,6 @@ class Presenca(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_excel(df)
-            print(df["% Pagamento"])
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")

@@ -55,6 +55,7 @@ class Aki(Bank):
             df_novo["DAT_CREDITO"] = diaMesAno
             df_novo["NUM_BANCO"] = 1684
             df_novo["NOM_BANCO"] = "AKI CAPITAL"
+            df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].astype(str).str.replace('-', '/', regex=False)
 
             return df_novo
         except Exception:

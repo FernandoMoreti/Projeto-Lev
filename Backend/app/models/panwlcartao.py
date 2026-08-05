@@ -70,8 +70,7 @@ class PanCartao(Bank):
                     list_types.append('ESTORNO')
 
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
-
-            df_novo.to_excel("abs.xlsx", index=False)
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], dayfirst=True, errors='coerce').dt.strftime('%d/%m/%Y')
 
             return df_novo
         except Exception:

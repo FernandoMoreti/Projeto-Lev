@@ -50,6 +50,7 @@ class C6equity(Bank):
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["PCL_COMISSAO"] = df_novo["PCL_COMISSAO"] * 100
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do C6equity finalizado com sucesso")
             return df_novo

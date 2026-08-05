@@ -13,7 +13,7 @@ class CrefazCLT(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_excel(df.stream, engine='xlrd', header=0)
-            df = df[pd.notna(df["%Comissão"])]
+            df = df[pd.notna(df["Vlr. Operação"])]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")

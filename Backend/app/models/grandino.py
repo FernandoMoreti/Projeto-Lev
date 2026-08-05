@@ -51,6 +51,8 @@ class Grandino(Bank):
             df_novo["NOM_BANCO"] = 'GRANDINO LTDA'
             df_novo["TIPO_COMISSAO_BANCO"] = 'DIRETA'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
+            df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"]
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], dayfirst=True, errors='coerce').dt.strftime('%d/%m/%Y')
 
             logger.info("Processamento do Grandino finalizado com sucesso")
             return df_novo

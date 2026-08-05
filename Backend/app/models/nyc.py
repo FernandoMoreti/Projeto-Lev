@@ -60,6 +60,8 @@ class Nyc(Bank):
                 else:
                     df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "DIRETA"
 
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
+
             logger.info("Processamento do Nyc finalizado com sucesso")
             return df_novo
         except Exception:

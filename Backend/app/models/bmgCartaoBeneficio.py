@@ -84,6 +84,8 @@ class BmgCartaoBeneficio(Bank):
 
             df_novo["TIPO_COMISSAO_BANCO"] = list_types
 
+            print(df_novo["DAT_CREDITO"])
+
             return df_novo
         except Exception:
             logger.exception("Erro ao editar Bmg")
