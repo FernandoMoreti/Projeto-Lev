@@ -270,25 +270,28 @@ def paintLine(row):
         return ["background-color: #ffcccc"] * len(row)
     return [""] * len(row)
 
-def convertDate(df):
+# def convertDate(df):
 
-    listOfDates = []
+#     listOfDates = []
 
-    for index, row in df.iterrows():
-        try:
-            if hasattr(row["DAT_CREDITO"], 'strftime'):
-                listOfDates.append(row["DAT_CREDITO"].strftime('%d/%m/%Y'))
+#     for index, row in df.iterrows():
 
-            if isinstance(row["DAT_CREDITO"], str):
-                date_formatted = parser.parse(row["DAT_CREDITO"])
-                listOfDates.append(date_formatted.strftime('%d/%m/%Y'))
-        except Exception as e:
-            print(f'Erro ao converter: {e}')
-            return "Quebrou ao tentar converter datas"
+#         print(row["DAT_CREDITO"])
+#         try:
+#             if hasattr(row["DAT_CREDITO"], 'strftime'):
+#                 listOfDates.append(row["DAT_CREDITO"].strftime('%d/%m/%Y'))
 
-    df["DAT_CREDITO"] = listOfDates
+#             if isinstance(row["DAT_CREDITO"], str):
+#                 date_formatted = parser.parse(row["DAT_CREDITO"])
+#                 listOfDates.append(date_formatted.strftime('%d/%m/%Y'))
+#         except Exception as e:
+#             print(f'Erro ao converter: {e}')
+#             return "Quebrou ao tentar converter datas"
 
-    return df
+#     print(listOfDates)
+#     df["DAT_CREDITO"] = listOfDates
+
+    # return df
 
 def createListByLine(df):
     listOfProposal = []
