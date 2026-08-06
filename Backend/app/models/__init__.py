@@ -9,6 +9,7 @@ from .bmgseguro import BmgSeguro
 from .bmgReposicaoCartaoBeneficio import BmgReposicaoCartaoBeneficio
 from .bmgRotativo import BmgRotativo
 from .brb360 import Brb360
+from .brb360Temp import Brb360Temp
 from .brbInconta import Brbinconta
 from .brbred import BrbRed
 from .btw import Btw
@@ -88,6 +89,7 @@ bancos = {
     "bmgsaque53259": lambda df: BmgSaque().run(df),
     "bmgseguro53259": lambda df: BmgSeguro().run(df),
     "brb360": lambda df: Brb360().run(df),
+    "brb360temp": lambda df: Brb360Temp().run(df),
     "brbinconta": lambda df: Brbinconta().run(df),
     "brbred": lambda df: BrbRed().run(df),
     "btw": lambda df: Btw().run(df),

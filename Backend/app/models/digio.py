@@ -29,6 +29,7 @@ class Digio(Bank):
             infos = {
                 "Prop.": "NUM_PROPOSTA",
                 "Base de Cálculo": "VAL_BASE_COMISSAO",
+                "Valor Liberado Oper": "VAL_BRUTO",
                 "Valor Comiss": "VAL_COMISSAO",
                 "Parâm": "PCL_COMISSAO",
                 "Dt. Pgto Cmss.": "DAT_CREDITO",
@@ -42,15 +43,32 @@ class Digio(Bank):
             df_novo = self.inputValues(df, df_novo, infos)
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
+            df_novo["VAL_BRUTO"] = convertValues(df_novo, "VAL_BRUTO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
 
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
-            df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["NUM_BANCO"] = 335
             df_novo["NOM_BANCO"] = "BANCO DIGIO"
-            df_novo["PCL_COMISSAO"] = (df_novo["PCL_COMISSAO"].astype(str).str.replace(",", ".").astype(float) * 100)
+
+            listValues = []
+            listValuesBruto = []
+
+            for index, row in df_novo.iterrows():
+                if round(row["VAL_BASE_COMISSAO"], 2) < 0:
+                    listValues.append(round(row["VAL_BASE_COMISSAO"], 2) * -1)
+                else:
+                    listValues.append(round(row["VAL_BASE_COMISSAO"], 2))
+
+                if round(row["VAL_BRUTO"], 2) < 0:
+                    listValuesBruto.append(round(row["VAL_BRUTO"], 2) * -1)
+                else:
+                    listValuesBruto.append(round(row["VAL_BRUTO"], 2))
+
+            df_novo["VAL_BASE_COMISSAO"] = listValues
+            df_novo["VAL_BRUTO"] = listValuesBruto
+            df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
 
             logger.info("Processamento do Digio finalizado com sucesso")
             return df_novo
