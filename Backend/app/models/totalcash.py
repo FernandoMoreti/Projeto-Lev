@@ -30,7 +30,6 @@ class Totalcash(Bank):
 
             infos = {
                 "Nr Proposta": "NUM_PROPOSTA",
-                "Valor Liberado Cliente": "VAL_BASE_COMISSAO",
                 "Valor Comissão": "VAL_COMISSAO",
             }
 
@@ -39,9 +38,19 @@ class Totalcash(Bank):
             if Error:
                 return Error
 
+            listOfValues = []
+
+            for index, row in df.iterrows():
+                if row["Produto"] == "Port + Refin":
+                    listOfValues.append(row["Valor Proposta"])
+                else:
+                    listOfValues.append(row["Valor Liberado Cliente"])
+
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
+
+            df_novo["VAL_BASE_COMISSAO"] = listOfValues
 
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")

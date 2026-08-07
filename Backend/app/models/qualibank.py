@@ -61,7 +61,6 @@ class Qualibank(Bank):
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
 
-
             logger.info("Processamento do Qualibank finalizado com sucesso")
             return df_novo
         except Exception:
