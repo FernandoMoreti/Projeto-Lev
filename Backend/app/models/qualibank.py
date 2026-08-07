@@ -31,13 +31,22 @@ class Qualibank(Bank):
                "DATA_PAGAMENTO":"DAT_CREDITO",
                "VALOR_BASE":"VAL_BASE_COMISSAO",
                "VALOR_INCENTIVO":"VAL_COMISSAO",
-               "PERC_INCENTIVO":"PCL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
             Error = self.validDataframe(df, infos)
             if Error:
                 return Error
+
+            listOfCommission = []
+
+            for index, row in df.iterrows():
+                if "LEV" not in row["PARCEIRO"]:
+                    listOfCommission.append(0)
+                else:
+                    listOfCommission.append(row["VALOR_INCENTIVO"])
+
+            df["VALOR_INCENTIVO"] = listOfCommission
 
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
@@ -50,6 +59,8 @@ class Qualibank(Bank):
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+
 
             logger.info("Processamento do Qualibank finalizado com sucesso")
             return df_novo
