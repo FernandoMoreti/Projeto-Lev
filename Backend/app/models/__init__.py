@@ -38,6 +38,7 @@ from .hope import Hope
 from .icred import Icred
 from .jbcred import Jbcred
 from .kardbank import Kardbank
+from .mercantil import Mercantil
 from .nbc import Nbc
 from .neo import Neo
 from .novosaque import Novosaque
@@ -121,6 +122,7 @@ bancos = {
     "icred": lambda df: Icred().run(df),
     "jbcred": lambda df: Jbcred().run(df),
     "kardbank": lambda df: Kardbank().run(df),
+    "mercantil": lambda df: Mercantil().run(df),
     "nbc": lambda df: Nbc().run(df),
     "neo": lambda df: Neo().run(df),
     "novosaque": lambda df: Novosaque().run(df),
