@@ -12,7 +12,7 @@ class Crefisa(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_html(df, header=0)[0]
+            df = pd.read_excel(df)
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -32,7 +32,6 @@ class Crefisa(Bank):
                "Data_Geracao_Comissao":"DAT_CREDITO",
                "Vlr_Liquido":"VAL_BASE_COMISSAO",
                "Vlr_Pagamento_Comissao":"VAL_COMISSAO",
-               "Perc_Pagamento_Comissao":"PCL_COMISSAO",
                "Tipo":"TIPO_COMISSAO_BANCO"
             }
 
@@ -49,16 +48,15 @@ class Crefisa(Bank):
                 if row["TIPO_COMISSAO_BANCO"] == "À Vista":
                     df_novo.at[index, "TIPO_COMISSAO_BANCO"] = "DIRETA"
 
-            print(df_novo["VAL_COMISSAO"])
-            print(df_novo["VAL_BASE_COMISSAO"])
-
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
 
             df_novo["NUM_BANCO"] = 69
             df_novo["NOM_BANCO"] = 'BANCO CREFISA S.A.'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
+            df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], format='%Y/%m/%d', errors='coerce').dt.strftime('%d/%m/%Y')
+            df_novo["TIPO_COMISSAO_BANCO"] = df_novo["TIPO_COMISSAO_BANCO"].str.upper()
 
             logger.info("Processamento do Crefisa finalizado com sucesso")
             return df_novo

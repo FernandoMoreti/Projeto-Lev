@@ -6,7 +6,7 @@ from .bank import Bank
 logger = logging.getLogger("bancos")
 
 class Hope(Bank):
-    def __init__(self, name = "HOPE", num = 1597, type = "html"):
+    def __init__(self, name = "HOPE", num = 1597, type = "excel"):
         super().__init__(name, num, type)
 
     def readArchive(self, df):
@@ -44,8 +44,6 @@ class Hope(Bank):
             logger.info("Criando novo DataFrame")
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
-
-            tamanho = len(df_novo["NUM_PROPOSTA"])
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
