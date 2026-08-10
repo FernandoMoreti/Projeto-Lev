@@ -66,6 +66,7 @@ class DaycovalCartao(Bank):
             df_novo["NOM_BANCO"] = 'BANCO DAYCOVAL S.A.'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["PCL_COMISSAO"] = listOfPorcent
+            df_novo["DSC_TIPO_PROPOSTA_EMPRESTIMO"] = df_novo["TIPO_COMISSAO_BANCO"]
 
             list_types = []
 
