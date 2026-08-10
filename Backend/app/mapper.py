@@ -458,3 +458,11 @@ BMG = {
     "WORKBANK - SEGURO": "SEGURO",
     "WORKBANK - SEGURO BMG": "SEGURO BMG"
 }
+
+FACTA = {
+    1: "DIRETA",
+    3: "ESTORNO DIRETA",
+    54: "BONUS",
+    63: "ESTORNO",
+    68: "CUSTO",
+}

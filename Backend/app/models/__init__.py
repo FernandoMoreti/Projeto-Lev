@@ -31,7 +31,7 @@ from .digio import Digio
 from .empresteicred import Empresteicred
 from .euro import Euro
 from .evol import Evol
-from .facta import Facta
+# from .facta import Facta
 from .grandino import Grandino
 from .happy import Happy
 from .hope import Hope
@@ -114,7 +114,7 @@ bancos = {
     "empresteicred": lambda df: Empresteicred().run(df),
     "euro": lambda df: Euro().run(df),
     "evol": lambda df: Evol().run(df),
-    "facta": lambda df: Facta().run(df),
+    # "facta": lambda df: Facta().run(df),
     "grandino": lambda df: Grandino().run(df),
     "happy": lambda df: Happy().run(df),
     "hope": lambda df: Hope().run(df),
