@@ -1,43 +1,46 @@
-<h1>🚀 Projeto Aurora</h1>
-<h3>Novo começo, nova forma de trabalhar</h3>
+<h1>🚀 Projeto Fastex</h1>
+<h3>Nova automação na área</h3>
 
 <hr>
 
 <h2>📌 Visão Geral</h2>
 <p>
-O <strong>Projeto Aurora</strong> é uma aplicação desenvolvida para realizar a
+O <strong>Projeto Fastex</strong> é uma aplicação desenvolvida para realizar a
 <strong>edição e conversão automatizada de relatórios</strong> nos formatos
-Excel, CSV, PDF e TXT para um modelo padrão de Excel denominado
-<strong>Workbank</strong>.
+Excel, CSV, PDF e TXT para um modelo padrão de Excel <strong>Workbank</strong>.
 </p>
 
+<h3>Descrição</h3>
+
 <p>
-O projeto tem como principal objetivo reduzir o trabalho manual de um setor
+O projeto tem como principal objetivo reduzir o trabalho manual do setor de comissao,
 responsável pela edição desses relatórios, garantindo padronização, agilidade
 e confiabilidade no processamento das informações.
 </p>
 
+<h3>Status</h3>
+
+<p>O projeto atualmente se encontra em: Produção</p>
+
+<h3>Tecnologias utilizadas</h3>
+
+<p>Backend: Python, Flask, CORS, pandas, base64</p>
+<p>Observabilidade: logger</p>
+<p>DevOps: Docker</p>
+
+<h2>Pré-requisitos</h2>
+
+<ul>
+  <li>Python</li>
+</ul>
+
 <hr>
 
-<h2>🏢 Empresa</h2>
-<p>LEV Negócios</p>
-
-<h2>👨‍💻 Autor</h2>
-<p>Fernando Moreti</p>
-
-<h2>📅 Data</h2>
-<p>16/01/2026</p>
-
-<h2>🏷️ Versão</h2>
-<p>1.0</p>
-
-<hr>
-
-<h2>❗ Problema Resolvido</h2>
+<h2>Problema Resolvido</h2>
 <p>
 A edição manual de relatórios é um processo demorado e sujeito a erros.
-O Projeto Aurora automatiza esse fluxo, convertendo relatórios brutos
-em um formato compatível com o sistema Workbank.
+O Projeto Fastex automatiza esse fluxo, convertendo relatórios brutos
+em um formato compatível com o sistema do Workbank.
 </p>
 
 <hr>
@@ -51,16 +54,16 @@ em um formato compatível com o sistema Workbank.
 
 <h3>Objetivo Geral</h3>
 <p>
-Desenvolver uma aplicação capaz de converter automaticamente relatórios
-extraídos do banco para um modelo compatível com o sistema Workbank.
+Editar automaticamente relatórios de comissão
+extraídos do banco convertendo-os para um modelo compatível com o sistema Workbank.
 </p>
 
 <h3>Objetivos Específicos</h3>
 <ul>
   <li>Ler arquivos retirados do banco</li>
   <li>Editar esses arquivos conforme regras definidas</li>
-  <li>Converter os dados para o modelo padrão Workbank</li>
-  <li>Salvar os arquivos editados no sistema interno</li>
+  <li>Converter os dados para um excel no modelo padrão Workbank</li>
+  <li>Enviar uma lista das propostas como resposta juntamente com o arquivo editado e padronizado para download</li>
 </ul>
 
 <hr>
@@ -70,6 +73,7 @@ extraídos do banco para um modelo compatível com o sistema Workbank.
   <li>Leitura de arquivos em diferentes formatos</li>
   <li>Edição automática de relatórios</li>
   <li>Conversão para o modelo Workbank</li>
+  <li>Retornar uma lista com todas as propostas editadas</li>
   <li>Download automático do arquivo editado</li>
 </ul>
 
@@ -77,6 +81,8 @@ extraídos do banco para um modelo compatível com o sistema Workbank.
 
 <h2>✅ Validações Importantes</h2>
 <ul>
+  <li>Validação de dados recebidos, conferindo existencia de dados obrigatórios</li>
+  <li>Validação do dados gerados, conferindo existencia de valores obrigatórios</li>
   <li>Validação do modelo final para garantir compatibilidade com o Workbank</li>
   <li>Verificação se a edição atende a todos os critérios de leitura do sistema</li>
 </ul>
@@ -85,56 +91,33 @@ extraídos do banco para um modelo compatível com o sistema Workbank.
 
 <h2>🏗️ Arquitetura e Estrutura do Projeto</h2>
 
-<h3>Frontend</h3>
-<pre>
-frontend/
- ├── public/
- └── src/
-     ├── app.jsx
-     └── main.jsx
-</pre>
-
 <h3>Backend</h3>
 <pre>
 backend/
- └── app/
-     ├── models/
-     ├── utils.py
-     └── app.py
+ ├── app/
+ |   ├── models/
+ |   |   └── TODOS OS ARQUIVOS DOS BANCOS
+ |   ├── utils.py
+ |   ├── logger.py
+ |   ├── mapper.py
+ |   └── app.py
+ ├── logs/
+ └── temp/
 </pre>
-
-<hr>
-
-<h2>🛠️ Tecnologias Utilizadas</h2>
-<ul>
-  <li><strong>Frontend:</strong> JavaScript / React</li>
-  <li><strong>Backend:</strong> Python / Flask</li>
-  <li><strong>Outras ferramentas:</strong> Node.js, Yarn</li>
-</ul>
-
-<hr>
-
-<h2>📦 Pré-requisitos</h2>
-<ul>
-  <li>Node.js</li>
-  <li>Python</li>
-  <li>Navegador web de sua preferência</li>
-</ul>
 
 <hr>
 
 <h2>▶️ Como Executar o Projeto</h2>
 
-<h3>Frontend</h3>
+<h3>Terminal code</h3>
 <pre>
-yarn install
-yarn dev
+  pip install -r requirements.txt
+  python -m app.app
 </pre>
 
-<h3>Backend</h3>
+<h3>Terminal Docker</h3>
 <pre>
-pip install -r requirements.txt
-python -m app.app
+  docker-compose up -d --build
 </pre>
 
 <p>Após esses passos, a aplicação estará rodando localmente.</p>
@@ -143,21 +126,22 @@ python -m app.app
 
 <h2>👤 Como Usar (Usuário Final)</h2>
 <ol>
-  <li>Acessar a aplicação</li>
-  <li>Selecionar o arquivo que deseja editar</li>
-  <li>Selecionar o banco correspondente ao arquivo enviado</li>
-  <li>Clicar no botão de execução</li>
-  <li>O download do arquivo editado será iniciado automaticamente</li>
+  <li>Acessar a aplicação desenvolvida pelo time responsavel</li>
+  <li>Faça uma request com o metodo post no endpoint "/execute" com o seguinte body no formato de FormData:
+    {
+      "banco": "exemplo",
+      "arquivo": exemplo.xlsx
+    }
+  </li>
+  <li>O retorno sera enviado da seguinte forma para capitação do Front:
+  {
+    "mensagem": "Sucesso",
+    "nome_arquivo": nome_arquivo,
+    "arquivo_base64": excel_base64,
+    "listOfProposal": listOfProposal
+  }
+  </li>
 </ol>
-
-<hr>
-
-<h2>🖥️ Telas do Sistema</h2>
-<p>
-A tela inicial apresenta a logo da empresa à direita e, à esquerda,
-os campos para upload de arquivo, seleção do banco e um botão
-para execução do processo.
-</p>
 
 <hr>
 
@@ -182,16 +166,7 @@ para execução do processo.
 
 <h2>🧱 Pontos Fracos Atuais</h2>
 <ul>
-  <li>Hospedagem em servidor web gratuito</li>
-  <li>A primeira requisição pode apresentar lentidão devido à inicialização do servidor</li>
-</ul>
-
-<hr>
-
-<h2>🚀 Melhorias Futuras</h2>
-<ul>
-  <li>Integração com a aplicação de extração automática de relatórios</li>
-  <li>Automatização completa do fluxo de extração e edição em intervalos definidos</li>
+  <li>Para adicionar um novo banco o processo é totalmente manual de capitação de campos</li>
 </ul>
 
 <hr>
@@ -214,16 +189,16 @@ para execução do processo.
   </li>
   <li>
     <strong>Aplicação em produção:</strong>
-    <a href="https://projeto-lev.vercel.app/" target="_blank">
-      https://projeto-lev.vercel.app/
+    <a href="http://192.168.1.90/5000" target="_blank">
+      http://192.168.1.90/5000
     </a>
   </li>
-  <li>
+  <!-- <li>
     <strong>Documentacão:</strong>
     <a href="https://lewecpcombr-my.sharepoint.com/:w:/g/personal/comissao_levnegocios_com_br/IQCOgYdx9coFRpDmWK85BJSHASy2cmBFKWCSgEr_n4nRJnI?e=MEyAy1)" target="_blank">
       Documentacao do projeto em word
     </a>
-  </li>
+  </li> -->
 </ul>
 
 <hr>

@@ -6,7 +6,6 @@ from .models.crivo import Crivo
 from .logger import setup_logging, setup_error_logging
 from io import BytesIO
 from datetime import datetime
-from .robot.factory import factoryBanks
 from .utils import createListByLine
 import os
 import base64
@@ -20,6 +19,10 @@ setup_error_logging()
 
 app = Flask(__name__) #cria o app, inicializa a aplicação flask
 CORS(app, origins=["https://projeto-lev.vercel.app", "http://localhost:5173", "http://localhost:3001", "http://192.168.1.90:30001"], expose_headers=["Content-Disposition"])
+
+@app.route("/health", methods=["GET"])
+def health():
+    return { "status": "OK", "message": "Pagina funcionando normalmente" }
 
 @app.route("/execute", methods=["POST"])
 def execute():
@@ -82,55 +85,6 @@ def execute():
         return jsonify({"error": "Erro interno inesperado"})
     finally:
         infos_logger.info("Finalizando o sistema de envio de arquivo para edicao e download")
-
-# @app.route("/proposal", methods=["POST"])
-# def groupProposal():
-
-#     try:
-#         nameBank = request.form.get("bank")
-#         nameBank = nameBank.lower().split("|")[0].replace(" ", "")
-#         queueId = request.form.get("queueId")
-
-#         factoryBanks[nameBank].run(queueId, nameBank)
-
-#         return jsonify({"status": 200})
-
-#     except Exception as e:
-#         print("Error")
-#         return jsonify({
-#             "error": "Erro interno ao processar e gerar o arquivo Excel.",
-#             "details": str(e)
-#         }), 500
-
-# @app.route("/editProposals", methods=["POST"])
-# def editProposals():
-
-#     try:
-#         nameBank = request.form.get("bank")
-#         nameBank = nameBank.lower().split("|")[0].replace(" ", "")
-#         queueId = request.form.get("queueId")
-
-#         dfEdited = factoryBanks[nameBank].run(queueId, nameBank, True)
-
-#         buffer = BytesIO()
-#         dfEdited.to_excel(buffer, index=False, engine='openpyxl')
-#         buffer.seek(0)
-
-#         file = buffer.read()
-#         fileName = f"{nameBank}.xlsx"
-
-#         print("Enviando Email...")
-#         sendMail(nameBank, fileName, file)
-
-#         return jsonify({
-#             "message": "Processo concluído com sucesso!"
-#         }), 200
-#     except Exception as e:
-#         print("Error")
-#         return jsonify({
-#             "error": "Erro interno ao processar e gerar o arquivo Excel.",
-#             "details": str(e)
-#         }), 500
 
 # @app.route("/crivo", methods=["POST"])
 # def crivo():
