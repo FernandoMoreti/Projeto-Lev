@@ -13,6 +13,7 @@ class C6kgiro(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_excel(df)
+            df = df[df["Elegível Kgiro"] == "ELEGIVEL"]
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")

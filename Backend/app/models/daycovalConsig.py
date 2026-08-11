@@ -77,7 +77,7 @@ class DaycovalConsig(Bank):
                         type = "DIRETA"
                 if row["TIPO_COMISSAO_BANCO"] == "PMT":
                     if row["VAL_COMISSAO"] < 0:
-                        type = "ESTORNO DIFERIDO"
+                        type = "ESTORNO DIF."
                     else:
                         type = "DIFERIDO"
                 types.append(type)
