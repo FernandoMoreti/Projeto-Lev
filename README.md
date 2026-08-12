@@ -30,9 +30,7 @@ e confiabilidade no processamento das informações.
 
 <h2>Pré-requisitos</h2>
 
-<ul>
-  <li>Python</li>
-</ul>
+<p>Python</p>
 
 <hr>
 
@@ -193,15 +191,12 @@ backend/
       http://192.168.1.90/5000
     </a>
   </li>
-  <!-- <li>
-    <strong>Documentacão:</strong>
-    <a href="https://lewecpcombr-my.sharepoint.com/:w:/g/personal/comissao_levnegocios_com_br/IQCOgYdx9coFRpDmWK85BJSHASy2cmBFKWCSgEr_n4nRJnI?e=MEyAy1)" target="_blank">
-      Documentacao do projeto em word
-    </a>
-  </li> -->
 </ul>
 
 <hr>
 
 <h2>📄 Licença</h2>
 <p>Uso interno — LEV Negócios</p>
+<h2>Desenvolvido por:</h2>
+<p>Fernando Moreti Bolela e Silva</p>
+

@@ -31,7 +31,8 @@ class Paranabank(Bank):
                 "Data Fatura": "DAT_CREDITO",
                 "Valor base": "VAL_BASE_COMISSAO",
                 "% Comissão": "PCL_COMISSAO",
-                "Valor comissão": "VAL_COMISSAO"
+                "Valor comissão": "VAL_COMISSAO",
+                "Observação": "DSC_OBSERVACAO"
             }
 
             logger.info("Validando DataFrame")
@@ -43,10 +44,6 @@ class Paranabank(Bank):
             df_novo = self.createDataframe()
             df_novo = self.inputValues(df, df_novo, infos)
 
-            for index, row in df.iterrows():
-                if (row["Auto Regulação"] == "Verdadeiro"):
-                    df_novo["DSC_OBSERVACAO"] = row["Observação"]
-
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["PCL_COMISSAO"] = convertValues(df_novo, "PCL_COMISSAO")
@@ -55,8 +52,17 @@ class Paranabank(Bank):
             df_novo["NOM_BANCO"] = "PARANÁ BANCO S.A."
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["NUM_BANCO"] = 254
-            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["DAT_CREDITO"] = pd.to_datetime(df_novo["DAT_CREDITO"], errors='coerce').dt.strftime('%d/%m/%Y')
+
+            listOfType = []
+
+            for index, row in df_novo.iterrows():
+                if row["VAL_COMISSAO"] < 0:
+                    listOfType.append("ESTORNO")
+                else:
+                    listOfType.append("DIRETA")
+
+            df_novo["TIPO_COMISSAO_BANCO"] = listOfType
 
             logger.info("Processamento do Paranabank finalizado com sucesso")
             return df_novo
