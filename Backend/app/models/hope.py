@@ -12,7 +12,7 @@ class Hope(Bank):
     def readArchive(self, df):
         try:
             df = pd.read_excel(df, header=0)
-            df = df[pd.notna(df["VALOR_BASE_CALCULO"])]
+            df = df[pd.notna(df["Valor Base do Contrato"])]
             df = df.iloc[:-1]
             return df
         except Exception:
@@ -29,10 +29,10 @@ class Hope(Bank):
             df = self.readArchive(df)
 
             infos ={
-                "NUMERO_PROPOSTA":"NUM_PROPOSTA",
-                "DATA_PGTO_CLIENTE":"DAT_CREDITO",
-                "VALOR_BASE_CALCULO":"VAL_BASE_COMISSAO",
-                "VALOR_PAGO":"VAL_COMISSAO",
+                "Número Ade":"NUM_PROPOSTA",
+                "Data Pgto Cliente":"DAT_CREDITO",
+                "Valor Base do Contrato":"VAL_BASE_COMISSAO",
+                "Valor":"VAL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
