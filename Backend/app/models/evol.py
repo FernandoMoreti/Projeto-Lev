@@ -11,7 +11,7 @@ class Evol(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df)
+            df = pd.read_excel(df, header=2)
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
