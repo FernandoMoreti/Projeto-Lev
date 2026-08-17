@@ -31,7 +31,7 @@ class BmgSaldo(Bank):
             infos ={
                 "Adesão":"NUM_PROPOSTA",
                 "Valor Base": "VAL_BASE_COMISSAO",
-                "Valor Bruto": "VAL_COMISSAO",
+                "Valor Presente": "VAL_COMISSAO",
                 "Data de Pagamento": "DAT_CREDITO",
             }
 

@@ -105,6 +105,8 @@ def createListByLine(df):
         if pd.isna(row["DAT_CREDITO"]):
             row["DAT_CREDITO"] = datetime.now().strftime("%d/%m/%Y")
 
+        row["DAT_CREDITO"] = datetime.strptime(row["DAT_CREDITO"], "%d/%m/%Y").date()
+
         data = {
             "bank": row["NOM_BANCO"],
             "proposal": row["NUM_PROPOSTA"],

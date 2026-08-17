@@ -27,11 +27,11 @@ class Happy(Bank):
             df = self.readArchive(df)
 
             infos ={
-               "PROPOSTA":"NUM_PROPOSTA",
-               "DT PAGTO":"DAT_CREDITO",
-               "VR BASE":"VAL_BASE_COMISSAO",
-               "VR CMS":"VAL_COMISSAO",
-               "% CMS":"PCL_COMISSAO",
+               "NUM_PROPOSTA":"NUM_PROPOSTA",
+               "DAT_CREDITO":"DAT_CREDITO",
+               "VAL_BASE_COMISSAO":"VAL_BASE_COMISSAO",
+               "VAL_COMISSAO":"VAL_COMISSAO",
+               "PCL_COMISSAO":"PCL_COMISSAO",
             }
 
             logger.info("Validando DataFrame")
