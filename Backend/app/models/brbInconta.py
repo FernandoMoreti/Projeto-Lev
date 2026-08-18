@@ -145,7 +145,7 @@ class Brbinconta(Bank):
 
             logger.info("Iniciando processo de edicao do BTW")
 
-            df_novo["PCL_COMISSAO"] = pd.to_numeric(df_novo["PCL_COMISSAO"].astype(str).str.replace(",", "."), errors='coerce').fillna(0)
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NUM_PROPOSTA"] = pd.to_numeric(df_novo["NUM_PROPOSTA"], errors='coerce').fillna(0).astype('int64')
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
             df_novo["NUM_BANCO"] = 70
