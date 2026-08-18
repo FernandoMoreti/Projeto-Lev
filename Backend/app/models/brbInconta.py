@@ -94,12 +94,12 @@ class Brbinconta(Bank):
             date = datetime.now().strftime("%d/%m/%Y")
 
             infos = {
-                1 : "NUM_PROPOSTA",
-                2 : "DSC_OBSERVACAO",
-                3 : "QTD_PARCELA",
-                4 : "PCL_COMISSAO",
-                6 : "VAL_BASE_COMISSAO",
-                7 : "VAL_COMISSAO",
+                2 : "NUM_PROPOSTA",
+                3 : "DSC_OBSERVACAO",
+                4 : "QTD_PARCELA",
+                6 : "PCL_COMISSAO",
+                7 : "VAL_BASE_COMISSAO",
+                8 : "VAL_COMISSAO",
             }
 
             logger.info("Iniciando processo de edicao do BTW")
@@ -108,15 +108,9 @@ class Brbinconta(Bank):
             if Error:
                 return Error
 
-            logger.info("Iniciando processo de edicao do BTW")
-            logger.info("Iniciando processo de edicao do BTW")
-
             df_novo = self.createDataframe()
 
             df_novo = self.inputValues(df, df_novo, infos)
-
-            logger.info("Iniciando processo de edicao do BTW")
-            logger.info("Iniciando processo de edicao do BTW")
 
             df_novo["VAL_BASE_COMISSAO"] = convertValues(df_novo, "VAL_BASE_COMISSAO")
             df_novo["VAL_COMISSAO"] = convertValues(df_novo, "VAL_COMISSAO")
