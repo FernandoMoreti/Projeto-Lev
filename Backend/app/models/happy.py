@@ -11,7 +11,7 @@ class Happy(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df, header=2)
+            df = pd.read_excel(df)
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -32,6 +32,7 @@ class Happy(Bank):
                "VAL_BASE_COMISSAO":"VAL_BASE_COMISSAO",
                "VAL_COMISSAO":"VAL_COMISSAO",
                "PCL_COMISSAO":"PCL_COMISSAO",
+               "DSC_TIPO_PROPOSTA_EMPRESTIMO":"DSC_TIPO_PROPOSTA_EMPRESTIMO",
             }
 
             logger.info("Validando DataFrame")
