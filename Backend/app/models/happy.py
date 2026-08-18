@@ -11,7 +11,7 @@ class Happy(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_csv(df, sep=";")
+            df = pd.read_csv(df, encoding='latin-1', sep=";")
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
@@ -30,8 +30,7 @@ class Happy(Bank):
                "NUM_PROPOSTA":"NUM_PROPOSTA",
                "DAT_CREDITO":"DAT_CREDITO",
                "VAL_BASE_COMISSAO":"VAL_BASE_COMISSAO",
-               "VAL_COMISSAO":"VAL_COMISSAO",
-               "PCL_COMISSAO":"PCL_COMISSAO",
+               "VAL_COMISSAO_TOTAL":"VAL_COMISSAO",
                "DSC_TIPO_PROPOSTA_EMPRESTIMO":"DSC_TIPO_PROPOSTA_EMPRESTIMO",
             }
 
@@ -49,6 +48,7 @@ class Happy(Bank):
 
             df_novo["VAL_BRUTO"] = df_novo["VAL_BASE_COMISSAO"]
             df_novo["VAL_LIQUIDO"] = df_novo["VAL_BASE_COMISSAO"]
+            df_novo["PCL_COMISSAO"] = (df_novo["VAL_COMISSAO"] / df_novo["VAL_BASE_COMISSAO"]) * 100
             df_novo["NUM_BANCO"] = 1010
             df_novo["NOM_BANCO"] = 'HAPPY'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
