@@ -11,7 +11,7 @@ class Happy(Bank):
 
     def readArchive(self, df):
         try:
-            df = pd.read_excel(df)
+            df = pd.read_csv(df, sep=";")
             return df
         except Exception:
             logger.exception("Erro ao ler arquivo")
