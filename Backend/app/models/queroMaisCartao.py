@@ -28,12 +28,15 @@ class QueroMaisCartao(Bank):
 
             df = self.readArchive(df)
 
+            print(df.columns)
+
             infos ={
                "Nº Proposta":"NUM_PROPOSTA",
                "Data Base":"DAT_CREDITO",
                "Base de Cálculo":"VAL_BASE_COMISSAO",
                "Valor Comissão":"VAL_COMISSAO",
                "Tipo de Cálculo":"TIPO_COMISSAO_BANCO",
+               "Tp. Oper.":"COD_PRODUTO",
             }
 
             logger.info("Validando DataFrame")
@@ -62,7 +65,12 @@ class QueroMaisCartao(Bank):
             for index, row in df_novo.iterrows():
 
                 if row["TIPO_COMISSAO_BANCO"] == "Fixo":
-                    listOftypes.append("PRÉ-ADESÃO")
+                    if row["COD_PRODUTO"] == "Ativação Imediata":
+                        listOftypes.append("ATIVAÇÃO IMEDIATA")
+                    elif row["COD_PRODUTO"] == "Venda":
+                        listOftypes.append("PRÉ-ADESÃO")
+                    else:
+                        listOftypes.append("ATIVAÇÃO")
                 else:
                     listOftypes.append("DIRETA")
 
