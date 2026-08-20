@@ -34,6 +34,7 @@ class BmgCartaoBeneficio(Bank):
                     "Valor Bruto": "VAL_COMISSAO",
                     "Data Pagamento": "DAT_CREDITO",
                     "Comissão Ato ou Diferido": "TIPO_COMISSAO_BANCO",
+                    "Tipo de Comissao": "DSC_OBSERVACAO",
                 }
             else:
                 infos ={
@@ -43,6 +44,7 @@ class BmgCartaoBeneficio(Bank):
                     "Data Pagamento": "DAT_CREDITO",
                     "Tipo de Comissao": "TIPO_COMISSAO_BANCO",
                     "% de Comissao": "PCL_COMISSAO",
+                    "Tipo de Comissao": "DSC_OBSERVACAO",
                 }
 
             logger.info("Validando DataFrame")

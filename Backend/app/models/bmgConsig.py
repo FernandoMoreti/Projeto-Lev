@@ -76,7 +76,10 @@ class BmgConsig(Bank):
                     type_row = BMG[row["TIPO_COMISSAO_BANCO"].upper()]
                     if type_row == ["DIRETA", "DIFERIDA"]:
                         if pd.notna(row["PCL_COMISSAO"]):
-                            list_types.append("DIRETA")
+                            if row["PCL_COMISSAO"] == 100:
+                                list_types.append("PRÉ-ADESÃO")
+                            else:
+                                list_types.append("DIRETA")
                         else:
                             list_types.append("DIFERIDA")
                     else:
