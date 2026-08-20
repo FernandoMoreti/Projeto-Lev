@@ -31,7 +31,7 @@ class C6kgiro(Bank):
             infos = {
                 "Proposta Consignado": "NUM_PROPOSTA",
                 "Data Pagamento Kgiro": "DAT_CREDITO",
-                "Valor Contrato Consignado": "VAL_BASE_COMISSAO",
+                "Valor Liberado Consignado": "VAL_BASE_COMISSAO",
                 "Valor Kgiro": "VAL_COMISSAO",
                 "Tipo Antecipação Detalhe": "TIPO_COMISSAO_BANCO",
             }
