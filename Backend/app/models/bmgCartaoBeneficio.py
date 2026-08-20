@@ -72,7 +72,10 @@ class BmgCartaoBeneficio(Bank):
                     if row["TIPO_COMISSAO_BANCO"] == "Diferido":
                         list_types.append("DIFERIDA")
                     else:
-                        list_types.append("DIRETA")
+                        if row["PCL_COMISSAO"] == 100:
+                            list_types.append("PRÉ-ADESÃO")
+                        else:
+                            list_types.append("DIRETA")
             else:
                 for index, row in df_novo.iterrows():
                     type_row = BMG[row["TIPO_COMISSAO_BANCO"].upper()]
