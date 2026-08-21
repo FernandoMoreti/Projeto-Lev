@@ -98,6 +98,7 @@ def createListByLine(df):
     listOfProposal = []
 
     for index, row in df.iterrows():
+        print(row["NUM_PROPOSTA"])
 
         if pd.isna(row["NUM_PROPOSTA"]) or pd.isna(row["VAL_COMISSAO"]):
             return "Propostas sem valor de numero de proposta ou valor de comissao"

@@ -85,9 +85,18 @@ class BrbRed(Bank):
             df_novo["NUM_BANCO"] = 702
             df_novo["NOM_BANCO"] = 'BRB - RED'
             df_novo["NUM_CONTRATO"] = df_novo["NUM_PROPOSTA"]
-            df_novo["TIPO_COMISSAO_BANCO"] = "DIRETA"
             df_novo["DAT_CREDITO"] = df_novo["DAT_CREDITO"].astype(str).str.replace('-', '/', regex=False)
             df_novo["DAT_CREDITO"] = datetime.now().strftime('%d/%m/%Y')
+
+            listOfTypes = []
+
+            for index, row in df_novo.iterrows():
+                if row["VAL_COMISSAO"] < 0:
+                    listOfTypes.append("ESTORNO")
+                else:
+                    listOfTypes.append("DIRETA")
+
+            df_novo["TIPO_COMISSAO_BANCO"] = listOfTypes
 
             return df_novo
         except Exception:
